@@ -1,36 +1,37 @@
 <!doctype html>
 <html lang="en"><head>
-<title>Hello World - Naomiku的自留地</title>
+<title>test - Naomiku的自留地</title>
 <meta charset="UTF-8">
 <meta name="keywords" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="HPCG实验操作流程实验环境配置基础实现配置   实验配置 参数版本 要求版本    平台 V100 -   GPU数量 1或2 -   HPCG 实现 nvidia-hpcg -   Git 2.39.5 -   OpenMPI 5.0.7 4.1   CUDA Toolkit 12.9.86 12.3   cuSPARSE 12.5.10.65 12.3   cuBLAS 12.9.1.4 1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2025/09/01/hello-world/index.html">
+<meta property="og:title" content="test">
+<meta property="og:url" content="http://example.com/2025/09/01/test/index.html">
 <meta property="og:site_name" content="Naomiku的自留地">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="HPCG实验操作流程实验环境配置基础实现配置   实验配置 参数版本 要求版本    平台 V100 -   GPU数量 1或2 -   HPCG 实现 nvidia-hpcg -   Git 2.39.5 -   OpenMPI 5.0.7 4.1   CUDA Toolkit 12.9.86 12.3   cuSPARSE 12.5.10.65 12.3   cuBLAS 12.9.1.4 1">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-09-01T09:12:00.447Z">
-<meta property="article:modified_time" content="2025-09-01T09:12:00.447Z">
+<meta property="article:published_time" content="2025-09-01T13:57:57.000Z">
+<meta property="article:modified_time" content="2025-09-01T13:58:49.708Z">
 <meta property="article:author" content="Naomiku">
+<meta property="article:tag" content="HPCG">
 <meta name="twitter:card" content="summary">
 
 <link rel="stylesheet" href="/lib/fancybox/fancybox.css">
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1756735160987">
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1756735160996">
 
-<link rel="stylesheet" href="/css/style.css?v=1756735160987">
+<link rel="stylesheet" href="/css/style.css?v=1756735160996">
 
 
 
 
     
-        <link rel="stylesheet" href="/custom.css?v=1756735160987">
+        <link rel="stylesheet" href="/custom.css?v=1756735160996">
     
 
 
@@ -40,7 +41,7 @@
 <script src="/lib/lax.min.js" async></script>
 
 
-<script async src="/js/app.js?v=1756735160987"></script>
+<script async src="/js/app.js?v=1756735160996"></script>
 
  
 
@@ -313,8 +314,8 @@
   <article>
     
         <div class="nexmoe-post-cover"> 
-            <img src="https://i.ibb.co/gLj3qxyk/image.png" alt="Hello World" loading="lazy">
-            <h1>Hello World</h1>
+            <img src="https://i.ibb.co/gLj3qxyk/image.png" alt="test" loading="lazy">
+            <h1>test</h1>
         </div>
     
     
@@ -331,19 +332,130 @@
     
 </div>
 
-    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <h1 id="HPCG实验操作流程"><a href="#HPCG实验操作流程" class="headerlink" title="HPCG实验操作流程"></a>HPCG实验操作流程</h1><h2 id="实验环境配置"><a href="#实验环境配置" class="headerlink" title="实验环境配置"></a>实验环境配置</h2><h3 id="基础实现配置"><a href="#基础实现配置" class="headerlink" title="基础实现配置"></a>基础实现配置</h3><table>
+<thead>
+<tr>
+<th align="center">实验配置</th>
+<th align="center">参数版本</th>
+<th align="center">要求版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">平台</td>
+<td align="center">V100</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">GPU数量</td>
+<td align="center">1或2</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">HPCG 实现</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/nvidia-hpcg">nvidia-hpcg</a></td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">Git</td>
+<td align="center">2.39.5</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">OpenMPI</td>
+<td align="center">5.0.7</td>
+<td align="center">4.1</td>
+</tr>
+<tr>
+<td align="center">CUDA Toolkit</td>
+<td align="center">12.9.86</td>
+<td align="center">12.3</td>
+</tr>
+<tr>
+<td align="center">cuSPARSE</td>
+<td align="center">12.5.10.65</td>
+<td align="center">12.3</td>
+</tr>
+<tr>
+<td align="center">cuBLAS</td>
+<td align="center">12.9.1.4</td>
+<td align="center">12.2</td>
+</tr>
+<tr>
+<td align="center">gcc</td>
+<td align="center">13.4.0</td>
+<td align="center">13.0</td>
+</tr>
+<tr>
+<td align="center">nvpl</td>
+<td align="center">25.5</td>
+<td align="center">24.03</td>
+</tr>
+<tr>
+<td align="center">nccl</td>
+<td align="center">2.27.7</td>
+<td align="center">2.19</td>
+</tr>
+<tr>
+<td align="center">gfortran</td>
+<td align="center">13.4.0</td>
+<td align="center">-</td>
+</tr>
+</tbody></table>
+<h2 id="编译与运行说明"><a href="#编译与运行说明" class="headerlink" title="编译与运行说明"></a>编译与运行说明</h2><p>有两种方式获取并运行HPCG:</p>
+<h3 id="方式一：从源码获取"><a href="#方式一：从源码获取" class="headerlink" title="方式一：从源码获取"></a>方式一：从源码获取</h3><p>下载nvidia提供的HPCG实现：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/NVIDIA/nvidia-hpcg</span><br></pre></td></tr></table></figure>
+<p>随后将附在压缩包内的三个脚本放入到<code>nvidia-hpcg/</code>下： </p>
+<ul>
+<li><code>beforebuild.sh</code> </li>
+<li><code>build_sample.sh</code></li>
+<li><code>run.sh</code></li>
+</ul>
+<hr>
+<h3 id="方式二：使用附件压缩包"><a href="#方式二：使用附件压缩包" class="headerlink" title="方式二：使用附件压缩包"></a>方式二：使用附件压缩包</h3><p>直接解压附在附件<code>hpcg.zip</code>，其中含有上述的三个脚本。</p>
+<hr>
+<p>确保<strong>基础实现配置</strong>满足最低要求后，请按照以下顺序执行脚本：</p>
+<h4 id="1-beforebuild-sh"><a href="#1-beforebuild-sh" class="headerlink" title="1. beforebuild.sh"></a>1. <code>beforebuild.sh</code></h4><p>根据注释写的说明来调整文件具体的位置，尤其需要保证以下变量配置正确：</p>
+<ul>
+<li><code>MPI_PATH</code></li>
+<li><code>CUDA_PATH</code></li>
+<li><code>MATHLIBS_PATH</code></li>
+<li><code>NCCL_PATH</code></li>
+<li><code>NVPL_SPARSE_PATH</code></li>
+</ul>
+<p>在进行下一步前，需要验证上述变量是否正确</p>
+<hr>
+<h4 id="2-build-sample-sh"><a href="#2-build-sample-sh" class="headerlink" title="2. build_sample.sh"></a>2. <code>build_sample.sh</code></h4><p>需要修改以下内容：</p>
+<ul>
+<li><code>CXX_PATH</code></li>
+<li><code>PATH</code></li>
+</ul>
+<p>如果是在<strong>V100平台</strong>上，需要先把<code>setup/Make.CUDA_X86</code>里面的架构代码从<code>80</code>改为<code>70</code>（压缩包内的版本已改好）</p>
+<p>其他情况可以按照下表修改参数：</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">修改方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">USE_CUDA</td>
+<td align="center">设置为 1 以构建 NVIDIA GPU，否则设置为 0</td>
+</tr>
+<tr>
+<td align="center">USE_GRACE</td>
+<td align="center">设置为 1 以构建 NVIDIA Grace CPU，否则设置为 0。设置为 0 时，代码将针对 x86 平台生成</td>
+</tr>
+<tr>
+<td align="center">USE_NCCL</td>
+<td align="center">设置为 1 可为 NCCL 构建，否则设置为 0</td>
+</tr>
+</tbody></table>
+<p>随后可以直接运行<code>build_sample.sh</code></p>
+<hr>
+<h4 id="3-run-sh"><a href="#3-run-sh" class="headerlink" title="3. run.sh"></a>3. <code>run.sh</code></h4><p>理论上，如果前面两个脚本已经成功完成编译和运行，这个脚本可以直接运行。</p>
+<h5 id="相关参数自定义"><a href="#相关参数自定义" class="headerlink" title="相关参数自定义"></a>相关参数自定义</h5><p>可以修改MPI的进程绑定参数，网络拓扑参数，以及问题尺寸配置，具体可以根据run.sh中的注释调整</p>
+<h2 id="性能最佳的输出"><a href="#性能最佳的输出" class="headerlink" title="性能最佳的输出"></a>性能最佳的输出</h2><p>存放在与本README.md相同的目录下，文件名output.txt</p>
 
     <p><img src="https://i.dawnlab.me/53a8c7cf3ad77a0f0a456ce2c6afe88a.png" loading="lazy"></p>
 
@@ -353,7 +465,7 @@
       
     <div class="nexmoe-post-copyright">
         <strong>Author：</strong>Naomiku<br>
-        <strong>Link：</strong><a href="http://example.com/2025/09/01/hello-world/" title="http:&#x2F;&#x2F;example.com&#x2F;2025&#x2F;09&#x2F;01&#x2F;hello-world&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2025&#x2F;09&#x2F;01&#x2F;hello-world&#x2F;</a><br>
+        <strong>Link：</strong><a href="http://example.com/2025/09/01/test/" title="http:&#x2F;&#x2F;example.com&#x2F;2025&#x2F;09&#x2F;01&#x2F;test&#x2F;" target="_blank" rel="noopener">http:&#x2F;&#x2F;example.com&#x2F;2025&#x2F;09&#x2F;01&#x2F;test&#x2F;</a><br>
         
             <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
 
@@ -366,10 +478,12 @@
   <div class="nexmoe-post-meta nexmoe-rainbow">
    
     
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/HPCG/" rel="tag">HPCG</a>
+    
 </div>
   
   
-    <script async src="/js/copy-codeblock.js?v=1756735160984"></script>
+    <script async src="/js/copy-codeblock.js?v=1756735160994"></script>
   
 
   
@@ -388,7 +502,7 @@
             <button class="mdui-fab catalog" style="overflow:unset;">
                 <i class="nexmoefont icon-i-catalog"></i>
                 <div class="nexmoe-toc">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HPCG%E5%AE%9E%E9%AA%8C%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">HPCG实验操作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">实验环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%AE%9E%E7%8E%B0%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">基础实现配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E8%BF%90%E8%A1%8C%E8%AF%B4%E6%98%8E"><span class="toc-number">1.2.</span> <span class="toc-text">编译与运行说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%BB%8E%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96"><span class="toc-number">1.2.1.</span> <span class="toc-text">方式一：从源码获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8%E9%99%84%E4%BB%B6%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="toc-number">1.2.2.</span> <span class="toc-text">方式二：使用附件压缩包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-beforebuild-sh"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1. beforebuild.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-build-sample-sh"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">2. build_sample.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-run-sh"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">3. run.sh</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.2.3.1.</span> <span class="toc-text">相关参数自定义</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%9C%80%E4%BD%B3%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">1.3.</span> <span class="toc-text">性能最佳的输出</span></a></li></ol></li></ol>
                 </div>
             </button>
             
