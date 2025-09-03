@@ -25,8 +25,8 @@
 <meta property="og:image" content="https://q1.qlogo.cn/g?b=qq&nk=1204958596&s=0">
 <meta property="og:image" content="https://avatars.githubusercontent.com/u/24761016?v=4">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006pSa7Qgw1fbrb5kz8dpj304g04gglj.jpg">
-<meta property="article:published_time" content="2025-09-03T09:34:11.000Z">
-<meta property="article:modified_time" content="2025-09-03T09:38:14.852Z">
+<meta property="article:published_time" content="2019-02-01T12:03:41.000Z">
+<meta property="article:modified_time" content="2025-09-03T10:33:05.933Z">
 <meta property="article:author" content="Naomiku">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://xiaoshuapp.com/icon.png">
@@ -35,15 +35,15 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1756892545689">
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1756895601511">
 
-<link rel="stylesheet" href="/css/style.css?v=1756892545689">
+<link rel="stylesheet" href="/css/style.css?v=1756895601511">
 
 
 
 
     
-        <link rel="stylesheet" href="/custom.css?v=1756892545689">
+        <link rel="stylesheet" href="/custom.css?v=1756895601511">
     
 
 
@@ -53,7 +53,7 @@
 <script src="/lib/lax.min.js" async></script>
 
 
-<script async src="/js/app.js?v=1756892545689"></script>
+<script async src="/js/app.js?v=1756895601511"></script>
 
  
 
@@ -129,7 +129,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1756892545691"></script>
+	<script async src="/js/search.js?v=1756895601513"></script>
 
 
 
@@ -288,7 +288,7 @@
 <style>
 .friends-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
   margin: 30px 0;
 }
@@ -299,164 +299,162 @@
   padding: 20px;
   transition: all 0.3s ease;
   border: 1px solid var(--color-shadow);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  text-align: center;
 }
 
 .friend-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px var(--color-shadow);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--color-shadow);
 }
 
-.friend-header {
-  display: flex;
-  align-items: center;
+.friend-avatar-container {
   margin-bottom: 15px;
 }
 
 .friend-avatar {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 15px;
-  flex-shrink: 0;
+  border: 2px solid var(--color-primary);
 }
 
-.friend-title {
+.friend-name {
   font-weight: bold;
   font-size: 1.1em;
-  margin: 0;
+  margin: 10px 0 5px 0;
   color: var(--color-primary);
 }
 
 .friend-description {
   color: var(--color-text-secondary);
   margin: 8px 0;
-  line-height: 1.5;
-  flex-grow: 1;
+  line-height: 1.4;
+  font-size: 0.9em;
+  min-height: 20px;
+}
+
+.friend-url {
+  margin-top: 10px;
 }
 
 .friend-link {
   color: var(--color-primary);
   text-decoration: none;
-  font-size: 0.9em;
+  font-size: 0.85em;
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
 }
 
 .friend-link:hover {
   text-decoration: underline;
-}
-
-.friend-url {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid var(--color-shadow);
+  background: rgba(255, 255, 255, 0.2);
 }
 </style>
 
 <div class="friends-grid">
   <!-- Sonic853 -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cravatar.cn/avatar/af325e71d97c743ce9022586ea18baa2?s=400" alt="Sonic853" data-caption="Sonic853" loading="lazy">
-      <h3 class="friend-title">Sonic853</h3>
     </div>
+    <div class="friend-name">Sonic853</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="http://blog.853lab.com/" target="_blank">http://blog.853lab.com/</a>
+      <a class="friend-link" href="http://blog.853lab.com/" target="_blank" rel="noopener">blog.853lab.com</a>
     </div>
   </div>
 
   <!-- DIYGod -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://avatars.githubusercontent.com/u/8266075?v=4" alt="DIYGod" data-caption="DIYGod" loading="lazy">
-      <h3 class="friend-title">DIYGod</h3>
     </div>
+    <div class="friend-name">DIYGod</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="https://diygod.me/" target="_blank">https://diygod.me/</a>
+      <a class="friend-link" href="https://diygod.me/" target="_blank" rel="noopener">diygod.me</a>
     </div>
   </div>
 
   <!-- Jrotty -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://thirdqq.qlogo.cn/g?b=sdk&k=0n5AZ9Ne4h3em8iboKu3sHg&s=100&t=1556021799" alt="Jrotty" data-caption="Jrotty" loading="lazy">
-      <h3 class="friend-title">Jrotty</h3>
     </div>
+    <div class="friend-name">Jrotty</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="https://zezeshe.com/" target="_blank">https://zezeshe.com/</a>
+      <a class="friend-link" href="https://zezeshe.com/" target="_blank" rel="noopener">zezeshe.com</a>
     </div>
   </div>
 
   <!-- 千千 -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://www.dreamwings.cn/wp-content/uploads/2018/06/806e52a2e2b9ff4bd2c23140df75cc1f.jpeg" alt="千千" data-caption="千千" loading="lazy">
-      <h3 class="friend-title">千千</h3>
     </div>
+    <div class="friend-name">千千</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="https://www.dreamwings.cn/" target="_blank">https://www.dreamwings.cn/</a>
+      <a class="friend-link" href="https://www.dreamwings.cn/" target="_blank" rel="noopener">dreamwings.cn</a>
     </div>
   </div>
 
   <!-- Shawn -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cravatar.cn/avatar/3448949a7fd417d7c976a0639d74385d?s=200" alt="Shawn" data-caption="Shawn" loading="lazy">
-      <h3 class="friend-title">Shawn</h3>
     </div>
+    <div class="friend-name">Shawn</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="http://shawnzeng.com/" target="_blank">http://shawnzeng.com/</a>
+      <a class="friend-link" href="http://shawnzeng.com/" target="_blank" rel="noopener">shawnzeng.com</a>
     </div>
   </div>
 
   <!-- Ailoli -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cravatar.cn/avatar/2190158261b87d651494ae5dbbb17ec1?s=200" alt="Ailoli" data-caption="Ailoli" loading="lazy">
-      <h3 class="friend-title">Ailoli</h3>
     </div>
+    <div class="friend-name">Ailoli</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="https://www.ailoli.org/" target="_blank">https://www.ailoli.org/</a>
+      <a class="friend-link" href="https://www.ailoli.org/" target="_blank" rel="noopener">ailoli.org</a>
     </div>
   </div>
 
   <!-- 保罗 -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://q1.qlogo.cn/g?b=qq&nk=1204958596&s=0" alt="保罗" data-caption="保罗" loading="lazy">
-      <h3 class="friend-title">保罗</h3>
     </div>
+    <div class="friend-name">保罗</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="https://paugram.com/" target="_blank">https://paugram.com/</a>
+      <a class="friend-link" href="https://paugram.com/" target="_blank" rel="noopener">paugram.com</a>
     </div>
   </div>
 
   <!-- Moehentai -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://avatars.githubusercontent.com/u/24761016?v=4" alt="Moehentai" data-caption="Moehentai" loading="lazy">
-      <h3 class="friend-title">Moehentai</h3>
     </div>
+    <div class="friend-name">Moehentai</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="https://blog.conoha.vip/" target="_blank">https://blog.conoha.vip/</a>
+      <a class="friend-link" href="https://blog.conoha.vip/" target="_blank" rel="noopener">blog.conoha.vip</a>
     </div>
   </div>
 
-  <!-- 继续添加其他友链，按照相同格式 -->
-  <!-- 由于篇幅限制，这里只展示了前8个，您需要继续添加剩下的 -->
+  <!-- 继续添加其他友链... -->
 
 </div>
 
@@ -482,13 +480,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="friends-grid">
   <!-- 不可访问的友链也使用相同的卡片样式 -->
   <div class="friend-card">
-    <div class="friend-header">
+    <div class="friend-avatar-container">
       <img onerror="imgOnError(this);" data-fancybox="gallery" src="https://ws1.sinaimg.cn/large/006pSa7Qgw1fbrb5kz8dpj304g04gglj.jpg" alt="Viosey" data-caption="Viosey" loading="lazy">
-      <h3 class="friend-title">Viosey</h3>
     </div>
+    <div class="friend-name">Viosey</div>
     <div class="friend-description"></div>
     <div class="friend-url">
-      <a class="friend-link" href="https://blog.viosey.com/" target="_blank">https://blog.viosey.com/</a>
+      <a class="friend-link" href="https://blog.viosey.com/" target="_blank" rel="noopener">blog.viosey.com</a>
     </div>
   </div>
 
@@ -532,7 +530,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <button class="mdui-fab catalog" style="overflow:unset;">
                 <i class="nexmoefont icon-i-catalog"></i>
                 <div class="nexmoe-toc">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E7%8E%A9%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text">好玩的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8B%E5%8F%8B%E4%BB%AC"><span class="toc-number">2.</span> <span class="toc-text">朋友们</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">Sonic853</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">DIYGod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text">Jrotty</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.4.</span> <span class="toc-text">千千</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.5.</span> <span class="toc-text">Shawn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.6.</span> <span class="toc-text">Ailoli</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.7.</span> <span class="toc-text">保罗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.8.</span> <span class="toc-text">Moehentai</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E8%AE%BF%E9%97%AE"><span class="toc-number">3.</span> <span class="toc-text">不可访问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.1.</span> <span class="toc-text">Viosey</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8F%8B%E9%93%BE"><span class="toc-number">4.</span> <span class="toc-text">添加友链</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E7%8E%A9%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text">好玩的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8B%E5%8F%8B%E4%BB%AC"><span class="toc-number">2.</span> <span class="toc-text">朋友们</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E8%AE%BF%E9%97%AE"><span class="toc-number">3.</span> <span class="toc-text">不可访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8F%8B%E9%93%BE"><span class="toc-number">4.</span> <span class="toc-text">添加友链</span></a></li></ol>
                 </div>
             </button>
             
