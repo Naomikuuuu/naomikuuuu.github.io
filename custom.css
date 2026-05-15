@@ -1,0 +1,32 @@
+/* 全局背景更可见 */
+#nexmoe-background .nexmoe-bg {
+    opacity: 0.55;
+}
+
+body {
+    background: transparent !important;
+}
+
+/* 侧边栏毛玻璃 */
+.nexmoe-drawer.mdui-drawer {
+    background: rgba(30, 30, 30, 0.72) !important;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* 主内容区毛玻璃 */
+#nexmoe-content .nexmoe-primary {
+    background-color: rgba(43, 43, 43, 0.72) !important;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* 亮色模式适配 */
+@media (prefers-color-scheme: light) {
+    .nexmoe-drawer.mdui-drawer {
+        background: rgba(255, 255, 255, 0.72) !important;
+    }
+    #nexmoe-content .nexmoe-primary {
+        background-color: rgba(255, 255, 255, 0.72) !important;
+    }
+}
