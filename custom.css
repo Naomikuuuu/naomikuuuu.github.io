@@ -1,6 +1,7 @@
-/* 全局背景更可见 */
+/* 全局背景更可见 — 降低模糊让星空能看清 */
 #nexmoe-background .nexmoe-bg {
-    opacity: 0.55;
+    opacity: 0.7;
+    filter: blur(8px);
 }
 
 body {
@@ -9,14 +10,14 @@ body {
 
 /* 侧边栏毛玻璃 */
 .nexmoe-drawer.mdui-drawer {
-    background: rgba(30, 30, 30, 0.72) !important;
+    background: rgba(30, 30, 30, 0.65) !important;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
 }
 
 /* 主内容区毛玻璃 */
 #nexmoe-content .nexmoe-primary {
-    background-color: rgba(43, 43, 43, 0.72) !important;
+    background-color: rgba(43, 43, 43, 0.65) !important;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
 }
