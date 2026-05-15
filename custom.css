@@ -1,33 +1,35 @@
-/* 全局背景更可见 — 降低模糊让星空能看清 */
-#nexmoe-background .nexmoe-bg {
-    opacity: 0.7;
-    filter: blur(8px);
+/* Butterfly 自定义样式 */
+/* 背景毛玻璃效果 */
+#body-wrap {
+  background: transparent !important;
 }
 
-body {
-    background: transparent !important;
+/* 侧边栏卡片毛玻璃 */
+.card-widget,
+#aside-content .card-widget {
+  background: rgba(43, 43, 43, 0.65) !important;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
-/* 侧边栏毛玻璃 */
-.nexmoe-drawer.mdui-drawer {
-    background: rgba(30, 30, 30, 0.65) !important;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+/* 文章卡片毛玻璃 */
+.layout > div:first-child:not(.recent-posts),
+.recent-posts > .recent-post-item,
+#post,
+#page {
+  background: rgba(43, 43, 43, 0.65) !important;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
-/* 主内容区毛玻璃 */
-#nexmoe-content .nexmoe-primary {
-    background-color: rgba(43, 43, 43, 0.65) !important;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-}
-
-/* 亮色模式适配 */
+/* 亮色模式 */
 @media (prefers-color-scheme: light) {
-    .nexmoe-drawer.mdui-drawer {
-        background: rgba(255, 255, 255, 0.72) !important;
-    }
-    #nexmoe-content .nexmoe-primary {
-        background-color: rgba(255, 255, 255, 0.72) !important;
-    }
+  .card-widget,
+  #aside-content .card-widget,
+  .layout > div:first-child:not(.recent-posts),
+  .recent-posts > .recent-post-item,
+  #post,
+  #page {
+    background: rgba(255, 255, 255, 0.72) !important;
+  }
 }
