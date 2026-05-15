@@ -1,0 +1,1330 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Basics of Morse Theory and the Poincaré-Hopf Theorem | Naomiku的自留地</title><meta name="author" content="Naomiku"><meta name="copyright" content="Naomiku"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Basics of Morse Theory and the Poincaré-Hopf Theorem     We mainly focus on Morse Theory by J. Milnor. In Chapter 6, we will use Theorem 11.27 and Lemma 11.20 from From Calculus to Cohomology (by Mad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Basics of Morse Theory and the Poincaré-Hopf Theorem">
+<meta property="og:url" content="https://naomikuuuu.github.io/2026/05/15/Morse-Theory/index.html">
+<meta property="og:site_name" content="Naomiku的自留地">
+<meta property="og:description" content="Basics of Morse Theory and the Poincaré-Hopf Theorem     We mainly focus on Morse Theory by J. Milnor. In Chapter 6, we will use Theorem 11.27 and Lemma 11.20 from From Calculus to Cohomology (by Mad">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop">
+<meta property="article:published_time" content="2026-05-15T08:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-15T07:24:02.308Z">
+<meta property="article:author" content="Naomiku">
+<meta property="article:tag" content="数学研讨课B, Morse Theory, 拓扑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Basics of Morse Theory and the Poincaré-Hopf Theorem",
+  "url": "https://naomikuuuu.github.io/2026/05/15/Morse-Theory/",
+  "image": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop",
+  "datePublished": "2026-05-15T08:00:00.000Z",
+  "dateModified": "2026-05-15T07:24:02.308Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Naomiku",
+      "url": "https://naomikuuuu.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://i.ibb.co/5hKF29hy/image.png"><link rel="canonical" href="https://naomikuuuu.github.io/2026/05/15/Morse-Theory/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-2058306854838448',
+  enable_page_level_ads: 'true'
+});</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-4D4ZJ9G024"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-4D4ZJ9G024')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-4D4ZJ9G024', {'page_path': window.location.pathname})
+}, 'google_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/content.json","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"No results found for: ${query}","hits_stats":"${hits} articles found"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"Author: Naomiku","link":"Link: ","source":"Source: Naomiku的自留地","info":"Copyright belongs to the author. For commercial use, please contact the author for authorization. For non-commercial use, please indicate the source."}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Basics of Morse Theory and the Poincaré-Hopf Theorem',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(https://images.unsplash.com/photo--yHqAeo9anE?w=1920&amp;q=80);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://i.ibb.co/734JgJC/image.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archive/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/PY/"><i class="fa-fw fas fa-user-friends"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info-circle"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&amp;h=600&amp;fit=crop);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Naomiku的自留地</span></a><a class="nav-page-title" href="/"><span class="site-name">Basics of Morse Theory and the Poincaré-Hopf Theorem</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archive/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/PY/"><i class="fa-fw fas fa-user-friends"></i><span> Friends</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-info-circle"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Basics of Morse Theory and the Poincaré-Hopf Theorem</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-05-15T08:00:00.000Z" title="Created 2026-05-15 16:00:00">2026-05-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-05-15T07:24:02.308Z" title="Updated 2026-05-15 15:24:02">2026-05-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div class="center">
+<p><strong>Basics of Morse Theory and the Poincaré-Hopf
+Theorem</strong></p>
+</div>
+<div class="center">
+
+</div>
+<p>We mainly focus on <em>Morse Theory</em> by J. Milnor. In Chapter 6,
+we will use Theorem 11.27 and Lemma 11.20 from <em>From Calculus to
+Cohomology</em> (by Madsen and Tornehave) to prove the Poincaré-Hopf
+theorem.</p>
+<h1 class="unnumbered" id="preliminaries">0. Preliminaries</h1>
+<div class="definition">
+<p><strong>Definition 1</strong> (Homotopy). <em>Let <span
+class="math inline">\(f, g: X \to Y\)</span> be continuous maps. We say
+<span class="math inline">\(f\)</span> is homotopic to <span
+class="math inline">\(g\)</span>, denoted by <span
+class="math inline">\(f \simeq g\)</span>, if there exists a continuous
+map <span class="math inline">\(H : X \times I \to Y\)</span> such
+that:</em></p>
+<ol>
+<li><p><em><span class="math inline">\(\forall x \in X, \ H(x, 0) =
+f(x)\)</span>.</em></p></li>
+<li><p><em><span class="math inline">\(\forall x \in X, \ H(x, 1) =
+g(x)\)</span>.</em></p></li>
+</ol>
+</div>
+<div class="definition">
+<p><strong>Definition 2</strong> (Homotopy Equivalence). <em>Two spaces
+<span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> are homotopy equivalent if there exist
+continuous maps <span class="math inline">\(f: X \to Y\)</span> and
+<span class="math inline">\(g: Y \to X\)</span> such that:</em></p>
+<ol>
+<li><p><em><span class="math inline">\(g \circ f \simeq
+\mathrm{id}_X\)</span></em></p></li>
+<li><p><em><span class="math inline">\(f \circ g \simeq
+\mathrm{id}_Y\)</span></em></p></li>
+</ol>
+</div>
+<div class="definition">
+<p><strong>Definition 3</strong> (Deformation Retract). <em>Let <span
+class="math inline">\(A \subset X\)</span>. A deformation retract is a
+continuous map <span class="math inline">\(H: X \times I \to X\)</span>
+such that:</em></p>
+<ol>
+<li><p><em><span class="math inline">\(\forall x \in X, \ H(x, 0) =
+x\)</span>.</em></p></li>
+<li><p><em><span class="math inline">\(\forall x \in X, \ H(x, 1) \in
+A\)</span>.</em></p></li>
+<li><p><em><span class="math inline">\(\forall a \in A, \forall t \in
+[0, 1], \ H(a, t) = a\)</span>.</em></p></li>
+</ol>
+</div>
+<div class="lemma">
+<p><strong>Lemma 1</strong> (Pasting Lemma). <em>Let <span
+class="math inline">\(X = A \cup B\)</span>, where <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are closed subsets of <span
+class="math inline">\(X\)</span>. If <span class="math inline">\(f: A
+\to Y\)</span> and <span class="math inline">\(g: B \to Y\)</span> are
+continuous maps such that <span class="math inline">\(f|_{A \cap B} =
+g|_{A \cap B}\)</span>, then the map <span class="math inline">\(h: X
+\to Y\)</span> defined by <span class="math display">\[h(x) =
+\begin{cases}
+f(x), &amp; x \in A \\
+g(x), &amp; x \in B
+\end{cases}\]</span> is continuous on <span
+class="math inline">\(X\)</span>.</em></p>
+</div>
+<div class="definition">
+<p><strong>Definition 4</strong> (CW-complex). <em>A CW-complex is
+defined by induction on its skeleta:</em></p>
+<ol>
+<li><p><em><span class="math inline">\(X^0\)</span>: A discrete set of
+points (0-cells).</em></p></li>
+<li><p><em><span class="math inline">\(X^n\)</span>: Obtained by
+attaching <span class="math inline">\(n\)</span>-cells <span
+class="math inline">\(D_\alpha^n\)</span> to the <span
+class="math inline">\((n-1)\)</span>-skeleton <span
+class="math inline">\(X^{n-1}\)</span> via continuous attaching maps
+<span class="math inline">\(\phi_\alpha : S_\alpha^{n-1} \to
+X^{n-1}\)</span>. Formally, <span class="math display">\[X^n = \left(
+X^{n-1} \coprod \bigsqcup_\alpha D_\alpha^n \right) \Big/
+\sim\]</span></em></p></li>
+</ol>
+</div>
+<h1 class="unnumbered" id="introduction">1. Introduction</h1>
+<figure id="fig:A torus tangent to a plane">
+<img src="/images/morse/1.1_torus.png" style="width:50.0%" />
+<figcaption>Diagram 1.1: Torus</figcaption>
+</figure>
+<p>Let <span class="math inline">\(f: M \to \mathbb{R}\)</span> be the
+height function above the plane. We denote the sublevel set by <span
+class="math inline">\(M^a = \{x \in M \mid f(x) \le a\}\)</span>.</p>
+<p>As the height <span class="math inline">\(a\)</span> increases, the
+topology of <span class="math inline">\(M^a\)</span> changes as
+follows:</p>
+<ul>
+<li><p><span class="math inline">\(a &lt; 0 = f(p)\)</span>.<br />
+<span class="math inline">\(M^a\)</span> is empty.</p></li>
+<li><p><span class="math inline">\(f(p) &lt; a &lt; f(q)\)</span>.<br />
+<span class="math inline">\(M^a \simeq D^2 \simeq \text{a point} \simeq
+\text{0-cell}\)</span>. <em>Attaching a 0-cell</em></p></li>
+<li><p><span class="math inline">\(f(q) &lt; a &lt; f(r)\)</span>.<br />
+<span class="math inline">\(M^a \simeq S^1 \times I \simeq S^1\)</span>.
+<em>Attaching a 1-cell</em></p></li>
+<li><p><span class="math inline">\(f(r) &lt; a &lt; f(s)\)</span>.<br />
+<span class="math inline">\(M^a \simeq \text{Diagram 1.2} \simeq
+\text{Diagram 1.3} \simeq S^1 \vee S^1\)</span>. <em>Attaching a
+1-cell</em></p></li>
+<li><p><span class="math inline">\(f(s) &lt; a\)</span>.<br />
+<span class="math inline">\(M^a \simeq T^2\)</span> (the full torus).
+<em>Attaching a 2-cell</em></p></li>
+</ul>
+<figure>
+<img src="/images/morse/1.2.png" />
+<img src="/images/morse/1.3.png" />
+<figcaption>Diagram 1.3</figcaption>
+</figure>
+<p>Intuitively, near the critical points <span class="math inline">\(p,
+q, r, s\)</span>, the function <span class="math inline">\(f\)</span>
+can be approximated locally as: <span
+class="math display">\[\begin{aligned}
+&amp;\text{at } p \text{ (minimum)}: \quad f = x^2 + y^2 \\
+&amp;\text{at } q, r \text{ (saddles)}: \quad f = C + x^2 - y^2 \\
+&amp;\text{at } s \text{ (maximum)}: \quad f = C - x^2 - y^2
+\end{aligned}\]</span></p>
+<p>Whenever we cross a critical value <span
+class="math inline">\(c\)</span>, it turns out that the topological
+change is completely determined by attaching a <span
+class="math inline">\(k\)</span>-cell to <span
+class="math inline">\(M^{c-\epsilon}\)</span>, where <span
+class="math inline">\(k\)</span> is the number of negative signs in the
+local quadratic form.</p>
+<h1 class="unnumbered" id="definitions-and-lemmas">2. Definitions and
+Lemmas</h1>
+<div class="definition">
+<p><strong>Definition 5</strong> (Critical point). <em>A point <span
+class="math inline">\(p\)</span> is called a <strong>critical
+point</strong> of a smooth function <span
+class="math inline">\(f\)</span>, if for a local coordinate system <span
+class="math inline">\((x^1, x^2, \dots, x^n)\)</span> in a neighborhood
+<span class="math inline">\(U\)</span> of <span
+class="math inline">\(p\)</span>, we have <span
+class="math display">\[\frac{\partial f}{\partial x^1}(p) = \dots =
+\frac{\partial f}{\partial x^n}(p) = 0.\]</span></em></p>
+</div>
+<div class="definition">
+<p><strong>Definition 6</strong> (Non-degenerate critical point). <em>A
+critical point <span class="math inline">\(p\)</span> is called
+<strong>non-degenerate</strong> if and only if the Hessian matrix
+evaluated at <span class="math inline">\(p\)</span> is non-singular,
+i.e., <span class="math display">\[\det \left( \frac{\partial^2
+f}{\partial x^i \partial x^j}(p) \right) \neq 0.\]</span></em></p>
+</div>
+<div class="lemma">
+<p><strong>Lemma 2</strong> (Lemma 2.1). <em>Let <span
+class="math inline">\(f\)</span> be a <span
+class="math inline">\(C^\infty\)</span> function in a convex
+neighborhood <span class="math inline">\(V\)</span> of <span
+class="math inline">\(0\)</span> in <span
+class="math inline">\(\mathbb{R}^n\)</span>, with <span
+class="math inline">\(f(0)=0\)</span>. Then <span
+class="math display">\[f(x_1, \dots, x_n) = \sum_{i=1}^n x_i g_i(x_1,
+\dots, x_n)\]</span> for some suitable <span
+class="math inline">\(C^\infty\)</span> functions <span
+class="math inline">\(g_i\)</span> defined in <span
+class="math inline">\(V\)</span>, satisfying <span
+class="math inline">\(g_i(0) = \frac{\partial f}{\partial
+x_i}(0)\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By the fundamental theorem of calculus and the chain
+rule, we have: <span class="math display">\[f(x_1, \dots, x_n) =
+\int_0^1 \frac{d}{dt}f(tx_1, \dots, tx_n) \, dt = \int_0^1 \sum_{i=1}^n
+\frac{\partial f}{\partial x_i}(tx_1, \dots, tx_n) \cdot x_i \,
+dt.\]</span> Therefore, we can simply define <span
+class="math inline">\(g_i(x_1, \dots, x_n) = \int_0^1 \frac{\partial
+f}{\partial x_i}(tx_1, \dots, tx_n) \, dt\)</span>. ◻</p>
+</div>
+<div class="lemma">
+<p><strong>Lemma 3</strong> (Lemma 2.2, The Morse Lemma). <em>Let <span
+class="math inline">\(p\)</span> be a non-degenerate critical point for
+<span class="math inline">\(f\)</span>. Then there exists a local
+coordinate system <span class="math inline">\((y^1, \dots, y^n)\)</span>
+in a neighborhood <span class="math inline">\(U\)</span> of <span
+class="math inline">\(p\)</span> with <span
+class="math inline">\(y^i(p)=0\)</span> for all <span
+class="math inline">\(i\)</span>, such that the identity <span
+class="math display">\[f = f(p) - (y^1)^2 - \dots - (y^\lambda)^2 +
+(y^{\lambda+1})^2 + \dots + (y^n)^2\]</span> holds throughout <span
+class="math inline">\(U\)</span>. Here, the integer <span
+class="math inline">\(\lambda\)</span> is called the
+<strong>index</strong> of <span class="math inline">\(f\)</span> at
+<span class="math inline">\(p\)</span>, which equals the negative index
+of inertia of the Hessian matrix <span class="math inline">\(\left(
+\frac{\partial^2 f}{\partial x^i \partial x^j}(p)
+\right)\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Without loss of generality, assume <span
+class="math inline">\(p\)</span> is the origin <span
+class="math inline">\(0\)</span>, and <span class="math inline">\(f(p) =
+0\)</span>. If the lemma holds, the function takes the form <span
+class="math inline">\(f(q) = -(z^1)^2 - \dots - (z^\lambda)^2 +
+(z^{\lambda+1})^2 + \dots + (z^n)^2\)</span>, which gives a diagonal
+Hessian matrix at <span class="math inline">\(p\)</span>: <span
+class="math display">\[\left( \frac{\partial^2 f}{\partial z^i \partial
+z^j}(p) \right) =
+\begin{bmatrix}
+-2 &amp; &amp; &amp; \\
+&amp; \ddots &amp; &amp; \\
+&amp; &amp; 2 &amp; \\
+&amp; &amp; &amp; \ddots
+\end{bmatrix}.\]</span></p>
+<p><strong>Step 1: Express <span class="math inline">\(f\)</span> as a
+quadratic form.</strong><br />
+By Lemma 2.1, we can write <span class="math inline">\(f(x) =
+\sum_{j=1}^n x_j g_j(x)\)</span> in some neighborhood of <span
+class="math inline">\(0\)</span>. Since <span
+class="math inline">\(0\)</span> is a critical point, <span
+class="math inline">\(g_j(0) = \frac{\partial f}{\partial x_j}(0) =
+0\)</span>. Applying Lemma 2.1 again to each <span
+class="math inline">\(g_j\)</span>, we obtain <span
+class="math inline">\(g_j(x) = \sum_{i=1}^n x_i h_{ij}(x)\)</span>.</p>
+<p>Substituting this back, we get <span class="math inline">\(f(x) =
+\sum_{i,j=1}^n x_i x_j h_{ij}(x)\)</span>. By defining <span
+class="math inline">\(\bar{h}_{ij} = \frac{1}{2}(h_{ij} +
+h_{ji})\)</span>, we may assume without loss of generality that <span
+class="math inline">\(h_{ij}(x)\)</span> is symmetric.</p>
+<p><em>Assertion:</em> <span class="math inline">\(h_{ij}(0) =
+\frac{1}{2} \frac{\partial^2 f}{\partial x^i \partial x^j}(0)\)</span>.
+Taking the first derivative yields: <span
+class="math display">\[\frac{\partial f}{\partial x^i} = \sum_{j} x_j
+h_{ij} + \sum_{j} x_j h_{ji} + \sum_{i,j} x_i x_j \frac{\partial
+h_{ij}}{\partial x_i}.\]</span> Taking the second derivative and
+evaluating at the origin gives: <span
+class="math display">\[\frac{\partial^2 f}{\partial x^i \partial x^j}(0)
+= h_{ij}(0) + h_{ji}(0) = 2h_{ij}(0).\]</span> Thus, the matrix <span
+class="math inline">\(\left( h_{ij}(0) \right) = \frac{1}{2} \left(
+\frac{\partial^2 f}{\partial x^i \partial x^j}(0) \right)\)</span> is
+non-singular.</p>
+<p><strong>Step 2: Imitate the diagonalization process.</strong><br />
+By induction, suppose there exist coordinates <span
+class="math inline">\(u_1, \dots, u_n\)</span> in a neighborhood <span
+class="math inline">\(U_1\)</span> of <span
+class="math inline">\(0\)</span> such that <span
+class="math display">\[f = \pm (u_1)^2 \pm \dots \pm (u_{r-1})^2 +
+\sum_{i,j \ge r} u_i u_j H_{ij}(u_1, \dots, u_n),\]</span> where <span
+class="math inline">\((H_{ij})\)</span> is symmetric.</p>
+<p><em>Ensuring that <span class="math inline">\(H_{rr}(0) \neq
+0\)</span>:</em> If <span class="math inline">\(H_{rr}(0) = 0\)</span>,
+we can perform a linear change of coordinates to fix it:</p>
+<ul>
+<li><p>If <span class="math inline">\(\exists H_{kk}(0) \neq 0\)</span>
+for <span class="math inline">\(k &gt; r\)</span>, we simply swap
+coordinates <span class="math inline">\(u_r\)</span> and <span
+class="math inline">\(u_k\)</span>.</p></li>
+<li><p>If <span class="math inline">\(\forall H_{kk}(0) = 0\)</span> but
+<span class="math inline">\(\exists A_{rk} \neq 0\)</span>, we apply a
+<span class="math inline">\(45^\circ\)</span> rotation <span
+class="math inline">\(u_r = \tilde{u}_r + \tilde{u}_k\)</span> and <span
+class="math inline">\(u_k = \tilde{u}_r - \tilde{u}_k\)</span>, which
+converts the cross term into square terms, ensuring the new <span
+class="math inline">\(H_{rr}(0) \neq 0\)</span>.</p></li>
+</ul>
+<p>Now, let <span class="math inline">\(g = \sqrt{|H_{rr}|}\)</span>,
+which is a smooth and non-zero function in a smaller neighborhood <span
+class="math inline">\(U_2 \subset U_1\)</span>. We define a new set of
+coordinates: <span class="math display">\[v_i = u_i \quad (\text{for } i
+\neq r), \quad \text{and} \quad v_r = g \left( u_r + \sum_{i&gt;r} u_i
+\frac{H_{ir}}{H_{rr}} \right).\]</span></p>
+<p><em><span class="math inline">\((v_1, \dots, v_n)\)</span> is a valid
+coordinate system:</em> The Jacobian matrix <span
+class="math inline">\(J = \left( \frac{\partial v_i}{\partial u_j}
+\right)\)</span> has the block form: <span class="math display">\[J =
+\begin{bmatrix}
+I &amp; 0 &amp; 0\\
+0 &amp; \frac{\partial v_r}{\partial u_r} &amp;\dots\\
+0 &amp; 0 &amp; I\\
+\end{bmatrix}.\]</span> Evaluated at the origin, <span
+class="math inline">\(\frac{\partial v_r}{\partial u_r}(0) = g(0) \neq
+0\)</span>. Thus, <span class="math inline">\(\det(J) \neq 0\)</span>,
+making it a valid diffeomorphism by the Inverse Function Theorem.</p>
+<p>By completing the square, the function in a neighborhood <span
+class="math inline">\(U_3 \subset U_2\)</span> becomes: <span
+class="math display">\[f = \sum_{i&lt;r} \pm (v_i)^2 +
+\mathrm{sgn}(H_{rr}(0)) v_r^2 + \sum_{i,j &gt; r} v_i v_j
+H&#39;_{ij}(v_1, \dots, v_n),\]</span> which successfully isolates the
+<span class="math inline">\(r\)</span>-th term. The proof follows by
+induction. ◻</p>
+</div>
+<div class="corollary">
+<p><strong>Corollary 1</strong> (Corollary 2.3). <em>Non-degenerate
+critical points are isolated.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By the Morse Lemma, there exists a neighborhood <span
+class="math inline">\(U\)</span> of <span
+class="math inline">\(p\)</span> where <span class="math inline">\(f =
+f(p) - (y^1)^2 - \dots + (y^n)^2\)</span>. Setting the gradient to zero
+yields <span class="math inline">\(\frac{\partial f}{\partial y^i} = \pm
+2y^i = 0 \implies y^i = 0\)</span>. Thus, <span
+class="math inline">\(p\)</span> (the origin) is the only critical point
+in <span class="math inline">\(U\)</span>. ◻</p>
+</div>
+<div class="definition">
+<p><strong>Definition 7</strong> (1-parameter group of diffeomorphisms).
+<em>A 1-parameter group of diffeomorphisms of a manifold <span
+class="math inline">\(M\)</span> is a <span
+class="math inline">\(C^\infty\)</span> map <span
+class="math inline">\(\phi: \mathbb{R} \times M \to M\)</span>, such
+that:</em></p>
+<ol>
+<li><p><em>For each <span class="math inline">\(t \in
+\mathbb{R}\)</span>, the map <span class="math inline">\(\phi_t : M \to
+M\)</span> defined by <span class="math inline">\(\phi_t(q) =
+\phi(t,q)\)</span> is a diffeomorphism of <span
+class="math inline">\(M\)</span> onto itself.</em></p></li>
+<li><p><em>For all <span class="math inline">\(t,s \in \mathbb{R}, \quad
+\phi_{t+s} = \phi_t \circ \phi_s\)</span>.</em></p></li>
+</ol>
+</div>
+<div class="definition">
+<p><strong>Definition 8</strong> (Vector field generated by the group).
+<em>For any smooth, real-valued function <span
+class="math inline">\(f\)</span>, the vector field <span
+class="math inline">\(X\)</span> generated by the group is defined by
+the directional derivative: <span class="math display">\[X_q(f) =
+\lim_{h \to 0} \frac{f(\phi_h(q)) - f(q)}{h} =
+\frac{df(q)}{dt}.\]</span></em></p>
+</div>
+<div class="lemma">
+<p><strong>Lemma 4</strong> (Lemma 2.4). <em>A smooth vector field on
+<span class="math inline">\(M\)</span> which vanishes outside of a
+compact set <span class="math inline">\(K \subset M\)</span> generates a
+unique 1-parameter group of diffeomorphisms of <span
+class="math inline">\(M\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The proof relies on solving the corresponding
+ordinary differential equation (ODE).</p>
+<p><strong>Step 1: Set up the ODE.</strong><br />
+We need to find the integral curve <span
+class="math inline">\(\phi_t(q)\)</span> satisfying: <span
+class="math display">\[\frac{d\phi_t(q)}{dt} = X_{\phi_t(q)}\]</span>
+with the initial condition <span class="math inline">\(\phi_0(q) =
+q\)</span>. (Here, the derivative means <span
+class="math inline">\(\frac{d}{dt}f(\phi_t(q)) =
+X_{\phi_t(q)}(f)\)</span> for any smooth function <span
+class="math inline">\(f\)</span>).</p>
+<p><strong>Step 2: Local coordinate representation.</strong><br />
+For any <span class="math inline">\(q \in M\)</span>, choose a
+coordinate chart <span class="math inline">\(\psi: U \to \tilde{U}
+\subset \mathbb{R}^n\)</span>, where <span class="math inline">\(\psi(q)
+= (u^1(q), \dots, u^n(q))\)</span>.</p>
+<p><strong>Step 3: Local existence and uniqueness.</strong><br />
+In local coordinates, the vector field equation becomes a standard
+system of first-order ODEs: <span class="math display">\[\frac{d
+u^j(t)}{dt} = X^j(u^1(t), \dots, u^n(t)), \quad j = 1, 2, \dots,
+n.\]</span> By the Picard-Lindelöf theorem, this system admits a unique
+smooth solution locally for <span class="math inline">\(|t| &lt;
+\epsilon\)</span>.</p>
+<p><strong>Step 4: Global extension via compactness.</strong><br />
+Since the vector field vanishes outside the compact set <span
+class="math inline">\(K\)</span>, we only need to worry about points
+inside <span class="math inline">\(K\)</span>. We can cover <span
+class="math inline">\(K\)</span> by a finite number of such
+neighborhoods <span class="math inline">\(U_i\)</span>, each with a
+guaranteed survival time <span
+class="math inline">\(\epsilon_i\)</span>. Let <span
+class="math inline">\(\epsilon_0 = \min\{\epsilon_i\} &gt;
+0\)</span>.</p>
+<p>Since <span class="math inline">\(\epsilon_0\)</span> is strictly
+positive, the map <span class="math inline">\(\phi_t\)</span> is
+well-defined for all <span class="math inline">\(|t| &lt;
+\epsilon_0\)</span>. For any arbitrary time <span
+class="math inline">\(t\)</span>, we can extend the flow globally by
+composing the map a finite number of times: <span
+class="math display">\[\phi_t = \phi_{\epsilon_0/2} \circ
+\phi_{\epsilon_0/2} \circ \dots \circ \phi_{\text{remainder}}.\]</span>
+This composition preserves smoothness and the group law (<span
+class="math inline">\(\phi_{t+s} = \phi_t \circ \phi_s\)</span>),
+ensuring that <span class="math inline">\(\phi_t\)</span> is a globally
+well-defined diffeomorphism. ◻</p>
+</div>
+<div class="remark">
+<p><strong>Remark 1</strong>. <em>The condition that <span
+class="math inline">\(X\)</span> vanishes outside a compact set
+<strong>cannot be omitted</strong>.<br />
+<em>Counterexample:</em> Let the manifold be the open interval <span
+class="math inline">\(M = (0,1) \subset \mathbb{R}\)</span>, and
+consider the constant vector field <span class="math inline">\(X =
+\frac{d}{dx}\)</span> (i.e., <span class="math inline">\(X^1(x) =
+1\)</span>).</em></p>
+<p><em>Solving the ODE <span class="math inline">\(\frac{dx}{dt} =
+X^1(x)\)</span> yields <span class="math inline">\(x(t) = x(0) +
+t\)</span>.<br />
+Thus, the flow is given by <span class="math inline">\(\phi_h(x) = x +
+h\)</span>. However, if we start at <span class="math inline">\(x =
+0.5\)</span> and let <span class="math inline">\(t = 0.5\)</span>, the
+point reaches <span class="math inline">\(x = 1.0 \notin M\)</span>. The
+solution blows up in finite time, meaning <span
+class="math inline">\(\phi_t\)</span> cannot be defined for all <span
+class="math inline">\(t \in \mathbb{R}\)</span>.</em></p>
+</div>
+<h1 class="unnumbered" id="homotopy-type-in-terms-of-critical-values">3.
+Homotopy Type in Terms of Critical Values</h1>
+<div class="theorem">
+<p><strong>Theorem 1</strong> (Theorem 3.1). <em>Let <span
+class="math inline">\(f\)</span> be a smooth real valued function on a
+manifold <span class="math inline">\(M\)</span>. Let <span
+class="math inline">\(a &lt; b\)</span> and suppose that the set <span
+class="math inline">\(f^{-1}[a,b]\)</span>, consisting of all <span
+class="math inline">\(p \in M\)</span> with <span
+class="math inline">\(a \le f(p) \le b\)</span>, is compact, and
+contains no critical points of <span class="math inline">\(f\)</span>.
+Then <span class="math inline">\(M^a\)</span> is diffeomorphic to <span
+class="math inline">\(M^b\)</span>. Furthermore, <span
+class="math inline">\(M^a\)</span> is a deformation retract of <span
+class="math inline">\(M^b\)</span>, so that the inclusion map <span
+class="math inline">\(M^a \to M^b\)</span> is a homotopy
+equivalence.</em></p>
+</div>
+<p><em>(Proof omitted.)</em></p>
+<div class="theorem">
+<p><strong>Theorem 2</strong> (Theorem 3.2). <em>Let <span
+class="math inline">\(f: M \to \mathbb{R}\)</span> be a smooth function,
+and let <span class="math inline">\(p\)</span> be a non-degenerate
+critical point with index <span class="math inline">\(\lambda\)</span>.
+Setting <span class="math inline">\(f(p) = c\)</span>, suppose that
+<span class="math inline">\(f^{-1}[c-\epsilon, c+\epsilon]\)</span> is
+compact, and contains no critical point of <span
+class="math inline">\(f\)</span> other than <span
+class="math inline">\(p\)</span>, for some <span
+class="math inline">\(\epsilon &gt; 0\)</span>. Then, for all
+sufficiently small <span class="math inline">\(\epsilon\)</span>, the
+set <span class="math inline">\(M^{c+\epsilon}\)</span> has the homotopy
+type of <span class="math inline">\(M^{c-\epsilon}\)</span> with a <span
+class="math inline">\(\lambda\)</span>-cell attached.</em></p>
+</div>
+<h2 class="unnumbered" id="proof-of-theorem-3.2">Proof of Theorem
+3.2</h2>
+<p><strong>Setup:</strong><br />
+Choose a local coordinate system <span class="math inline">\(u^1, u^2,
+\dots, u^n\)</span> in a neighborhood <span
+class="math inline">\(U\)</span> of <span
+class="math inline">\(p\)</span> such that: <span
+class="math display">\[f = c - (u^1)^2 - \dots - (u^\lambda)^2 +
+(u^{\lambda+1})^2 + \dots + (u^n)^2\]</span> Consider a closed disk
+<span class="math inline">\(\overline{D(0, 2\epsilon)} \subset
+U\)</span>, defined by <span class="math inline">\(\overline{D(0,
+2\epsilon)} = \left\{ (u^1, \dots, u^n) \mid \sum (u^i)^2 \le 2\epsilon
+\right\}\)</span>.</p>
+<p>Let <span class="math inline">\(e^\lambda\)</span> be the <span
+class="math inline">\(\lambda\)</span>-cell attached, given by: <span
+class="math display">\[e^\lambda = \left\{ \sum_{i=1}^\lambda (u^i)^2
+\le \epsilon \quad \text{and} \quad u^{\lambda+1} = \dots = u^n = 0
+\right\}\]</span></p>
+<figure>
+<img src="/images/morse/3.1.png" />
+<img src="/images/morse/3.2.png" />
+<figcaption>Diagram 3.1</figcaption>
+</figure>
+<p>Let <span class="math inline">\(\mu: \mathbb{R} \to
+\mathbb{R}\)</span> be a smooth function satisfying: <span
+class="math display">\[\begin{aligned}
+    &amp;\mu(0) &gt; \epsilon \\
+    &amp;\mu(r) = 0 \quad \text{for } r \ge 2\epsilon \\
+    &amp;-1 &lt; \mu&#39;(r) \le 0 \quad \text{for all } r.
+\end{aligned}\]</span></p>
+<p>Denote <span class="math inline">\(\xi = \sum_{i=1}^\lambda
+(u^i)^2\)</span> and <span class="math inline">\(\eta =
+\sum_{j=\lambda+1}^n (u^j)^2\)</span>. We define a new function <span
+class="math inline">\(F\)</span>: <span class="math display">\[F = f -
+\mu(\xi + 2\eta) = c - \xi + \eta - \mu(\xi + 2\eta).\]</span></p>
+<div class="assertion">
+<p><strong>Assertion 1</strong> (1). <em>The region <span
+class="math inline">\(F^{-1}(-\infty, c+\epsilon]\)</span> coincides
+with the region <span class="math inline">\(M^{c+\epsilon} =
+f^{-1}(-\infty, c+\epsilon]\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em>  </p>
+<ol>
+<li><p>If <span class="math inline">\(\xi + 2\eta &gt;
+2\epsilon\)</span>, then <span class="math inline">\(\mu(\xi + 2\eta) =
+0 \implies F = f\)</span>.</p></li>
+<li><p>If <span class="math inline">\(\xi + 2\eta \le
+2\epsilon\)</span>, then: <span class="math display">\[F \le f = c - \xi
++ \eta \le c + \frac{1}{2}\xi + \eta = c + \frac{1}{2}(\xi + 2\eta) \le
+c + \epsilon.\]</span></p></li>
+</ol>
+<p>Thus, the sublevel sets coincide. ◻</p>
+</div>
+<div class="assertion">
+<p><strong>Assertion 2</strong> (2). <em>The critical points of <span
+class="math inline">\(F\)</span> are the same as those of <span
+class="math inline">\(f\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Set <span class="math inline">\(dF = 0\)</span>. We
+compute the differential of <span class="math inline">\(F\)</span>:
+<span class="math display">\[dF = \frac{\partial F}{\partial \xi} d\xi +
+\frac{\partial F}{\partial \eta} d\eta = \frac{\partial F}{\partial \xi}
+\sum_{i=1}^\lambda 2u^i du^i + \frac{\partial F}{\partial \eta}
+\sum_{p=\lambda+1}^n 2u^p du^p.\]</span> By our construction of <span
+class="math inline">\(\mu\)</span>: <span
+class="math display">\[\frac{\partial F}{\partial \xi} = -1 -
+\mu&#39;(\xi+2\eta) &lt; -1 - (-1) = 0.\]</span> <span
+class="math display">\[\frac{\partial F}{\partial \eta} = 1 -
+2\mu&#39;(\xi+2\eta) \ge 1.\]</span> Since the coefficients are strictly
+non-zero , <span class="math inline">\(dF = 0\)</span> requires: <span
+class="math display">\[u^i = 0 \quad \text{and} \quad u^p = 0.\]</span>
+Hence, the origin is the only critical point. ◻</p>
+</div>
+<div class="assertion">
+<p><strong>Assertion 3</strong> (3). <em>The region <span
+class="math inline">\(F^{-1}(-\infty, c-\epsilon]\)</span> is a
+deformation retract of <span
+class="math inline">\(M^{c+\epsilon}\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Since <span class="math inline">\(F \le f\)</span>,
+we have <span class="math inline">\(F^{-1}[c-\epsilon, c+\epsilon]
+\subset f^{-1}[c-\epsilon, c+\epsilon]\)</span>. Because the latter is
+compact by assumption, the set <span
+class="math inline">\(F^{-1}[c-\epsilon, c+\epsilon]\)</span> is also
+compact.</p>
+<p>Suppose <span class="math inline">\(F^{-1}[c-\epsilon,
+c+\epsilon]\)</span> contains a critical point. By Assertion 2, it can
+only be <span class="math inline">\(p\)</span> (the origin). But at
+<span class="math inline">\(p\)</span>: <span
+class="math display">\[F(p) = c - \mu(0) &lt; c - \epsilon.\]</span>
+This violates the assumption that it lies in <span
+class="math inline">\([c-\epsilon, c+\epsilon]\)</span>. Thus, it
+contains no critical points. According to Theorem 3.1, the region is a
+deformation retract. ◻</p>
+</div>
+<figure>
+<img src="/images/morse/3.3.png" style="width:50.0%" />
+<figcaption>Diagram 3.3</figcaption>
+</figure>
+<div class="assertion">
+<p><strong>Assertion 4</strong> (4). <em><span
+class="math inline">\(M^{c-\epsilon} \cup e^\lambda\)</span> is a
+deformation retract of <span class="math inline">\(M^{c-\epsilon} \cup
+H\)</span>.</em></p>
+</div>
+<p>Let <span class="math inline">\(H = F^{-1}(-\infty,
+c-\epsilon]\)</span>. We construct the deformation retraction by
+distinguishing three cases (further details omitted).</p>
+<figure>
+<img src="/images/morse/3.4.png" style="width:50.0%" />
+<figcaption>Diagram 3.4</figcaption>
+</figure>
+<div class="remark">
+<p><strong>Remark 2</strong> (Remark 3.3). <em>More generally suppose
+that there are <span class="math inline">\(k\)</span> non-degenerate
+critical points <span class="math inline">\(p_1, \dots, p_k\)</span>
+with indices <span class="math inline">\(\lambda_1, \dots,
+\lambda_k\)</span> in <span class="math inline">\(f^{-1}(c)\)</span>.
+Then a similar proof shows that <span
+class="math inline">\(M^{c+\epsilon}\)</span> has the homotopy type of
+<span class="math inline">\(M^{c-\epsilon} \cup e^{\lambda_1} \cup \dots
+\cup e^{\lambda_k}\)</span>.</em></p>
+</div>
+<div class="remark">
+<p><strong>Remark 3</strong> (Remark 3.4). <em>A simple modification of
+the proof of 3.2 shows that the set <span
+class="math inline">\(M^c\)</span> is also a deformation retract of
+<span class="math inline">\(M^{c+\epsilon}\)</span>.</em></p>
+</div>
+<figure>
+<img src="/images/morse/3.5.png" style="width:50.0%" />
+<figcaption>Diagram 3.5</figcaption>
+</figure>
+<div class="theorem">
+<p><strong>Theorem 3</strong> (Theorem 3.5). <em>If <span
+class="math inline">\(f\)</span> is a differentiable function on a
+manifold <span class="math inline">\(M\)</span> with no degenerate
+critical points, and if each <span class="math inline">\(M^a\)</span> is
+compact, then <span class="math inline">\(M\)</span> has the homotopy
+type of a CW-complex, with one cell of dimension <span
+class="math inline">\(\lambda\)</span> for each critical point of index
+<span class="math inline">\(\lambda\)</span>.</em></p>
+</div>
+<div class="lemma">
+<p><strong>Lemma 5</strong> (Lemma 3.6, Whitehead). <em>Let <span
+class="math inline">\(\varphi_0\)</span> and <span
+class="math inline">\(\varphi_1\)</span> be homotopic maps from the
+sphere <span class="math inline">\(\dot{e}^\lambda\)</span> to <span
+class="math inline">\(X\)</span>. Then the identity map of <span
+class="math inline">\(X\)</span> extends to a homotopy equivalence <span
+class="math display">\[k: X \cup_{\varphi_0} e^\lambda \to X
+\cup_{\varphi_1} e^\lambda.\]</span></em></p>
+</div>
+<div class="lemma">
+<p><strong>Lemma 6</strong> (Lemma 3.7). <em>Let <span
+class="math inline">\(\varphi: \dot{e}^\lambda \to X\)</span> be an
+attaching map. Any homotopy equivalence <span class="math inline">\(f: X
+\to Y\)</span> extends to a homotopy equivalence <span
+class="math display">\[F: X \cup_{\varphi} e^\lambda \to Y \cup_{f \circ
+\varphi} e^\lambda.\]</span></em></p>
+</div>
+<h2 class="unnumbered" id="proof-of-theorem-3.5">Proof of Theorem
+3.5</h2>
+<p><strong>Case 1: <span class="math inline">\(M\)</span> is
+compact.</strong></p>
+<p>Let <span class="math inline">\(c_1 &lt; c_2 &lt; c_3 &lt;
+\dots\)</span> be the critical values of <span class="math inline">\(f:
+M \to \mathbb{R}\)</span>.<br />
+Since each <span class="math inline">\(M^a\)</span> is compact, the
+sequence <span class="math inline">\(\{c_i\}\)</span> has no cluster
+point. We proceed by induction on the critical values.</p>
+<ul>
+<li><p>For <span class="math inline">\(a &lt; c_1\)</span>, the set
+<span class="math inline">\(M^a = \emptyset\)</span>.</p></li>
+<li><p>Assume that for some <span class="math inline">\(a\)</span>,
+<span class="math inline">\(M^a\)</span> has the homotopy type of a
+CW-complex. Let <span class="math display">\[h&#39;: M^a
+\xrightarrow{\simeq} K\]</span> be the homotopy equivalence, where <span
+class="math inline">\(K\)</span> is a CW-complex. Let <span
+class="math inline">\(c\)</span> be the smallest critical value such
+that <span class="math inline">\(c &gt; a\)</span>.</p></li>
+<li><p>By Theorem 3.1, for sufficiently small <span
+class="math inline">\(\epsilon &gt; 0\)</span>, there is a deformation
+retraction (and thus a homotopy equivalence): <span
+class="math display">\[h: M^{c-\epsilon} \xrightarrow{\simeq}
+M^a\]</span></p></li>
+<li><p>By Theorem 3.2 and 3.3, <span
+class="math inline">\(M^{c+\epsilon}\)</span> is obtained by attaching
+cells to <span class="math inline">\(M^{c-\epsilon}\)</span>: <span
+class="math display">\[M^{c+\epsilon} \simeq M^{c-\epsilon}
+\cup_{\varphi_1} e^{\lambda_1} \cup \dots \cup_{\varphi_j}
+e^{\lambda_j}\]</span> where the attaching maps are <span
+class="math inline">\(\varphi_j: \dot{e}^{\lambda_j} \to
+M^{c-\epsilon}\)</span>.</p></li>
+<li><p>The composition map <span class="math inline">\(h&#39; \circ h
+\circ \varphi_j\)</span> maps the boundary <span
+class="math inline">\(\dot{e}^{\lambda_j}\)</span> into <span
+class="math inline">\(K\)</span>. <strong>By Cellular
+Approximation</strong>, this continuous map is homotopic to a cellular
+map: <span class="math display">\[h&#39; \circ h \circ \varphi_j \simeq
+\psi_j\]</span> where <span class="math inline">\(\psi_j:
+\dot{e}^{\lambda_j} \to (\lambda_j - 1)\text{-skeleton of }
+K\)</span>.</p></li>
+<li><p>Because the attaching maps are homotopic, by <strong>Lemma
+3.6</strong> and <strong>Lemma 3.7</strong>, the resulting spaces are
+homotopy equivalent. Therefore: <span
+class="math display">\[M^{c+\epsilon} \simeq K \cup_{\psi_1}
+e^{\lambda_1} \cup \dots \cup_{\psi_j} e^{\lambda_j}\]</span> Since the
+boundaries are attached to the correct lower-dimensional skeleta of
+<span class="math inline">\(K\)</span>, this new space is strictly a
+valid CW-complex.</p></li>
+</ul>
+<p>This completes the inductive step.</p>
+<p><strong>Case 2: <span class="math inline">\(M\)</span> is not
+compact.</strong><br />
+<em>(Proof omitted.)</em></p>
+<h1 class="unnumbered" id="manifolds-in-euclidean-space">6. Manifolds in
+Euclidean Space</h1>
+<p><strong>Whitney Embedding Theorem:</strong> Any smooth <span
+class="math inline">\(n\)</span>-manifold can be differentiably embedded
+in <span class="math inline">\(\mathbb{R}^{2n}\)</span>.</p>
+<p>Let <span class="math inline">\(M \subset \mathbb{R}^n\)</span> be a
+manifold of dimension <span class="math inline">\(k &lt; n\)</span>.</p>
+<div class="definition">
+<p><strong>Definition 9</strong>. <em>We define the space <span
+class="math inline">\(N\)</span>: <span class="math display">\[N = \{
+(q, v) : q \in M, \ v \text{ perpendicular to } M \text{ at } q
+\}\]</span> (<span class="math inline">\(N\)</span> is an <span
+class="math inline">\(n\)</span>-dimensional manifold, and can be
+differentiably embedded in <span
+class="math inline">\(\mathbb{R}^{2n}\)</span>).</em></p>
+<p><em>Define the endpoint map <span class="math inline">\(E: N \to
+\mathbb{R}^n\)</span> by: <span class="math display">\[(q, v) \mapsto q
++ v\]</span></em></p>
+<p><em>A point <span class="math inline">\(e \in \mathbb{R}^n\)</span>
+is a <strong>focal point</strong> of <span class="math inline">\((M,
+q)\)</span> if:</em></p>
+<ol>
+<li><p><em><span class="math inline">\(e = q + v\)</span>, where <span
+class="math inline">\((q, v) \in N\)</span>.</em></p></li>
+<li><p><em>The Jacobian matrix of <span class="math inline">\(E\)</span>
+at <span class="math inline">\((q, v)\)</span> is degenerate
+(singular).</em></p></li>
+</ol>
+<p><em>The point <span class="math inline">\(e\)</span> will be called a
+focal point of <span class="math inline">\(M\)</span> if <span
+class="math inline">\(e\)</span> is a focal point of <span
+class="math inline">\((M, q)\)</span> for some <span
+class="math inline">\(q \in M\)</span>.</em></p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 4</strong> (Theorem 6.1, Sard). <em>If <span
+class="math inline">\(M_1\)</span> and <span
+class="math inline">\(M_2\)</span> are differentiable manifolds having a
+countable basis, of the same dimension, and <span
+class="math inline">\(f: M_1 \to M_2\)</span> is of class <span
+class="math inline">\(C^1\)</span>, then the image of the set of
+critical points has measure <span class="math inline">\(0\)</span> in
+<span class="math inline">\(M_2\)</span>.</em></p>
+</div>
+<div class="corollary">
+<p><strong>Corollary 2</strong> (Corollary 6.2). <em>For almost all
+<span class="math inline">\(x \in \mathbb{R}^n\)</span>, the point <span
+class="math inline">\(x\)</span> is not a focal point of <span
+class="math inline">\(M\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Consider the map <span class="math inline">\(E: N \to
+\mathbb{R}^n\)</span>. <span class="math inline">\(x\)</span> is a focal
+point <span class="math inline">\(\iff x \in \{ f(y) \mid y \text{ is a
+critical point of } E: N \to \mathbb{R}^n \}\)</span>. By Sard’s
+Theorem, the set of focal points has measure <span
+class="math inline">\(0\)</span>. ◻</p>
+</div>
+<p><strong>Local Coordinates and Fundamental Forms:</strong><br />
+Let <span class="math inline">\(u^1, \dots, u^k\)</span> be local
+coordinates. The embedding function is given by: <span
+class="math display">\[\vec{x}: M \to \mathbb{R}^n, \quad (u^1, \dots,
+u^k) \mapsto \big( x_1(u^1, \dots, u^k), \dots, x_n(u^1, \dots, u^k)
+\big)\]</span></p>
+<p>Then we can naturally get:</p>
+<ol>
+<li><p><strong>The first fundamental form:</strong> <span
+class="math inline">\((g_{ij}) = \left( \frac{\partial \vec{x}}{\partial
+u^i} \cdot \frac{\partial \vec{x}}{\partial u^j}
+\right)\)</span></p></li>
+<li><p><strong>The second fundamental form:</strong> <span
+class="math inline">\((h_{ij}) = \left( \vec{n} \cdot \frac{\partial^2
+\vec{x}}{\partial u^i \partial u^j} \right) = (\vec{n} \cdot
+\vec{x}_{ij})\)</span></p></li>
+</ol>
+<p>We let <span class="math inline">\((g_{ij}) = I_{n \times
+n}\)</span>, like the unitized curvature grid in <span
+class="math inline">\(\mathbb{R}^3\)</span>. Then <span
+class="math inline">\(\kappa_i\)</span> are the eigenvalues of <span
+class="math inline">\((l_{ij})\)</span>.</p>
+<div class="lemma">
+<p><strong>Lemma 7</strong> (Lemma 6.3). <em>The focal points of <span
+class="math inline">\((M, q)\)</span> along <span
+class="math inline">\(v\)</span> are precisely the points <span
+class="math inline">\(q + \kappa_i^{-1} v\)</span>, where <span
+class="math inline">\(1 \le i \le k, \kappa_i \neq 0\)</span>. Thus
+there are at most <span class="math inline">\(k\)</span> focal points of
+<span class="math inline">\((M, q)\)</span> along <span
+class="math inline">\(l\)</span>, each being counted with its proper
+multiplicity.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(n-k\)</span> vector
+fields <span class="math inline">\(\vec{w}_1, \dots,
+\vec{w}_{n-k}\)</span> be the unit vectors of orthogonal directions. The
+map <span class="math inline">\(E: N \to \mathbb{R}^n\)</span> is
+written as: <span class="math display">\[(u^1, \dots, u^k, t^1, \dots,
+t^{n-k}) \xrightarrow{E} \vec{x}(u^1, \dots, u^k) + \sum_{\alpha}
+t^\alpha \vec{w}_\alpha(u^1, \dots, u^k)\]</span> The partial
+derivatives are: <span class="math display">\[\begin{cases}
+    \frac{\partial \vec{e}}{\partial u^i} = \frac{\partial
+\vec{x}}{\partial u^i} + \sum_{\alpha} t^\alpha \frac{\partial
+\vec{w}_\alpha}{\partial u^i} \\
+    \frac{\partial \vec{e}}{\partial t^\beta} = \vec{w}_\beta
+\end{cases}\]</span> Since <span class="math inline">\(C = \big(
+\frac{\partial \vec{x}}{\partial u^1}, \dots, \frac{\partial
+\vec{x}}{\partial u^k}, \vec{w}_1, \dots, \vec{w}_{n-k} \big)\)</span>
+are linearly independent (non-degenerate basis). Let the Jacobian matrix
+of <span class="math inline">\(E\)</span> be <span
+class="math inline">\(J\)</span>. <span class="math inline">\(J\)</span>
+is degenerate <span class="math inline">\(\iff\)</span> the block matrix
+<span class="math inline">\(J_C\)</span> is degenerate, where: <span
+class="math display">\[J C =
+\begin{pmatrix}
+    \left( \frac{\partial \vec{x}}{\partial u^i} \cdot \frac{\partial
+\vec{x}}{\partial u^j} + \sum t^\alpha \frac{\partial
+\vec{w}_\alpha}{\partial u^i} \cdot \frac{\partial \vec{x}}{\partial
+u^j} \right) &amp; \left( \sum t^\alpha \frac{\partial
+\vec{w}_\alpha}{\partial u^i} \cdot \vec{w}_\beta \right) \\
+    0 &amp; I
+\end{pmatrix}\]</span> The degeneracy condition simplifies to: <span
+class="math display">\[\iff \left| g_{ij} + \sum_\alpha t^\alpha \left(
+\frac{\partial \vec{w}_\alpha}{\partial u^i} \cdot \frac{\partial
+\vec{x}}{\partial u^j} \right) \right| = 0\]</span> Using the
+orthogonality condition <span class="math inline">\(\vec{w}_\alpha \cdot
+\vec{x}_j = 0\)</span>, taking the derivative yields <span
+class="math inline">\(\frac{\partial \vec{w}_\alpha}{\partial u^i} \cdot
+\vec{x}_j + \vec{w}_\alpha \cdot \vec{x}_{ij} = 0\)</span>. Substituting
+this: <span class="math display">\[\iff \left| I - \sum_\alpha t^\alpha
+(\vec{w}_\alpha \cdot \vec{x}_{ij}) \right| = 0\]</span> <span
+class="math display">\[\iff \left| I - t (\vec{n} \cdot \vec{x}_{ij})
+\right| = 0\]</span> <span class="math display">\[\iff t =
+\frac{1}{\kappa_i}.\]</span> ◻</p>
+</div>
+<p><strong>Distance Squared Function:</strong><br />
+Now for a fixed point <span class="math inline">\(\vec{p} \in
+\mathbb{R}^n\)</span>, we consider the function <span
+class="math inline">\(L_p = f: M \to \mathbb{R}\)</span>. <span
+class="math display">\[f(\vec{x}(u^1, \dots, u^k)) = \| \vec{x}(u^1,
+\dots, u^k) - \vec{p} \|^2 = \vec{x} \cdot \vec{x} - 2\vec{x} \cdot
+\vec{p} + \vec{p} \cdot \vec{p}\]</span> Taking the first derivative:
+<span class="math display">\[\frac{\partial f}{\partial u^i} = 2
+\frac{\partial \vec{x}}{\partial u^i} \cdot (\vec{x} - \vec{p})\]</span>
+Then <span class="math inline">\(\vec{q}\)</span> is a critical point of
+<span class="math inline">\(f \iff \vec{q} - \vec{p}\)</span> is
+perpendicular to <span class="math inline">\(M\)</span> at <span
+class="math inline">\(\vec{q}\)</span>.</p>
+<p>Taking the second derivative (Hessian): <span
+class="math display">\[\frac{\partial^2 f}{\partial u^i \partial u^j} =
+2 \left( \frac{\partial \vec{x}}{\partial u^i} \cdot \frac{\partial
+\vec{x}}{\partial u^j} + \frac{\partial^2 \vec{x}}{\partial u^i \partial
+u^j} \cdot (\vec{x} - \vec{p}) \right)\]</span> Let <span
+class="math inline">\(\vec{p} = \vec{x} + t\vec{n}\)</span> (where <span
+class="math inline">\(\vec{v}\)</span> is the unit normal vector, <span
+class="math inline">\(t\)</span> is distance). Since <span
+class="math inline">\(\vec{x} = \vec{q}\)</span> at the critical point,
+<span class="math inline">\(\vec{x} - \vec{p} = -t\vec{v}\)</span>:
+<span class="math display">\[= 2(g_{ij} - t \vec{n} \cdot
+\vec{h}_{ij})\]</span></p>
+<p>Then we have:</p>
+<div class="lemma">
+<p><strong>Lemma 8</strong> (Lemma 6.5). <em>The point <span
+class="math inline">\(q \in M\)</span> is a degenerate critical point of
+<span class="math inline">\(f = L_p\)</span> if and only if <span
+class="math inline">\(p\)</span> is a focal point of <span
+class="math inline">\((M, q)\)</span>.</em></p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 5</strong> (Theorem 6.6). <em>For almost all <span
+class="math inline">\(p \in \mathbb{R}^n\)</span> (all but a set of
+measure <span class="math inline">\(0\)</span>) the function <span
+class="math inline">\(L_p: M \to \mathbb{R}\)</span> has no degenerate
+critical points.</em></p>
+</div>
+<div class="corollary">
+<p><strong>Corollary 3</strong> (Corollary 6.7). <em>On any manifold
+<span class="math inline">\(M\)</span> there exists a differentiable
+function, with no degenerate critical points, for which each <span
+class="math inline">\(M^a\)</span> is compact.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em>  </p>
+<ol>
+<li><p>Embedding <span class="math inline">\(M\)</span> to <span
+class="math inline">\(\mathbb{R}^{2n}\)</span> (as a closed
+subset).</p></li>
+<li><p>Set a point <span class="math inline">\(p\)</span> outside <span
+class="math inline">\(M\)</span>, apart from focal points. Define <span
+class="math inline">\(f(x) = L_p(x) = \|x - p\|^2\)</span>.</p></li>
+<li><p><span class="math inline">\(M^a = \{x \in M \mid f(x) \le a\} =
+\{x \in M \mid \|x - p\|^2 \le a\}\)</span>. Being the intersection of a
+closed set <span class="math inline">\(M\)</span> and a bounded closed
+ball, <span class="math inline">\(M^a\)</span> is compact.</p></li>
+</ol>
+<p> ◻</p>
+</div>
+<div class="application">
+<p><strong>Application 1</strong> (1). <em>A differentiable manifold has
+the homotopy type of a CW-complex. This follows from the above corollary
+and Theorem 3.5.</em></p>
+</div>
+<div class="application">
+<p><strong>Application 2</strong> (2, Poincaré-Hopf Index Theorem).
+<em>On a compact manifold <span class="math inline">\(M\)</span> there
+is a vector field <span class="math inline">\(X\)</span> such that the
+sum of the indices of the critical points of <span
+class="math inline">\(X\)</span> equals <span
+class="math inline">\(\chi(M)\)</span>, the Euler characteristic of
+<span class="math inline">\(M\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <strong>1. Topological Definitions:</strong><br />
+In Chapter 5, we define:</p>
+<ul>
+<li><p><span class="math inline">\(R_\lambda(X, Y) = \lambda\)</span>-th
+Betti number of <span class="math inline">\((X, Y) = \dim_F H_\lambda(X,
+Y; F)\)</span>.</p></li>
+<li><p><span class="math inline">\(\chi(X, Y) = \sum (-1)^\lambda
+R_\lambda(X, Y)\)</span>.</p></li>
+</ul>
+<p>And when <span class="math inline">\(Y = \emptyset\)</span>, we note
+the Euler characteristic of <span class="math inline">\(M\)</span>:
+<span class="math display">\[\chi(X) = \chi(X, \emptyset) =
+\sum_{\lambda} (-1)^\lambda R_\lambda(X).\]</span></p>
+<div class="theorem">
+<p><strong>Theorem 6</strong> (Theorem 5.2, Weak Morse Inequalities).
+<em>If <span class="math inline">\(C_\lambda\)</span> denotes the number
+of critical points of index <span class="math inline">\(\lambda\)</span>
+on the compact manifold <span class="math inline">\(M\)</span>, then
+<span class="math inline">\(R_\lambda(M) \le C_\lambda\)</span>, and
+<span class="math display">\[\sum (-1)^\lambda R_\lambda(M) = \sum
+(-1)^\lambda C_\lambda\]</span></em></p>
+</div>
+<p><em>(Proof omitted.)</em></p>
+<p><strong>2. Vector Field Index:</strong><br />
+According to Theorem 11.27 in <em>From Calculus to Cohomology</em>, for
+any smooth vector field <span class="math inline">\(X\)</span> on <span
+class="math inline">\(M^n\)</span>, the total index is a topological
+invariant: <span class="math display">\[\text{Index}(X) =
+\deg(g)\]</span> (where <span class="math inline">\(g\)</span> is a
+Gauss map defined in Thm 11.27).<br />
+So, we can selectively choose a specific vector field: <span
+class="math inline">\(X = \text{grad}(f)\)</span>, where <span
+class="math inline">\(f\)</span> is a Morse function.</p>
+<p><strong>3. Local Index Calculation:</strong><br />
+In every neighborhood of any non-degenerate critical point of <span
+class="math inline">\(f\)</span>, by the Morse Lemma: <span
+class="math display">\[f = c - x_1^2 - x_2^2 - \dots - x_\lambda^2 +
+x_{\lambda+1}^2 + \dots + x_n^2\]</span> The gradient vector field is:
+<span class="math display">\[\text{grad}(f) = 2(-x_1, \dots, -x_\lambda,
+x_{\lambda+1}, \dots, x_n)\]</span> Clearly, <span
+class="math inline">\(\text{grad}(f) = 0 \iff x = 0\)</span>.</p>
+<p>The Jacobian matrix of the vector field (which is the Hessian of
+<span class="math inline">\(f\)</span>) at <span
+class="math inline">\(0\)</span> is: <span class="math display">\[\left(
+\frac{\partial^2 f}{\partial x_i \partial x_j}(0) \right) =
+\text{diag}(-2, \dots, -2, 2, \dots, 2)\]</span> From Lemma 11.20 in
+<em>From Calculus to Cohomology</em>, the local index of the vector
+field at the zero point is determined by the sign of the determinant of
+its Jacobian: <span class="math display">\[\text{index}(X, p_0) =
+\text{sign}(\det D_0 f) = (-1)^\lambda\]</span></p>
+<p><strong>4. Conclusion:</strong><br />
+So the sum of the indices of the critical points of <span
+class="math inline">\(X\)</span> is: <span class="math display">\[\sum
+\text{index}(X, p_0) = \sum (-1)^\lambda C_\lambda =
+\chi(M).\]</span> ◻</p>
+</div>
+<div class="corollary">
+<p><strong>Corollary 4</strong> (Corollary 6.8). <em>Any bounded smooth
+function <span class="math inline">\(f: M \to \mathbb{R}\)</span> can be
+uniformly approximated by a smooth function <span
+class="math inline">\(g\)</span> which has no degenerate critical
+points. Furthermore <span class="math inline">\(g\)</span> can be chosen
+so that the <span class="math inline">\(i\)</span>-th derivatives of
+<span class="math inline">\(g\)</span> on the compact set <span
+class="math inline">\(K\)</span> uniformly approximate the corresponding
+derivatives of <span class="math inline">\(f\)</span>, for <span
+class="math inline">\(i \le k\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <strong>Step 1:</strong> Choose some embedding <span
+class="math inline">\(h: M \to \mathbb{R}^n\)</span> (<span
+class="math inline">\(M\)</span> is a bounded and closed subset). <span
+class="math display">\[h(x) = (h_1(x), h_2(x), \dots, h_n(x))\]</span>
+We can specifically choose the embedding such that <span
+class="math inline">\(h_1(x) = f(x)\)</span>.</p>
+<p><strong>Step 2:</strong> Choose a reference point <span
+class="math inline">\(p = (-c + \epsilon_1, \epsilon_2, \dots,
+\epsilon_n)\)</span>, where <span class="math inline">\(c\)</span> is
+extremely large, and <span class="math inline">\(\epsilon_i \to
+0\)</span>. By Theorem 6.6, we can choose <span
+class="math inline">\(p\)</span> such that the distance squared function
+<span class="math inline">\(L_p: M \to \mathbb{R}\)</span> is
+non-degenerate.</p>
+<p><strong>Step 3:</strong> Define a new function <span
+class="math inline">\(g(x)\)</span>: <span class="math display">\[g(x) =
+\frac{L_p(x) - c^2}{2c}\]</span> Since <span
+class="math inline">\(g(x)\)</span> is just a linear transformation of
+<span class="math inline">\(L_p(x)\)</span>, <span
+class="math inline">\(g(x)\)</span> is also perfectly non-degenerate. We
+expand the expression: <span class="math display">\[\begin{aligned}
+g(x) &amp;= \frac{1}{2c} \left[ (h_1 - (-c + \epsilon_1))^2 +
+\sum_{i=2}^n (h_i - \epsilon_i)^2 - c^2 \right] \\
+&amp;= \frac{1}{2c} \left[ h_1^2 + c^2 + \epsilon_1^2 + 2ch_1 -
+2\epsilon_1 h_1 - 2c\epsilon_1 + \sum_{i=2}^n (h_i - \epsilon_i)^2 - c^2
+\right] \\
+&amp;= h_1(x) + \sum_{i=1}^n \frac{h_i^2}{2c} - \sum_{i=1}^n
+\frac{\epsilon_i h_i}{c} + \sum_{i=1}^n \frac{\epsilon_i^2}{2c} -
+\epsilon_1
+\end{aligned}\]</span></p>
+<p><strong>Step 4: Convergence Analysis.</strong><br />
+Recall that <span class="math inline">\(h_1(x) = f(x)\)</span>. Since
+the embedding is bounded, <span class="math inline">\(|h_i^{(m)}| \le
+M\)</span> on the compact set for all <span class="math inline">\(m \le
+k\)</span>. When we let <span class="math inline">\(c \to
++\infty\)</span> and <span class="math inline">\(\epsilon_i \to
+0\)</span>: <span class="math display">\[g(x) \rightrightarrows
+f(x)\]</span> (The error terms vanish, meaning <span
+class="math inline">\(g\)</span> uniformly approximates <span
+class="math inline">\(f\)</span>).<br />
+Also, for the derivatives, taking the limits yields: <span
+class="math display">\[g^{(m)}(x) \rightrightarrows f^{(m)}(x)\]</span>
+This completes the proof. ◻</p>
+</div>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://naomikuuuu.github.io">Naomiku</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://naomikuuuu.github.io/2026/05/15/Morse-Theory/">https://naomikuuuu.github.io/2026/05/15/Morse-Theory/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%AD%A6%E7%A0%94%E8%AE%A8%E8%AF%BEB-Morse-Theory-%E6%8B%93%E6%89%91/">数学研讨课B, Morse Theory, 拓扑</a></div><div class="post-share"><div class="social-share" data-image="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&amp;h=600&amp;fit=crop" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width no-desc" href="/2025/09/04/%E5%88%86%E6%9E%90%E5%AD%A6%E2%85%A0%E5%A4%8D%E4%B9%A0/" title="分析学Ⅰ复习"><img class="cover" src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=800&amp;h=600&amp;fit=crop" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">分析学Ⅰ复习</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://i.ibb.co/734JgJC/image.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Naomiku</div><div class="author-info-description">Naomiku的自留地 — 记录我的来时路</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Naomikuuuu"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Naomikuuuu/naomikuuuu.github.io" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/391439035" target="_blank" title="Bilibili"><i class="fab fa-bilibili" style="color: #e76a8d;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome to Naomiku's Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#preliminaries"><span class="toc-number">1.</span> <span class="toc-text">0. Preliminaries</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#definitions-and-lemmas"><span class="toc-number">3.</span> <span class="toc-text">2. Definitions and
+Lemmas</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#homotopy-type-in-terms-of-critical-values"><span class="toc-number">4.</span> <span class="toc-text">3.
+Homotopy Type in Terms of Critical Values</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#proof-of-theorem-3.2"><span class="toc-number">4.1.</span> <span class="toc-text">Proof of Theorem
+3.2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proof-of-theorem-3.5"><span class="toc-number">4.2.</span> <span class="toc-text">Proof of Theorem
+3.5</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#manifolds-in-euclidean-space"><span class="toc-number">5.</span> <span class="toc-text">6. Manifolds in
+Euclidean Space</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/15/Morse-Theory/" title="Basics of Morse Theory and the Poincaré-Hopf Theorem"><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&amp;h=600&amp;fit=crop" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Basics of Morse Theory and the Poincaré-Hopf Theorem"/></a><div class="content"><a class="title" href="/2026/05/15/Morse-Theory/" title="Basics of Morse Theory and the Poincaré-Hopf Theorem">Basics of Morse Theory and the Poincaré-Hopf Theorem</a><time datetime="2026-05-15T08:00:00.000Z" title="Created 2026-05-15 16:00:00">2026-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/09/04/%E5%88%86%E6%9E%90%E5%AD%A6%E2%85%A0%E5%A4%8D%E4%B9%A0/" title="分析学Ⅰ复习"><img src="https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=800&amp;h=600&amp;fit=crop" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="分析学Ⅰ复习"/></a><div class="content"><a class="title" href="/2025/09/04/%E5%88%86%E6%9E%90%E5%AD%A6%E2%85%A0%E5%A4%8D%E4%B9%A0/" title="分析学Ⅰ复习">分析学Ⅰ复习</a><time datetime="2025-09-04T03:24:40.000Z" title="Created 2025-09-04 11:24:40">2025-09-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/09/01/test/" title="test"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&amp;h=600&amp;fit=crop" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="test"/></a><div class="content"><a class="title" href="/2025/09/01/test/" title="test">test</a><time datetime="2025-09-01T13:57:57.000Z" title="Created 2025-09-01 21:57:57">2025-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Naomiku</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">Naomiku</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Naomikuuuu/naomikuuuu.github.io',
+      'data-repo-id': 'R_kgDOPnyTNQ',
+      'data-category-id': 'DIC_kwDOPnyTNc4Cu6Wm',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading Database</span></div><div class="local-search-input"><input placeholder="Search..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
