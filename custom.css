@@ -1,10 +1,8 @@
 /* Butterfly 自定义样式 */
-/* 背景毛玻璃效果 */
 #body-wrap {
   background: transparent !important;
 }
 
-/* 侧边栏卡片毛玻璃 */
 .card-widget,
 #aside-content .card-widget {
   background: rgba(43, 43, 43, 0.65) !important;
@@ -12,7 +10,6 @@
   -webkit-backdrop-filter: blur(24px);
 }
 
-/* 文章卡片毛玻璃 */
 .layout > div:first-child:not(.recent-posts),
 .recent-posts > .recent-post-item,
 #post,
@@ -22,7 +19,6 @@
   -webkit-backdrop-filter: blur(24px);
 }
 
-/* 亮色模式 */
 @media (prefers-color-scheme: light) {
   .card-widget,
   #aside-content .card-widget,
@@ -31,5 +27,108 @@
   #post,
   #page {
     background: rgba(255, 255, 255, 0.72) !important;
+  }
+}
+
+/* ===== 数学环境样式 (Morse Theory 文章) ===== */
+
+/* 定义 */
+div.definition {
+  border-left: 4px solid #4a9eff;
+  background: rgba(74, 158, 255, 0.08);
+  margin: 1.2em 0;
+  padding: 0.8em 1.2em;
+  border-radius: 0 8px 8px 0;
+}
+div.definition p:first-child strong {
+  color: #4a9eff;
+}
+
+/* 定理 / 引理 / 推论 */
+div.theorem,
+div.lemma,
+div.corollary {
+  border-left: 4px solid #ff6b6b;
+  background: rgba(255, 107, 107, 0.06);
+  margin: 1.2em 0;
+  padding: 0.8em 1.2em;
+  border-radius: 0 8px 8px 0;
+}
+div.theorem p:first-child strong,
+div.lemma p:first-child strong,
+div.corollary p:first-child strong {
+  font-style: italic;
+  color: #ff6b6b;
+}
+
+/* 证明 */
+div.proof {
+  background: rgba(128, 128, 128, 0.05);
+  margin: 1em 0;
+  padding: 0.8em 1.2em;
+  border-radius: 8px;
+}
+div.proof p:first-child em {
+  color: #999;
+  font-style: normal;
+  font-weight: bold;
+}
+div.proof > :last-child::after {
+  content: " ∎";
+  font-size: 1.2em;
+  float: right;
+  color: #999;
+}
+
+/* 注记 */
+div.remark {
+  background: rgba(255, 185, 0, 0.06);
+  border-left: 4px solid #ffb900;
+  margin: 1em 0;
+  padding: 0.8em 1.2em;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+
+/* 断言 */
+div.assertion {
+  border-left: 4px solid #33d57a;
+  background: rgba(51, 213, 122, 0.06);
+  margin: 1em 0;
+  padding: 0.8em 1.2em;
+  border-radius: 0 8px 8px 0;
+}
+
+/* 应用 */
+div.application {
+  border-left: 4px solid #9090ff;
+  background: rgba(144, 144, 255, 0.08);
+  margin: 1em 0;
+  padding: 0.8em 1.2em;
+  border-radius: 0 8px 8px 0;
+}
+div.application p:first-child strong {
+  color: #9090ff;
+}
+
+/* 亮色模式调整 */
+@media (prefers-color-scheme: light) {
+  div.definition {
+    background: rgba(74, 158, 255, 0.04);
+  }
+  div.theorem, div.lemma, div.corollary {
+    background: rgba(255, 107, 107, 0.04);
+  }
+  div.proof {
+    background: rgba(128, 128, 128, 0.03);
+  }
+  div.remark {
+    background: rgba(255, 185, 0, 0.04);
+  }
+  div.assertion {
+    background: rgba(51, 213, 122, 0.04);
+  }
+  div.application {
+    background: rgba(144, 144, 255, 0.04);
   }
 }
