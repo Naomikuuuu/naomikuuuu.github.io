@@ -1,0 +1,262 @@
+
+\documentclass[11pt, a4paper]{article}
+
+% --- 常用宏包 ---
+\usepackage[UTF8]{ctex} % 支持中文
+\usepackage[margin=1in]{geometry} % 页边距
+\usepackage{amsmath, amssymb} % 数学公式
+\usepackage{listings} % 代码块
+\usepackage{xcolor} % 代码高亮
+\usepackage{booktabs} % 表格样式
+\usepackage{hyperref} % 超链接
+
+% --- 代码高亮设置 ---
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black},
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5}
+}
+
+\title{OOP HW4}
+\author{Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+% ---------------------------------------------------
+
+\subsection*{Question 3}
+\textbf{Which among the following is mandatory condition for operators overloading?}
+\begin{itemize}
+    \item \textbf{A. Overloaded operator must be member function of the left operand}
+    \item B. Overloaded operator must be member function of the right operand
+    \item C. Overloaded operator must be member function of either left or right operand
+    \item D. Overloaded operator must not be dependent on the operands
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。在 C++ 面向对象题库的标准语境中，本题特指\textbf{“重载为成员函数”}的前提条件。为了让编译器识别重载并隐含传递 \texttt{this} 指针，运算符必须作为表达式左侧操作数的成员函数（即左操作数充当调用函数的对象）。如果是友元函数重载则无此限制，但在该类题库中 A 为标准的预期答案。
+
+% ---------------------------------------------------
+
+\subsection*{Question 4}
+\textbf{When the operator to be overloaded becomes the left operand member then \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. The right operand acts as implicit object represented by *this
+    \item \textbf{B. The left operand acts as implicit object represented by *this}
+    \item C. Either right or left operand acts as implicit object represented by *this
+    \item D. *this pointer is not applicable in that member function
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。当二元运算符（如 \texttt{+}）被重载为类的成员函数时，执行 \texttt{A + B} 实际上是被编译器转换为 \texttt{A.operator+(B)}。因此，\textbf{左操作数}（A）成为了隐含的调用对象，在成员函数内部由 \texttt{*this} 指针来代表。
+
+% ---------------------------------------------------
+
+\subsection*{Question 5}
+\textbf{If the left operand is pointed by *this pointer, what happens to other operands?}
+\begin{itemize}
+    \item A. Other operands are passed as function return type
+    \item B. Other operands are passed to compiler implicitly
+    \item C. Other operands must be passed using another member function
+    \item \textbf{D. Other operands are passed as function arguments}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。在成员函数形式的二元运算符重载中，因为左操作数已经作为隐含的 \texttt{*this} 指针存在，所以\textbf{右操作数}（即 other operands）必须显式地作为\textbf{函数参数（Function arguments）}传递进该成员函数中。例如声明为：\texttt{ReturnType operator+(const ClassName\& right\_operand);}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 8}
+\textbf{Which object’s members can be called directly while overloading operator function is used (In function definition)?}
+\begin{itemize}
+    \item \textbf{A. Left operand members}
+    \item B. Right operand members
+    \item C. All operand members
+    \item D. None of the members
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。由于重载的成员函数是由\textbf{左操作数}（即 \texttt{*this}）主动调用的，所以在重载函数的函数体内部，你可以直接访问左操作数的成员变量（例如直接写 \texttt{val}，编译器会自动将其解析为 \texttt{this->val}）。而右操作数的成员不能直接写名字，必须通过传递进来的参数对象加点号来访问（例如 \texttt{rhs.val}）。
+
+% ---------------------------------------------------
+% ===================================================
+% 补充笔记：运算符重载方式总结
+% ===================================================
+\newpage % 如果不需要另起一页，可以把这行删掉
+\section*{补充笔记：运算符的重载方式选择 (Member vs Friend)}
+
+在 C++ 中，运算符重载的选择并非随意，编译器对不同运算符有严格的规定。以下为四大类核心场景：
+
+\vspace{1em}
+
+\subsection*{1. 必须且只能用“成员函数 (Member Function)”重载}
+这类运算符与对象的内存状态或生命周期高度绑定，左操作数必须是该类的对象。
+\begin{itemize}
+    \item \textbf{包含：} 赋值 \texttt{=}、下标 \texttt{[]}、函数调用 \texttt{()}、成员访问 \texttt{->}
+    \item \textbf{记忆口诀：} “等号、中括号、小括号、箭头” 这四个是类的“私有财产”，绝不允许非成员函数插手。
+\end{itemize}
+
+\subsection*{2. 通常必须用“友元函数 / 非成员函数 (Friend Function)”重载}
+这类运算符的左操作数通常不是自定义类，而是标准库类（如 \texttt{ostream} 或 \texttt{istream}）。
+\begin{itemize}
+    \item \textbf{包含：} 流插入 \texttt{<<}、流提取 \texttt{>>}
+    \item \textbf{核心逻辑：} 为了保持 \texttt{cout << obj;} 这种符合直觉的写法，左操作数必须是 \texttt{ostream} 对象，因此只能写成全局非成员函数：\texttt{operator<<(ostream\& out, const MyClass\& obj)}。通常将其声明为 \textbf{friend} 以便访问类内的私有成员。
+\end{itemize}
+
+\subsection*{3. 两者皆可（Member 或 Friend 都可以）}
+绝大多数常规的二元运算符都属于这一类。
+\begin{itemize}
+    \item \textbf{包含：} 算术 (\texttt{+}, \texttt{-}, \texttt{*}), 关系 (\texttt{==}, \texttt{<}), 复合赋值 (\texttt{+=}), 自增自减 (\texttt{++}, \texttt{--}) 等。
+    \item \textbf{最佳实践经验：} 
+    \begin{itemize}
+        \item \textbf{改变对象自身状态的}（如 \texttt{+=}, \texttt{++}）：强烈建议用 \textbf{Member function}。
+        \item \textbf{不改变双方状态且具对称性的}（如 \texttt{+}, \texttt{==}）：强烈建议用 \textbf{Friend function}。因为友元函数允许左右两边的操作数都进行隐式类型转换（例如 \texttt{obj + 5} 和 \texttt{5 + obj} 均可顺利编译）。
+    \end{itemize}
+\end{itemize}
+
+\subsection*{4. 绝对不能被重载的运算符}
+为了保证 C++ 基础语法的解析不崩溃，以下 5 个运算符\textbf{绝对禁止}重载：
+\begin{itemize}
+    \item 成员访问 \texttt{.}、成员指针访问 \texttt{.*}、作用域解析 \texttt{::}、三目条件 \texttt{?:}、获取大小 \texttt{sizeof}。
+\end{itemize}
+
+\vspace{1.5em}
+
+\noindent \textbf{终极总结速查表}
+
+\begin{table}[h]
+    \centering
+    \renewcommand{\arraystretch}{1.5} % 增加行高
+    \begin{tabular}{@{} l l c c c @{}}
+        \toprule
+        \textbf{运算符类别} & \textbf{示例} & \textbf{必须 Member?} & \textbf{必须 Friend?} & \textbf{两者皆可?} \\
+        \midrule
+        \textbf{类的核心行为} & \texttt{=}, \texttt{[]}, \texttt{()}, \texttt{->} & $\checkmark$ \textbf{是} & $\times$ 否 & $\times$ 否 \\
+        \textbf{标准 IO 流操作} & \texttt{<<}, \texttt{>>} (配合 cin/cout) & $\times$ 否 & $\checkmark$ \textbf{是} & $\times$ 否 \\
+        \textbf{修改对象自身状态} & \texttt{+=}, \texttt{-=}, \texttt{++}, \texttt{--} & $\times$ 否 & $\times$ 否 & $\checkmark$ 可以 (推荐 Member) \\
+        \textbf{对称计算与比较} & \texttt{+}, \texttt{-}, \texttt{==}, \texttt{<} & $\times$ 否 & $\times$ 否 & $\checkmark$ 可以 (推荐 Friend) \\
+        \textbf{底层语法解析} & \texttt{.}, \texttt{::}, \texttt{?:}, \texttt{sizeof} & - & - & \textcolor{red}{\textbf{严禁重载}} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+% ===================================================
+% 补充笔记：运算符重载与多态核心概念 (填空题汇总)
+% ===================================================
+\newpage
+\section{Operator Overloading \& Polymorphism Concepts}
+
+% ---------------------------------------------------
+\subsection*{Concept 1: Assignment Operator}
+\textbf{赋值运算符可以重载，但是无论参数为何种类型，赋值运算符都必须重载为成员函数，并且因为返回的是左值，所以返回值的类型必须是该类的 \underline{\hspace{3cm}}。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{引用}（或 \texttt{类名\&}）\\
+\textbf{解析：} 赋值运算符 \texttt{=} 为了支持连续赋值操作（如 \texttt{a = b = c;}），其返回值必须是可以被修改的左值。因此，它必须返回调用该运算符的对象自身的引用（即 \texttt{return *this;}），其标准函数签名通常为 \texttt{ClassName\& operator=(const ClassName\& rhs);}。
+
+% ---------------------------------------------------
+\subsection*{Concept 2: Parameter Counts \& Polymorphism Definition}
+\textbf{运算符重载为类的成员函数时，函数参数个数比原来的运算符个数 \underline{\hspace{2cm}}，当重载为类的友元函数时，参数个数与原来运算符个数 \underline{\hspace{2cm}}。多态指不同对象接收 \underline{\hspace{3cm}} 时产生的 \underline{\hspace{3cm}}。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{少一个}、\textbf{相同}、\textbf{相同的消息}、\textbf{不同行为} \\
+\textbf{解析：} 
+\begin{itemize}
+    \item \textbf{参数个数：} 重载为成员函数时，左操作数充当了隐藏的 \texttt{this} 指针，所以显式参数少一个；重载为友元函数时无隐藏指针，所有操作数都要显式传入。
+    \item \textbf{多态本质：} 面向对象中的多态，核心定义就是“不同的对象接收到相同的消息（即调用同名接口），由于内部具体实现不同，从而表现出不同的响应行为”。
+\end{itemize}
+
+% ---------------------------------------------------
+\subsection*{Concept 3: Overloading Methods}
+\textbf{运算符重载函数的两种主要方式是 \underline{\hspace{3cm}}、\underline{\hspace{3cm}}。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{成员函数}、\textbf{友元函数}（或普通全局函数）
+
+% ---------------------------------------------------
+\subsection*{Concept 4: Types of Polymorphism (Execution)}
+\textbf{从运行的角度多态可分为 \underline{\hspace{3cm}} 和 \underline{\hspace{3cm}}。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{静态多态}（编译时多态）、\textbf{动态多态}（运行时多态）\\
+\textbf{解析：} 静态多态主要依赖函数重载、运算符重载和模板（Template）在编译期决断；动态多态则主要依赖继承和虚函数（\texttt{virtual}）在运行期决断。
+
+% ---------------------------------------------------
+\subsection*{Concept 5: Function Overloading}
+\textbf{函数重载就是一种 \underline{\hspace{3cm}} ，相同的函数名，对应多个不同的函数体。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{静态多态}（或编译时多态）\\
+\textbf{解析：} 编译器在编译阶段，就能根据传入实参的“类型、数量、顺序”组成的函数签名，唯一确定需要绑定哪一个具体的函数版本，无需拖延到运行时。
+
+% ---------------------------------------------------
+\subsection*{Concept 6: Overloading Polymorphism}
+\textbf{函数重载和 \underline{\hspace{3cm}} 都属于重载多态。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{运算符重载}\\
+\textbf{解析：} 广义的多态可分为四大类：重载多态（函数/运算符重载）、强制多态（类型转换）、包含多态（虚函数）、参数多态（模板）。
+
+% ---------------------------------------------------
+\subsection*{Concept 7: Coercion Polymorphism}
+\textbf{强制类型转换是通过 \underline{\hspace{3cm}} 来实现的。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{类型转换函数}（如 \texttt{operator int()}） 或 \textbf{强制多态} \\
+\textbf{解析：} 在 C++ 类的语境下，实现隐式或强制类型转换靠的是自定义的类型转换重载函数。
+
+% ---------------------------------------------------
+\subsection*{Concept 8: Binding Phases}
+\textbf{按照联编所进行的阶段不同，可分为两种不同的联编方法：\underline{\hspace{3cm}} 和 \underline{\hspace{3cm}}。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{静态联编}（早期联编/编译时联编）、\textbf{动态联编}（晚期联编/运行时联编）\\
+\textbf{解析：} 联编（Binding）即将函数调用语句与具体的函数体内存代码绑定在一起的过程。
+
+% ---------------------------------------------------
+\subsection*{Concept 9: Dynamic Binding Core}
+\textbf{动态联编对函数的选择不是基于指针或者引用，而是基于 \underline{\hspace{4cm}} ，在编译、链接过程中无法解决的绑定问题要等到程序开始运行之后再确定。}
+
+\vspace{0.5em}
+\noindent \textbf{答案：} \textbf{指针或引用所指向对象的实际类型} \\
+\textbf{解析：} 这是动态多态的灵魂。例如 \texttt{Base* ptr = new Derived();}，\texttt{ptr} 的静态类型是基类指针，但它真正在内存中指向的\textbf{实际类型}是派生类。动态联编会通过查找虚函数表（vtable），在运行时精准调用派生类重写的虚函数。
+
+% ---------------------------------------------------
+% ---------------------------------------------------
+\subsection*{Concept 10: Copy Constructor vs. Assignment Operator (拷贝构造与赋值重载的易错区分)}
+\textbf{在 C++ 中，“\texttt{=}” 符号在不同的上下文中有两种完全不同的含义，这是考试和面试中最常见的陷阱。核心的判断标准只有一个：\underline{赋值号左边的对象是否已经存在？}}
+
+\vspace{0.5em}
+\noindent \textbf{1. 拷贝构造函数 (Copy Constructor): \texttt{A(const A \&)}}
+\begin{itemize}
+    \item \textbf{核心动作：初始化 (Initialization)}
+    \item \textbf{触发条件：} 正在\textbf{创建}一个全新的对象，并用一个同类型的、已存在的对象来初始化它。此时该对象在内存中刚刚被分配空间。
+    \item \textbf{典型代码：} \texttt{A d = a;} （在 C++ 编译器眼中，这行代码与 \texttt{A d(a);} 完全等价，绝不会调用 \texttt{operator=}）。
+    \item \textbf{其他隐式调用场景 (极易考)：}
+    \begin{itemize}
+        \item 将对象作为实参，\textbf{按值传递}给函数参数时（例如调用 \texttt{void func(A obj);}）。
+        \item 函数\textbf{按值返回}一个局部对象时（例如 \texttt{A func() \{ return a; \}}）。
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.5em}
+\noindent \textbf{2. 赋值运算符重载 (Assignment Operator): \texttt{A\& operator=(const A \&)}}
+\begin{itemize}
+    \item \textbf{核心动作：赋值 (Assignment)}
+    \item \textbf{触发条件：} 针对一个\textbf{已经存在}（在之前的代码中早就已经被构造函数创建好）的对象，修改或覆盖它的状态。
+    \item \textbf{典型代码：} \texttt{c = a;} （前提是 \texttt{c} 在这行代码之前就已经通过诸如 \texttt{A c;} 声明过了）。
+\end{itemize}
+
+\vspace{1em} % 增加间距突出重点
+\noindent \textbf{\textcolor{red}{【一句话防坑口诀】}}：
+\begin{center}
+    \fbox{\parbox{0.9\textwidth}{
+        \textbf{带有类型名声明的“\texttt{=}”}（例如 \texttt{A d = a;}）是在生孩子，\textbf{必定调用拷贝构造}；\\
+        \textbf{没有类型名、单独使用的“\texttt{=}”}（例如 \texttt{c = a;}）是在换衣服，\textbf{必定调用赋值重载}。
+    }}
+\end{center}
+
+% ---------------------------------------------------
+\end{document}

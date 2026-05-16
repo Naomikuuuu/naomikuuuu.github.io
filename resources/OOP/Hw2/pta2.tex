@@ -1,0 +1,915 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- 常用宏包 ---
+\usepackage[UTF8]{ctex} % 支持中文
+\usepackage[margin=1in]{geometry} % 页边距
+\usepackage{amsmath, amssymb} % 数学公式
+\usepackage{listings} % 代码块
+\usepackage{xcolor} % 代码高亮
+\usepackage{booktabs} % 表格样式
+\usepackage{hyperref} % 超链接
+
+% --- 代码高亮设置 ---
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black},
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5}
+}
+
+\title{OOP HW2}
+\author{Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section{PTA2}
+\subsection*{Question 1}
+\textbf{The copy constructors can be used to \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Copy an object so that it can be passed to another primitive type variable
+    \item B. Copy an object for type casting
+    \item \textbf{C. Copy an object so that it can be passed to a function}
+    \item D. Copy an object so that it can be passed to a class
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。当对象以“值传递（Pass by Value）”的方式作为形参传入函数，或者从函数中按值返回时，编译器会自动调用拷贝构造函数（Copy Constructor）来生成该对象的一个克隆副本，以避免原始对象的数据被函数内部意外破坏。
+
+% ---------------------------------------------------
+
+\subsection*{Question 2}
+\textbf{Which constructor will be called from the object obj2 in the following C++ program?}\\
+\texttt{A obj2(10,20);}
+\begin{itemize}
+    \item \textbf{A. A(int y, int x)}
+    \item B. A(int y; int x)
+    \item C. A(int y)
+    \item D. A(int x)
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。对象实例化时，编译器会根据传入参数的数量、类型和顺序进行函数重载决议（Overload Resolution）。\texttt{obj2} 在创建时明确传入了两个整型参数 \texttt{(10, 20)}，因此精确匹配带有两个 \texttt{int} 形参的构造函数 \texttt{A(int y, int x)}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 5}
+\textbf{Which of the following is not a property of an object?}
+\begin{itemize}
+    \item A. Properties
+    \item \textbf{B. Names}
+    \item C. Identity
+    \item D. Attributes
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。在面向对象编程（OOP）理论中，对象包含三个核心要素：状态（State / Properties / Attributes）、行为（Behavior / Methods）和标识（Identity，例如内存地址）。“名字（Names）”仅仅是代码中程序员用于引用该对象的变量标识符，它不是对象本身固有的、独立于程序运行的内在属性。
+
+% ---------------------------------------------------
+
+\subsection*{Question 10}
+\textbf{If data members are private, what can we do to access them from the class object?}
+\begin{itemize}
+    \item A. Private data members can never be accessed from outside the class
+    \item \textbf{B. Create public member functions to access those data members}
+    \item C. Create private member functions to access those data members
+    \item D. Create protected member functions to access those data members
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。这是面向对象“封装（Encapsulation）”特性的标准实践：将数据成员设为 \texttt{private} 隐藏在类内部，同时暴露 \texttt{public} 的成员函数（如常见的 Getter 和 Setter 方法）作为合法接口，供外部代码安全地读取和修改这些数据。
+
+% ---------------------------------------------------
+
+\subsection*{Question 15}
+\textbf{Copy constructor will be called whenever the compiler \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Generates implicit code
+    \item B. Generates member function calls
+    \item \textbf{C. Generates temporary object}
+    \item D. Generates object operations
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。C++ 编译器在底层处理对象的按值传参、按值返回，或者执行某些隐式类型转换时，通常会在内存的栈区生成临时对象（Temporary object）。每当这个临时对象被创建并需要用另一个现存对象来初始化时，就必定会触发拷贝构造函数的调用。
+
+% ---------------------------------------------------
+
+\subsection*{Question 17}
+\textbf{Can a copy constructor be made private?}
+\begin{itemize}
+    \item \textbf{A. Yes, always}
+    \item B. Yes, if no other constructor is defined
+    \item C. No, never
+    \item D. No, private members can’t be accessed
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。在 C++ 中（尤其是 C++11 标准之前），将拷贝构造函数和赋值运算符显式声明为 \texttt{private} 且不提供实现，是一种极其经典的防止对象被错误复制的模式（即打造 Non-copyable Object，如互斥锁、单例对象等）。如今虽更推荐使用 \texttt{= delete}，但将其设为私有在语法上永远是合法的。
+
+% ---------------------------------------------------
+
+\subsection*{Question 20}
+\textbf{Does constructor overloading include different return types for constructors to be overloaded?}
+\begin{itemize}
+    \item A. Yes, if return types are different, signature becomes different
+    \item B. Yes, because return types can differentiate two functions
+    \item C. No, return type can’t differentiate two functions
+    \item \textbf{D. No, constructors doesn’t have any return type}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。构造函数是一种极其特殊的成员函数，它在语法上根本不允许定义任何返回类型（连 \texttt{void} 都不允许写）。因此，既然没有返回类型，自然也就谈不上“依靠返回类型的不同来进行重载”。构造函数的重载只能通过参数列表（形参类型、个数、顺序）的不同来实现。
+
+% ---------------------------------------------------
+
+\subsection*{Question 21}
+\textbf{Destructor calls \rule{2cm}{0.15mm} (C++)}
+\begin{itemize}
+    \item A. Are only implicit
+    \item B. Are only explicit
+    \item \textbf{C. Can be implicit or explicit}
+    \item D. Are made at end of program only
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。析构函数通常在对象离开其作用域或生命周期结束时，由系统\textbf{隐式调用（Implicit）}。但在某些高级内存管理场景下（例如使用了定位 \texttt{new} / Placement \texttt{new} 在预分配的内存上构造对象时），程序员必须通过 \texttt{obj.\textasciitilde ClassName()} 的语法来\textbf{显式调用（Explicit）}析构函数以清理资源。
+
+% ---------------------------------------------------
+
+\subsection*{Question 26}
+\textbf{When a destructor is called?}
+\begin{itemize}
+    \item A. After the end of object life
+    \item B. Anytime in between object’s lifespan
+    \item C. At end of whole program
+    \item \textbf{D. Just before the end of object life}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。析构函数的调用时机非常精确：它是在对象的生命周期即将终结，但其所占用的内存空间还未被系统彻底回收的“最后一刻（Just before）”被执行。它的核心任务是在对象彻底灰飞烟灭前，安全地释放掉它生前持有的外部资源（如堆内存、文件句柄等）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 29}
+\textbf{Global destructors execute in \rule{2cm}{0.15mm} order after main function is terminated.}
+\begin{itemize}
+    \item A. Sequential
+    \item B. Random
+    \item \textbf{C. Reverse}
+    \item D. Depending on priority
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。C++ 中对象的构造和析构遵循栈（Stack）的“后进先出（LIFO）”严格逻辑。因此，无论是在局部函数中还是在全局存储区，对象的析构顺序总是与其在初始化时构造的顺序\textbf{完全相反（Reverse order）}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 31}
+\textbf{Which among the following is true for public class?}
+\begin{itemize}
+    \item A. There can be more than one public class in a single program
+    \item B. Public class members can be used without using instance of class
+    \item C. Public class is available only within the package
+    \item \textbf{D. Public classes can be accessed from any other class using instance}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。（注：这道题干带有强烈的 Java/C\# 面向对象风格）。公开类（Public Class）的设计初衷就是向整个程序的其他模块暴露其定义。在任何其他类或作用域中，只要你创建了该公开类的实例（Instance/对象），就可以自由地访问其公共属性和方法。
+
+% ---------------------------------------------------
+
+\subsection*{Question 38}
+\textbf{What is the output of following code?}
+\begin{lstlisting}
+int n=10; // global
+class A {
+private :
+    int n;
+public :
+    int m;
+    A() { n=100; m=50; }
+    void disp() { cout<<"n"<<m<<n; }
+};
+\end{lstlisting}
+\begin{itemize}
+    \item A. 1050100
+    \item B. 1005010
+    \item C. n5010
+    \item \textbf{D. n50100}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。本题考查名字查找和局部优先原则。在 \texttt{disp()} 的输出流中：第一个 \texttt{"n"} 是带有双引号的字符串字面量，原样输出字符 \texttt{n}；接着输出 \texttt{m} 的值 \texttt{50}；最后输出变量 \texttt{n}。根据 C++ 的\textbf{局部优先原则（Name Shadowing/Hiding）}，类内部的成员变量 \texttt{n=100} 的作用域覆盖了全局变量 \texttt{n=10}。因此最终拼接的输出结果为 \texttt{n50100}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 44}
+\textbf{Can a function, other than the enclosing function of local class, access the class members?}
+\begin{itemize}
+    \item A. Yes, using object
+    \item B. Yes, using direct call
+    \item C. Yes, using pointer
+    \item \textbf{D. No, can’t access}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。局部类（Local Class）是定义在某一个特定函数体内部的类。它的作用域被死死限制在包裹它的那个函数的花括号内，对外部世界完全隔离（作用类似于局部变量）。因此，定义它的外部函数之外的其他任何函数，甚至连它的名字都无法识别，更别提访问其成员了。
+
+% ---------------------------------------------------
+
+\subsection*{Question 45}
+\textbf{Which among the following is the main advantage of using local classes?}
+\begin{itemize}
+    \item A. Make program more efficient
+    \item B. Makes program execution faster
+    \item \textbf{C. Helps to add extra functionality to a function}
+    \item D. Helps to add more members to a function
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。局部类并不能提升程序的运行速度或效率。它的核心价值在于代码结构的管理：当你编写一个复杂的函数时，可以临时在内部定义一个小型的辅助数据结构，用来提供该函数专属的额外功能。这能完美避免污染全局的命名空间，极大地提高了代码的内聚性和可读性。
+
+% ---------------------------------------------------
+
+\subsection*{Question 48}
+\textbf{Non-static nested classes have access to \rule{2cm}{0.15mm} from enclosing class.}
+\begin{itemize}
+    \item A. Private members
+    \item B. Protected members
+    \item C. Public members
+    \item \textbf{D. All the members}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。在 C++ 访问控制规则中，嵌套类（Nested Class）被编译器完全视同为外部类的一个内部成员。由于“成员可以访问本类的所有其他成员”，因此嵌套类享有极高的权限，它可以无条件访问包围它的外部类的\textbf{所有成员（包括 private 和 protected 成员）}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 56}
+\textbf{Which among the following is correct?}
+\begin{itemize}
+    \item \textbf{A. Friend function of derived class can access non-private members of base class}
+    \item B. Friend function of base class can access derived class members
+    \item C. Friend function of derived class can access members of only derived class
+    \item D. Friend function can access private members of base class of a derived class
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。友元关系是不具备继承性的。子类（派生类）的友元函数可以访问子类的所有成员；而父类（基类）的非私有成员（\texttt{public} 和 \texttt{protected}）已经被子类成功继承下来，成为了子类自身组成部分。因此，子类的友元函数自然能够顺理成章地访问这些通过继承得来的父类非私有成员。
+\subsection*{Question 1}
+\textbf{The copy constructors can be used to \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Copy an object so that it can be passed to another primitive type variable
+    \item B. Copy an object for type casting
+    \item \textbf{C. Copy an object so that it can be passed to a function}
+    \item D. Copy an object so that it can be passed to a class
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。当对象以“值传递（Pass by Value）”的方式作为形参传入函数，或者从函数中按值返回时，编译器会自动调用拷贝构造函数（Copy Constructor）来生成该对象的一个克隆副本，以避免原始对象的数据被函数内部意外破坏。
+
+% ---------------------------------------------------
+
+\subsection*{Question 2}
+\textbf{Which constructor will be called from the object obj2 in the following C++ program?}\\
+\texttt{A obj2(10,20);}
+\begin{itemize}
+    \item \textbf{A. A(int y, int x)}
+    \item B. A(int y; int x)
+    \item C. A(int y)
+    \item D. A(int x)
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。对象实例化时，编译器会根据传入参数的数量、类型和顺序进行函数重载决议（Overload Resolution）。\texttt{obj2} 在创建时明确传入了两个整型参数 \texttt{(10, 20)}，因此精确匹配带有两个 \texttt{int} 形参的构造函数 \texttt{A(int y, int x)}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 5}
+\textbf{Which of the following is not a property of an object?}
+\begin{itemize}
+    \item A. Properties
+    \item \textbf{B. Names}
+    \item C. Identity
+    \item D. Attributes
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。在面向对象编程（OOP）理论中，对象包含三个核心要素：状态（State / Properties / Attributes）、行为（Behavior / Methods）和标识（Identity，例如内存地址）。“名字（Names）”仅仅是代码中程序员用于引用该对象的变量标识符，它不是对象本身固有的、独立于程序运行的内在属性。
+
+% ---------------------------------------------------
+
+\subsection*{Question 10}
+\textbf{If data members are private, what can we do to access them from the class object?}
+\begin{itemize}
+    \item A. Private data members can never be accessed from outside the class
+    \item \textbf{B. Create public member functions to access those data members}
+    \item C. Create private member functions to access those data members
+    \item D. Create protected member functions to access those data members
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。这是面向对象“封装（Encapsulation）”特性的标准实践：将数据成员设为 \texttt{private} 隐藏在类内部，同时暴露 \texttt{public} 的成员函数（如常见的 Getter 和 Setter 方法）作为合法接口，供外部代码安全地读取和修改这些数据。
+
+% ---------------------------------------------------
+
+\subsection*{Question 15}
+\textbf{Copy constructor will be called whenever the compiler \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Generates implicit code
+    \item B. Generates member function calls
+    \item \textbf{C. Generates temporary object}
+    \item D. Generates object operations
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。C++ 编译器在底层处理对象的按值传参、按值返回，或者执行某些隐式类型转换时，通常会在内存的栈区生成临时对象（Temporary object）。每当这个临时对象被创建并需要用另一个现存对象来初始化时，就必定会触发拷贝构造函数的调用。
+
+% ---------------------------------------------------
+
+\subsection*{Question 17}
+\textbf{Can a copy constructor be made private?}
+\begin{itemize}
+    \item \textbf{A. Yes, always}
+    \item B. Yes, if no other constructor is defined
+    \item C. No, never
+    \item D. No, private members can’t be accessed
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。在 C++ 中（尤其是 C++11 标准之前），将拷贝构造函数和赋值运算符显式声明为 \texttt{private} 且不提供实现，是一种极其经典的防止对象被错误复制的模式（即打造 Non-copyable Object，如互斥锁、单例对象等）。如今虽更推荐使用 \texttt{= delete}，但将其设为私有在语法上永远是合法的。
+
+% ---------------------------------------------------
+
+\subsection*{Question 20}
+\textbf{Does constructor overloading include different return types for constructors to be overloaded?}
+\begin{itemize}
+    \item A. Yes, if return types are different, signature becomes different
+    \item B. Yes, because return types can differentiate two functions
+    \item C. No, return type can’t differentiate two functions
+    \item \textbf{D. No, constructors doesn’t have any return type}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。构造函数是一种极其特殊的成员函数，它在语法上根本不允许定义任何返回类型（连 \texttt{void} 都不允许写）。因此，既然没有返回类型，自然也就谈不上“依靠返回类型的不同来进行重载”。构造函数的重载只能通过参数列表（形参类型、个数、顺序）的不同来实现。
+
+% ---------------------------------------------------
+
+\subsection*{Question 21}
+\textbf{Destructor calls \rule{2cm}{0.15mm} (C++)}
+\begin{itemize}
+    \item A. Are only implicit
+    \item B. Are only explicit
+    \item \textbf{C. Can be implicit or explicit}
+    \item D. Are made at end of program only
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。析构函数通常在对象离开其作用域或生命周期结束时，由系统\textbf{隐式调用（Implicit）}。但在某些高级内存管理场景下（例如使用了定位 \texttt{new} / Placement \texttt{new} 在预分配的内存上构造对象时），程序员必须通过 \texttt{obj.\textasciitilde ClassName()} 的语法来\textbf{显式调用（Explicit）}析构函数以清理资源。
+
+% ---------------------------------------------------
+
+\subsection*{Question 26}
+\textbf{When a destructor is called?}
+\begin{itemize}
+    \item A. After the end of object life
+    \item B. Anytime in between object’s lifespan
+    \item C. At end of whole program
+    \item \textbf{D. Just before the end of object life}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。析构函数的调用时机非常精确：它是在对象的生命周期即将终结，但其所占用的内存空间还未被系统彻底回收的“最后一刻（Just before）”被执行。它的核心任务是在对象彻底灰飞烟灭前，安全地释放掉它生前持有的外部资源（如堆内存、文件句柄等）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 29}
+\textbf{Global destructors execute in \rule{2cm}{0.15mm} order after main function is terminated.}
+\begin{itemize}
+    \item A. Sequential
+    \item B. Random
+    \item \textbf{C. Reverse}
+    \item D. Depending on priority
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。C++ 中对象的构造和析构遵循栈（Stack）的“后进先出（LIFO）”严格逻辑。因此，无论是在局部函数中还是在全局存储区，对象的析构顺序总是与其在初始化时构造的顺序\textbf{完全相反（Reverse order）}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 31}
+\textbf{Which among the following is true for public class?}
+\begin{itemize}
+    \item A. There can be more than one public class in a single program
+    \item B. Public class members can be used without using instance of class
+    \item C. Public class is available only within the package
+    \item \textbf{D. Public classes can be accessed from any other class using instance}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。（注：这道题干带有强烈的 Java/C\# 面向对象风格）。公开类（Public Class）的设计初衷就是向整个程序的其他模块暴露其定义。在任何其他类或作用域中，只要你创建了该公开类的实例（Instance/对象），就可以自由地访问其公共属性和方法。
+
+% ---------------------------------------------------
+
+\subsection*{Question 38}
+\textbf{What is the output of following code?}
+\begin{lstlisting}
+int n=10; // global
+class A {
+private :
+    int n;
+public :
+    int m;
+    A() { n=100; m=50; }
+    void disp() { cout<<"n"<<m<<n; }
+};
+\end{lstlisting}
+\begin{itemize}
+    \item A. 1050100
+    \item B. 1005010
+    \item C. n5010
+    \item \textbf{D. n50100}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。本题考查名字查找和局部优先原则。在 \texttt{disp()} 的输出流中：第一个 \texttt{"n"} 是带有双引号的字符串字面量，原样输出字符 \texttt{n}；接着输出 \texttt{m} 的值 \texttt{50}；最后输出变量 \texttt{n}。根据 C++ 的\textbf{局部优先原则（Name Shadowing/Hiding）}，类内部的成员变量 \texttt{n=100} 的作用域覆盖了全局变量 \texttt{n=10}。因此最终拼接的输出结果为 \texttt{n50100}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 44}
+\textbf{Can a function, other than the enclosing function of local class, access the class members?}
+\begin{itemize}
+    \item A. Yes, using object
+    \item B. Yes, using direct call
+    \item C. Yes, using pointer
+    \item \textbf{D. No, can’t access}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。局部类（Local Class）是定义在某一个特定函数体内部的类。它的作用域被死死限制在包裹它的那个函数的花括号内，对外部世界完全隔离（作用类似于局部变量）。因此，定义它的外部函数之外的其他任何函数，甚至连它的名字都无法识别，更别提访问其成员了。
+
+% ---------------------------------------------------
+
+\subsection*{Question 45}
+\textbf{Which among the following is the main advantage of using local classes?}
+\begin{itemize}
+    \item A. Make program more efficient
+    \item B. Makes program execution faster
+    \item \textbf{C. Helps to add extra functionality to a function}
+    \item D. Helps to add more members to a function
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。局部类并不能提升程序的运行速度或效率。它的核心价值在于代码结构的管理：当你编写一个复杂的函数时，可以临时在内部定义一个小型的辅助数据结构，用来提供该函数专属的额外功能。这能完美避免污染全局的命名空间，极大地提高了代码的内聚性和可读性。
+
+% ---------------------------------------------------
+
+\subsection*{Question 48}
+\textbf{Non-static nested classes have access to \rule{2cm}{0.15mm} from enclosing class.}
+\begin{itemize}
+    \item A. Private members
+    \item B. Protected members
+    \item C. Public members
+    \item \textbf{D. All the members}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。在 C++ 访问控制规则中，嵌套类（Nested Class）被编译器完全视同为外部类的一个内部成员。由于“成员可以访问本类的所有其他成员”，因此嵌套类享有极高的权限，它可以无条件访问包围它的外部类的\textbf{所有成员（包括 private 和 protected 成员）}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 56}
+\textbf{Which among the following is correct?}
+\begin{itemize}
+    \item \textbf{A. Friend function of derived class can access non-private members of base class}
+    \item B. Friend function of base class can access derived class members
+    \item C. Friend function of derived class can access members of only derived class
+    \item D. Friend function can access private members of base class of a derived class
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。友元关系是不具备继承性的。子类（派生类）的友元函数可以访问子类的所有成员；而父类（基类）的非私有成员（\texttt{public} 和 \texttt{protected}）已经被子类成功继承下来，成为了子类自身组成部分。因此，子类的友元函数自然能够顺理成章地访问这些通过继承得来的父类非私有成员。
+% ---------------------------------------------------
+
+\subsection*{Question 61}
+\textbf{What are the constant member functions?}
+\begin{itemize}
+    \item \textbf{A. Functions which doesn’t change value of calling object}
+    \item B. Functions which doesn’t change value of any object inside definition
+    \item C. Functions which doesn’t allow modification of any object of class
+    \item D. Functions which doesn’t allow modification of argument objects
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。常成员函数（即在函数声明末尾加上 \texttt{const} 关键字的函数，例如 \texttt{void func() const;}）是在向编译器郑重承诺：该函数内部绝不会修改调用该对象（即隐含的 \texttt{this} 指针所指向的对象）的任何数据成员状态。它是 C++ 保障数据安全的重要手段。
+
+% ---------------------------------------------------
+
+\subsection*{Question 65}
+\textbf{Which type of member functions get inherited in the same specifier in which the inheritance is done?}
+\begin{itemize}
+    \item A. Private member functions
+    \item B. Protected member functions
+    \item \textbf{C. Public member functions}
+    \item D. All member functions
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。这考查的是 C++ 继承权限修饰符的核心规律：无论哪种继承方式，父类的 \texttt{private} 成员在子类中永远不可见。而父类的 \texttt{public} 成员在继承后，其在子类中的最终权限完全由继承方式（specifier）决定——\texttt{public} 继承依然是 \texttt{public}，\texttt{protected} 继承变成 \texttt{protected}，\texttt{private} 继承变成 \texttt{private}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 73}
+\textbf{If static data members have to be used inside a class, those member functions \rule{2cm}{0.15mm} (when no object exists)}
+\begin{itemize}
+    \item A. Must not be static member functions
+    \item B. Must not be member functions
+    \item \textbf{C. Must be static member functions}
+    \item D. Must not be member function of corresponding class
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。静态数据成员的生命周期独立于任何对象，程序一开始就存在。如果在尚未实例化任何对象的情况下，想要在类内部操作这些静态数据，就必须借助静态成员函数。因为普通成员函数必须依赖对象（需要隐含的 \texttt{this} 指针）才能被调用。
+
+% ---------------------------------------------------
+
+\subsection*{Question 78}
+\textbf{If object of class are created, then the static data members can be accessed \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Using dot operator
+    \item B. Using arrow operator
+    \item C. Using colon
+    \item \textbf{D. Using dot or arrow operator}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。虽然静态成员属于整个类，业界最规范的推荐写法是使用作用域解析符 \texttt{ClassName::} 访问。但在 C++ 语法设计中，为了方便和兼容，如果你已经持有了该类的对象实例或对象指针，同样完全允许使用普通的点（\texttt{.}）操作符或指针的箭头（\texttt{->}）操作符去访问静态成员。
+
+% ---------------------------------------------------
+
+\subsection*{Question 80}
+\textbf{Which among the following is wrong syntax related to static data members?}
+\begin{itemize}
+    \item A. className :: staticDataMember;
+    \item B. dataType className :: memberName =value;
+    \item C. static dataType memberName;
+    \item \textbf{D. className : dataType -> memberName;}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。这是一个明显的“生造”干扰项。合法的静态成员访问语法必须使用双冒号 \texttt{::}。绝不可能出现单独一个冒号 \texttt{:} 并且诡异地和指针操作符 \texttt{->} 混用的语法结构。
+
+% ---------------------------------------------------
+
+\subsection*{Question 81}
+\textbf{Which among the following is correct definition for static member functions?}
+\begin{itemize}
+    \item A. Functions created to allocate constant values to each object
+    \item \textbf{B. Functions made to maintain single copy of member functions for all objects}
+    \item C. Functions created to define the static members
+    \item D. Functions made to manipulate static programs
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。注意：在底层物理内存上，无论是普通函数还是静态函数，所有对象的函数代码本来就只有一份。然而，这是各大考研/计算机基础题库中的经典题：出题人意在强调静态函数体现了“大家共有、不属于某一个具体对象”的特性。它属于整个类的抽象级别（Class-level），是独立于具体实例的单一公共方法。
+
+% ---------------------------------------------------
+
+\subsection*{Question 90}
+\textbf{The keyword static is used \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. With declaration inside class and with definition outside the class
+    \item \textbf{B. With declaration inside class and not with definition outside the class}
+    \item C. With declaration and definition wherever done
+    \item D. With each call to the member function
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。这是 C++ 的硬性语法规定。当你在类的外部去单独实现（定义）一个静态成员（无论是静态数据变量的内存分配，还是静态函数的实现）时，\textbf{绝对不能}在前面再加 \texttt{static} 关键字，否则会导致链接错误。\texttt{static} 只能出现在类内部的声明处。
+
+% ---------------------------------------------------
+
+\subsection*{Question 93}
+\textbf{What will be the output if all necessary code is included?}
+\begin{lstlisting}
+void test (Object &y) { y = "It is a string"; }
+void main() {
+    Object x ;
+    test (x);
+    cout<<x;
+}
+\end{lstlisting}
+\begin{itemize}
+    \item A. Run time error
+    \item B. Compile time error
+    \item C. Null
+    \item \textbf{D. It is a string}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。在 \texttt{test} 函数中，形参使用的是对象的引用（\texttt{Object \&y}）。按引用传递意味着 \texttt{y} 只是外部对象 \texttt{x} 的一个别名。因此，在函数内部对 \texttt{y} 进行赋值，本质上直接覆写了外部 \texttt{x} 的内存数据。最终输出修改后的字符串。
+
+% ---------------------------------------------------
+
+\subsection*{Question 100}
+\textbf{Which error will be produced if a local object is returned by reference outside a function?}
+\begin{itemize}
+    \item A. Out of memory error
+    \item \textbf{B. Run time error}
+    \item C. Compile time error
+    \item D. No error
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。这是一个非常致命且经典的“悬空引用（Dangling Reference）”错误。局部对象存在于函数的栈内存中，一旦函数执行结束，这块内存立刻被系统回收。如果返回了它的引用，外部调用者将拿到一个“指向已销毁内存”的毒指针，对其访问极易导致 \texttt{Segmentation fault} 等运行时崩溃（Run time error）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 102}
+\textbf{Can we return an array of objects?}
+\begin{itemize}
+    \item A. Yes, always
+    \item B. Yes, only if objects are having same values
+    \item C. No, because objects contain many other values
+    \item \textbf{D. No, because objects are single entity (arrays are not a single entity)}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。在 C/C++ 底层机制中，原生数组（Native Array）不支持整体按值复制，因此不能作为函数的返回值直接返回。如果要返回一组数据，我们只能返回指向数组首元素的指针，或者更现代的做法是使用 \texttt{std::vector} 或 \texttt{std::array} 将数组包装为单一的对象实体后再返回。
+
+% ---------------------------------------------------
+
+\subsection*{Question 103}
+\textbf{Which among the following is true?}
+\begin{itemize}
+    \item \textbf{A. Two objects can point to the same memory location}
+    \item B. Two objects can never point to the same memory location
+    \item C. Objects not allowed to point at a location already occupied
+    \item D. Objects can’t point to any address
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。通过指针操作或引用传递，C++ 完全允许让不同的对象（或指针对象）指向堆区或栈区中的同一块物理内存地址。这也是导致“浅拷贝引发内存重复释放（Double Free）”这一经典 Bug 的根本原因。
+
+% ---------------------------------------------------
+
+\subsection*{Question 108}
+\textbf{How the argument passed to a function get initialized?}
+\begin{itemize}
+    \item \textbf{A. Assigned using copy constructor at time of passing}
+    \item B. Copied directly
+    \item C. Uses addresses always
+    \item D. Doesn’t get initialized
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。当对象作为参数进行“按值传递（Pass by Value）”时，系统绝不是简单粗暴地做底层字节复制。相反，系统在开辟函数栈区时，会正规地调用该类的“拷贝构造函数（Copy Constructor）”来精心构建并初始化这个局部的形参对象。
+
+% ---------------------------------------------------
+
+\subsection*{Question 111}
+\textbf{In copy constructor definition, if non const values are accepted only \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Only const objects will be accepted
+    \item \textbf{B. Only non – const objects are accepted}
+    \item C. Only const members will not get copied
+    \item D. Compiler generates an error
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。拷贝构造函数的参数通常会写成 \texttt{const ClassName\&}。如果你没有加 \texttt{const} 修饰（即 \texttt{ClassName(ClassName\& obj)}），这就表示你的函数具有修改源对象的潜力。此时，编译器基于类型安全，将\textbf{绝对不允许}你把一个只读的 \texttt{const} 对象传给它。因此它变得只能接受非常量对象（non-const objects）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 112}
+\textbf{Use of assignment operator \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item \textbf{A. Changes its use, when used at declaration and in normal assignment}
+    \item B. Doesn’t changes its use, whatever the syntax might be
+    \item C. Assignment takes place in declaration and assignment syntax
+    \item D. Doesn’t work in normal syntax, but only with declaration
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。赋值符号 \texttt{=} 在 C++ 中扮演双重角色，根据上下文改变其底层行为：如果在对象刚刚声明创建时使用（例如 \texttt{A obj2 = obj1;}），它实际上调用的是\textbf{拷贝构造函数}；如果在对象早已创建完毕之后的某个语句中使用（例如 \texttt{obj2 = obj1;}），它调用的则是重载的\textbf{赋值运算符 (\texttt{operator=})}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 117}
+\textbf{Which among the following is true?}
+\begin{itemize}
+    \item A. We can use direct assignment for any object
+    \item B. We can use direct assignment only for different class objects
+    \item C. We must not use direct assignment
+    \item \textbf{D. We can use direct assignment to same class objects}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。在 C++ 中，即使你没有手动编写任何赋值逻辑，编译器也会自动为每一个类隐式生成一个默认的赋值运算符重载。这意味着，只要属于相同的类，这两个不同实例对象之间就可以直接使用等于号（\texttt{=}）进行互相赋值（默认执行逐成员的浅拷贝）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 119}
+\textbf{What is the size of an object pointer?}
+\begin{itemize}
+    \item \textbf{A. Equal to size of any usual pointer}
+    \item B. Equal to size of sum of all the members of object
+    \item C. Equal to size of maximum sized member of object
+    \item D. Equal to size of void
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。无论一个类包含多少成员，无论该类的实例对象占用多庞大的内存空间，\textbf{指向该对象的指针仅仅是一个存放内存地址的变量}。因此，对象指针的大小永远等于当前计算机架构下普通指针的大小（例如 32 位操作系统下为 4 字节，64 位系统下为 8 字节）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 127}
+\textbf{An object’s this pointer \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Isn’t part of class
+    \item B. Isn’t part of program
+    \item C. Isn’t part of compiler
+    \item \textbf{D. Isn’t part of object itself}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。\texttt{this} 指针的本质是编译器在调用类的非静态成员函数时，在幕后隐式传递的\textbf{第一个函数参数}（用于告诉函数当前是在操作哪一个对象）。它根本不存储在对象的物理内存布局中。因此对对象执行 \texttt{sizeof()}，其结果绝对不包含 \texttt{this} 指针的体积。
+% ---------------------------------------------------
+
+\subsection*{Question 130}
+\textbf{Which is the correct interpretation of the member function call from an object, object.function(parameter);}
+\begin{itemize}
+    \item A. object.function(\&this, parameter)
+    \item B. object(\&function,parameter)
+    \item C. function(\&object,\&parameter)
+    \item \textbf{D. function(\&object,parameter)}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。这是 C++ 面向对象机制最底层的真相：在编译器眼中，其实根本没有所谓的“成员函数”。当你在代码里写出 \texttt{object.function(arg)} 时，编译器在底层会将其重写并转化为普通的全局函数调用：\texttt{function(\&object, arg)}。它悄悄地把调用者的内存地址（即 \texttt{\&object}）作为第一个隐藏参数传了进去，这个隐藏参数在函数内部接收的名字，就叫做 \texttt{this} 指针。
+
+% ---------------------------------------------------
+
+\subsection*{Question 132}
+\textbf{Which among the following is true? (About this pointer)}
+\begin{itemize}
+    \item A. This pointer can be used to guard against any kind of reference
+    \item \textbf{B. This pointer can be used to guard against self-reference}
+    \item C. This pointer can be used to guard from other pointers
+    \item D. This pointer can be used to guard from parameter referencing
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。在重载赋值运算符（\texttt{operator=}）时，我们必须要防范一种极度危险的操作：“自我赋值（Self-assignment）”，比如 \texttt{obj = obj;}。因为赋值操作通常会先释放自己原有的旧内存，如果是自我赋值，就会把自己的新数据也连同销毁。因此，标准的做法是利用 \texttt{this} 指针进行防御性检查：\texttt{if (this != \&other) \{ ... \}}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 136}
+\textbf{This pointer can be used directly to \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item \textbf{A. To manipulate self-referential data structures}
+    \item B. To manipulate any reference to pointers to member functions
+    \item C. To manipulate class references
+    \item D. To manipulate and disable any use of pointers
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。\texttt{this} 指针最常见的直接运用之一，就是在成员函数末尾返回 \texttt{*this}。这使得该函数返回了当前对象本身的引用，从而允许程序员像拼图一样进行极其优雅的“链式调用（Method Chaining）”，例如：\texttt{obj.setX(1).setY(2).print();}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 137}
+\textbf{Which is the correct syntax for declaring the type of this in a member function?}
+\begin{itemize}
+    \item A. classType [cv-qualifier-list] *const this;
+    \item B. classType const[cv-qualifier-list] *this;
+    \item C.[cv-qualifier-list]*const classType this;
+    \item \textbf{D.[cv-qualifier-list] classType *const this;}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。理解这一点的关键是：\texttt{this} 就像你的身份证，它从你“出生”（进入函数）那一刻起就绑定在你身上，\textbf{绝对不允许重新指向其他对象}。因此，必须将 \texttt{const} 放在 \texttt{*} 号的右边，声明它是一个“常量指针（Constant Pointer）”。若外层函数还有 \texttt{const} 修饰（即 \texttt{cv-qualifier-list}），则指向的数据也会变为不可变。
+
+% ---------------------------------------------------
+
+\subsection*{Question 139}
+\textbf{If a constructors should be capable of creating objects without argument and with arguments, which is a good alternative for this purpose?}
+\begin{itemize}
+    \item A. Use zero argument constructor
+    \item B. Use constructor with one parameter
+    \item \textbf{C. Use constructor with all default arguments}
+    \item D. Use default constructor
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。在 C++ 中，如果我们提供了一个所有参数都带有默认值的构造函数（例如 \texttt{ClassName(int a = 0, int b = 0);}），它就能同时扮演两个角色：当你传参时它是带参构造，当你不传参时它就是无参（默认）构造。这能减少代码冗余。
+
+% ---------------------------------------------------
+
+\subsection*{Question 142}
+\textbf{If the constructors are overloaded by using the default arguments, which problem may arise?}
+\begin{itemize}
+    \item \textbf{A. The constructors might have all the same arguments except the default arguments}
+    \item B. The constructors might have same return type
+    \item C. The constructors might have same number of arguments
+    \item D. The constructors can’t be overloaded with respect to default arguments
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。滥用带默认参数的构造函数极其容易引发\textbf{二义性（Ambiguity）冲突}。如果类中同时定义了 \texttt{A()} 和 \texttt{A(int x = 0)}，当用户编写 \texttt{A obj;} 试图实例化对象时，编译器将彻底精神分裂：它不知道你到底是想调用无参构造函数，还是想调用那个带默认值的函数，最终会导致直接报编译错误。
+
+% ---------------------------------------------------
+
+\subsection*{Question 145}
+\textbf{Which constructor definition will produce a compile time error?}
+\begin{itemize}
+    \item A. className(int x=0);
+    \item B. className(char c);
+    \item \textbf{C. className(int x=0, char c);}
+    \item D. className(char c, int x=0);
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。这是 C++ 形参默认值的铁律：\textbf{函数的默认参数必须严格遵循“从右向左”连续填充的原则}。你绝对不能把一个带有默认值的参数放在一个没有默认值的参数的左边。如果不遵守此规则，编译器在匹配参数时将引发灾难性的混乱。
+
+% ---------------------------------------------------
+
+\subsection*{Question 147}
+\textbf{Which is the correct statement for default constructors?}
+\begin{itemize}
+    \item A. The constructors with all the default arguments
+    \item B. The constructors with all the null and zero values
+    \item C. The constructors which can’t be defined by programmer
+    \item \textbf{D. The constructors with zero arguments}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。C++ 标准术语中的“默认构造函数（Default Constructor）”，狭义上就是专指那个\textbf{不接收任何参数}的构造函数（包括你手动写了空参数的，或者所有参数都提供默认值的，或者是编译器自动生成的）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 150}
+\textbf{What happens when new fails?}
+\begin{itemize}
+    \item A. Returns zero always
+    \item B. Throws an exception always
+    \item \textbf{C. Either throws an exception or returns zero}
+    \item D. Terminates the program
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。在现代 C++ 标准中，当堆内存耗尽导致 \texttt{new} 失败时，默认行为是抛出 \texttt{std::bad\_alloc} 异常。但如果你使用了特殊的“不抛异常”版本，即 \texttt{new (std::nothrow) Type;}，那么在分配失败时，它就不会抛异常，而是优雅地返回一个空指针 \texttt{nullptr} (即 0)。
+
+% ---------------------------------------------------
+
+\subsection*{Question 160}
+\textbf{If delete is used to delete an object which was not allocated using new \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Then out of memory error arises
+    \item B. Then unreachable code error arises
+    \item \textbf{C. Then unpredictable errors may arise}
+    \item D. Then undefined variable error arises
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。这是一个绝对禁忌的严重错误！\texttt{new} / \texttt{delete} 必须在堆（Heap）内存上成对使用。如果你试图对一个分配在栈（Stack）上或全局数据区的对象地址调用 \texttt{delete}，底层的内存管理器会因找不到合法的堆内存元数据块而崩溃，这在 C++ 中属于典型的未定义行为（Undefined Behavior, UB），会导致难以预测的恐怖后果。
+
+% ---------------------------------------------------
+
+\subsection*{Question 162}
+\textbf{When delete operator is used \rule{2cm}{0.15mm} (If object has a destructor)}
+\begin{itemize}
+    \item A. Object destructor is called after deallocation
+    \item \textbf{B. Object destructor is called before deallocation}
+    \item C. Object destructor is not used
+    \item D. Object destructor can be called anytime during destruction
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。与 \texttt{new} 操作符相反，\texttt{delete} 的执行过程严格分为两步：第一步，先\textbf{就地调用对象的析构函数}，让对象有尊严地清理掉自己手中的资源；第二步，再调用全局的 \texttt{operator delete}，将这块物理内存彻底交还给操作系统（deallocation）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 163}
+\textbf{If delete is applied to an object whose l-value is modifiable, then \rule{2cm}{0.15mm} after the object is deleted.}
+\begin{itemize}
+    \item A. Its value is defined as null
+    \item B. Its value is defined as void
+    \item C. Its value is defined as 0
+    \item \textbf{D. Its value is undefined}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。对指针执行 \texttt{delete} 操作，仅仅是把指针指向的那块内存还给了操作系统，\textbf{它并不会自动把你的指针变量清空为 \texttt{nullptr}}。操作结束后，这个指针里仍然保留着原来的物理地址，这就产生了一个极度危险的“悬挂指针（Dangling Pointer）”。任何后续对它的解引用，后果都是未定义（Undefined）的。这也是为什么我们在 delete 之后强烈建议手动写上 \texttt{ptr = nullptr;} 的原因。
+
+% ---------------------------------------------------
+
+\subsection*{Question 164}
+\textbf{Which is the correct syntax to delete an array of objects?}
+\begin{itemize}
+    \item \textbf{A. delete[] objectName;}
+    \item B. delete * objectName;
+    \item C. objectName[] delete;
+    \item D. delete objectName[];
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。使用 \texttt{new Type[N]} 申请的对象数组，在释放时必须配套使用带有方括号的 \texttt{delete[]}。方括号相当于给编译器的一个明显信号：不要只析构第一个元素，请去读取隐藏的数组长度信息，并调用数组中每一个元素的析构函数！若漏掉 \texttt{[]} 会引发严重的内存/资源泄漏。
+
+% ---------------------------------------------------
+
+\subsection*{Question 165}
+\textbf{The delete operator \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item \textbf{A. Invokes function operator delete}
+    \item B. Invokes function defined by user to delete
+    \item C. Invokes function defined in global scope to delete object
+    \item D. Doesn’t invoke any function
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。\texttt{delete} 是 C++ 的一个关键字级别的操作符，它在完成析构后，底层必然会调用配套的 \texttt{operator delete} 函数来实现物理内存的释放。虽然开发者可以重载自己的 \texttt{operator delete}，但若不显式指定，最终也会调用标准库提供的版本。
+
+% ---------------------------------------------------
+
+\subsection*{Question 167}
+\textbf{What are inbuilt classes?}
+\begin{itemize}
+    \item \textbf{A. The predefined classes in a language}
+    \item B. The classes that are defined by the user
+    \item C. The classes which are meant to be modified by the user
+    \item D. The classes which can’t be used by the user
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。“内置类（Inbuilt Classes）”是指由编程语言核心或者标准库预先定义好、开箱即用的类。在 C++ 中，最典型的内置类代表就是标准模板库（STL）中提供的 \texttt{std::string}，以及各类 I/O 流（如 \texttt{std::istream}）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 169}
+\textbf{What doesn’t inbuilt classes contain?}
+\begin{itemize}
+    \item A. Function prototype
+    \item B. Function declaration
+    \item C. Function definitions
+    \item \textbf{D. Objects}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。这道题重申了 OOP 的基本哲学理念：类（Class）永远只是描绘蓝图和设计规范的数据结构（里面包含函数声明和定义）。它本身是抽象的，里面\textbf{绝对不会直接包含实体化的对象（Objects）}。对象是运行时通过这份蓝图才被建造出来的。
+
+% ---------------------------------------------------
+
+\subsection*{Question 171}
+\textbf{What is an array of objects?}
+\begin{itemize}
+    \item \textbf{A. An array of instances of class represented by single name}
+    \item B. An array of instances of class represented by more than one name
+    \item C. An array of instances which have more than 2 instances
+    \item D. An array of instances which have different types
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。对象数组本质上就是内存中连续存放的、属于同一个类的多个实例（Instances）。为了方便索引和管理，它们在代码中共享同一个名字（Single name），开发者通过下标（例如 \texttt{students[0]}, \texttt{students[1]}）来分别定位每个独立的对象。
+
+\end{document}

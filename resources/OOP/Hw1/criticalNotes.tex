@@ -1,0 +1,204 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- 常用宏包 ---
+\usepackage[UTF8]{ctex} % 支持中文
+\usepackage[margin=1in]{geometry} % 页边距
+\usepackage{amsmath, amssymb} % 数学公式
+\usepackage{listings} % 代码块
+\usepackage{xcolor} % 代码高亮
+\usepackage{booktabs} % 表格样式
+\usepackage{hyperref} % 超链接
+
+% --- 代码高亮设置 ---
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black},
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5}
+}
+
+\title{OOP HW1}
+\author{Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\section{C++ OOP and Namespaces Questions}
+
+\subsection*{Question 8}
+\textbf{Which concept of OOP is false for C++?}
+\begin{itemize}
+    \item A. Code can be written without using classes
+    \item \textbf{B. Code must contain at least one class}
+    \item C. A class must have member functions
+    \item D. At least one object should be declared in code
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。C++ 是一门多范式（Multi-paradigm）语言。它不仅支持面向对象，还完全向下兼容 C 语言的面向过程编程。你可以写一个只有 \texttt{main()} 函数和几个普通计算程序的 \texttt{.cpp} 文件，里面不定义任何类，代码依然能完美编译和运行。因此，“代码必须包含类”这个说法在 C++ 中是绝对错误的。
+
+% ---------------------------------------------------
+
+\subsection*{Question 18}
+\textbf{Which feature allows open recursion, among the following?}
+\begin{itemize}
+    \item \textbf{A. Use of this pointer}
+    \item B. Use of pointers
+    \item C. Use of pass by value
+    \item D. Use of parameterized constructor
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。“开放递归（Open Recursion）”是面向对象中的一个术语，指的是在类的内部，一个成员函数去调用另一个成员函数。在 C++ 编译器底层，这种类内部的函数相互调用，实际上都是通过隐藏的 \texttt{this} 指针（例如隐式执行了 \texttt{this->anotherFunction()}）来完成的。这也是实现多态时，基类调用虚函数能正确路由到子类实现的关键机制。
+
+% ---------------------------------------------------
+
+\subsection*{Question 21}
+\textbf{Which among the following is false, for a member function of a class?}
+\begin{itemize}
+    \item A. All member functions must be defined
+    \item B. Member functions can be defined inside or outside the class body
+    \item \textbf{C. Member functions need not be declared inside the class definition}
+    \item D. Member functions can be made friend to another class using the friend keyword
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。C++ 的语法严格要求，类的所有行为规范必须在类的 \texttt{\{\}} 内部声明清楚。你可以把成员函数的\textbf{具体实现（函数体）}写在类的外面（使用作用域解析符 \texttt{ClassName::}），但你\textbf{必须}在类的大括号里面先写上它的\textbf{声明（函数原型）}。如果不声明，编译器将无法识别该函数属于这个类。
+
+% ---------------------------------------------------
+
+\subsection*{Question 32}
+\textbf{Abstraction principle includes\rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item A. Use abstraction at its minimum
+    \item B. Use abstraction to avoid longer codes
+    \item \textbf{C. Use abstraction whenever possible to avoid duplication}
+    \item D. Use abstraction whenever possible to achieve OOP
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{C}。抽象的核心目的不仅是隐藏细节，更是为了提炼共性。当你的代码中出现多处类似的逻辑时，软件工程的 DRY (Don't Repeat Yourself) 原则建议你将这些重复的部分“抽象”成一个公共的函数、类或基类。这能大幅提高代码的复用性和可维护性。
+
+% ---------------------------------------------------
+
+\subsection*{Question 33}
+\textbf{Encapsulation and abstraction differ as \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item \textbf{A. Binding and Hiding respectively}
+    \item B. Hiding and Binding respectively
+    \item C. Can be used any way
+    \item D. Hiding and hiding respectively
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。这是一道非常经典的区分题：\textbf{封装（Encapsulation）}侧重于\textbf{绑定（Binding）}，它把数据（属性）和操作数据的方法捆绑成一个不可分割的整体；而\textbf{抽象（Abstraction）}侧重于\textbf{隐藏（Hiding）}，它向外界隐藏内部复杂的运作机制，只暴露出最简单、必要的接口。
+
+% ---------------------------------------------------
+
+\subsection*{Question 34}
+\textbf{In terms of stream and files \rule{2cm}{0.15mm}}
+\begin{itemize}
+    \item \textbf{A. Abstraction is called a stream and device is called a file}
+    \item B. Abstraction is called a file and device is called a stream
+    \item C. Abstraction can be called both file and stream
+    \item D. Abstraction can’t be defined in terms of files and stream
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。在 C++ 的 I/O 系统中，“流（Stream）”是一个纯粹的\textbf{逻辑抽象}概念，代表数据的流动过程（如 \texttt{cin}, \texttt{cout}）。而“文件（File）”或者显示器、键盘等，则是具体存在的\textbf{物理设备（Device）}。我们通过操作“流”这个抽象层，来实现对物理设备的统一数据读写。
+
+% ---------------------------------------------------
+
+\subsection*{Question 37}
+\textbf{Which among the following is not a level of abstraction?}
+\begin{itemize}
+    \item A. Logical level
+    \item B. Physical level
+    \item C. View level
+    \item \textbf{D. External level}
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{D}。这道题的背景源自计算机科学中经典的数据抽象三层架构：1. \textbf{物理层（Physical level）}：数据在底层的实际存储方式；2. \textbf{逻辑层（Logical level）}：数据的结构与关系；3. \textbf{视图层（View level）}：用户界面上展示的特定数据子集。“External level（外部层）”通常在数据库领域的某些特定标准中作为 View level 的同义词，但在这种标准的三层架构单选题中，它被视为非标准层级或干扰项。
+
+% ---------------------------------------------------
+
+\subsection*{Question 40}
+\textbf{Identify the correct statement.}
+\begin{itemize}
+    \item \textbf{A. Namespace is used to group class, objects and functions}
+    \item B. Namespace is used to mark the beginning of the program
+    \item C. A namespace is used to separate the class, objects
+    \item D. Namespace is used to mark the beginning \& end of the program
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。命名空间（Namespace）的作用类似于文件系统中的“文件夹”。在大型工程中，为了防止不同的模块产生命名冲突（Name Collision），我们使用命名空间将相关的类、对象、变量和函数包裹并分组在一起，实现隔离和管理。
+
+% ---------------------------------------------------
+
+\subsection*{Question 41}
+\textbf{What is the use of Namespace?}
+\begin{itemize}
+    \item A. To encapsulate the data
+    \item \textbf{B. To structure a program into logical units}
+    \item C. Encapsulate the data \& structure a program into logical units
+    \item D. It is used to mark the beginning of the program
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{B}。这与第 40 题逻辑一致。类的主要目的是封装数据和方法（Encapsulate the data），而命名空间则是在更高的宏观维度上，将程序的代码架构划分为不同的“逻辑单元”或“模块”（例如 C++ 标准库的所有内容都被组织在 \texttt{std} 这个逻辑单元里）。
+
+% ---------------------------------------------------
+
+\subsection*{Question 47}
+\textbf{What will be the output of the following C++ code?}
+\begin{verbatim}
+#include <iostream>
+using namespace std;
+namespace extra {
+    int i;
+}
+void i() {
+    using namespace extra;
+    int i;
+    i = 9;
+    cout << i;
+}
+int main() {
+    enum letter { i, j };
+    class i { letter j; };
+    ::i();
+    return 0;
+}
+\end{verbatim}
+\begin{itemize}
+    \item \textbf{A. 9}
+    \item B. 10
+    \item C. compile time error
+    \item D. 11
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。这道题考察的是作用域解析和变量覆盖（Shadowing）。在 \texttt{main} 函数中，\texttt{::i()} 前面的 \texttt{::} 告诉编译器忽略局部作用域里的枚举 \texttt{i} 和类 \texttt{i}，直接调用全局函数 \texttt{void i()}。在函数 \texttt{i()} 内部，虽然引入了 \texttt{extra} 命名空间，但紧接着声明的局部变量 \texttt{int i;} 优先级更高，直接屏蔽（Shadow）了命名空间里的 \texttt{i}。因此，\texttt{i = 9} 修改的是局部变量，最终输出 9。
+
+% ---------------------------------------------------
+
+\subsection*{Question 54}
+\textbf{What will be the output of the following C++ code?}
+\begin{verbatim}
+#include <iostream>
+using namespace std;
+namespace {
+    int var = 10;
+}
+int main() {
+    cout << var;
+}
+\end{verbatim}
+\begin{itemize}
+    \item \textbf{A. 10}
+    \item B. Error
+    \item C. Some garbage value
+    \item D. Nothing but program runs perfectly
+\end{itemize}
+
+\textbf{解析：}正确选项是 \textbf{A}。代码中使用的是\textbf{匿名命名空间（Unnamed Namespace）}。匿名命名空间中的变量和函数自动具有内部链接属性（类似于 \texttt{static} 全局变量），它们的作用域被严格限制在当前文件中。在当前文件的 \texttt{main()} 函数中，可以直接通过变量名 \texttt{var} 访问它而无需任何前缀，因此程序正常输出 10。
+
+
+\end{document}
