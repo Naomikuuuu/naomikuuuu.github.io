@@ -170,13 +170,35 @@
   function create() {
     var oml2d = window.__oml2d = OML2D.loadOml2d(CONFIG);
 
-    // 点击反应
+    // 点击 & 双击检测
     var clickMsgs = [
       '哎呀，别戳我~', '好痒！', '嗯？怎么啦？',
       '嘻嘻~', '有什么想说的吗？'
     ];
+    var lastHitTime = 0, hitTimer = null;
     oml2d.add('hit', function () {
-      say(oml2d, clickMsgs, 3000, 5);
+      var now = Date.now();
+      if (now - lastHitTime < 400) {
+        // 双击 → 旋转
+        clearTimeout(hitTimer);
+        lastHitTime = 0;
+        var steps = [0.1, 0.2, 0.3, 0.2, 0.1, 0, -0.1, -0.15, -0.1, -0.05, 0];
+        var i = 0;
+        say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
+        function step() {
+          if (i >= steps.length) return;
+          oml2d.setModelRotation(steps[i]);
+          i++;
+          setTimeout(step, 60);
+        }
+        step();
+        return;
+      }
+      lastHitTime = now;
+      clearTimeout(hitTimer);
+      hitTimer = setTimeout(function () {
+        say(oml2d, clickMsgs, 3000, 5);
+      }, 420);
     });
 
     // 首页专属问候
@@ -206,25 +228,6 @@
     }
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // 双击旋转
-    function bindDblClick() {
-      var canvas = document.querySelector('canvas');
-      if (!canvas) { setTimeout(bindDblClick, 1000); return; }
-      canvas.addEventListener('dblclick', function () {
-        var steps = [0.1, 0.2, 0.3, 0.2, 0.1, 0, -0.1, -0.15, -0.1, -0.05, 0];
-        var i = 0;
-        var msgs = ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼'];
-        say(oml2d, msgs, 3000, 5);
-        function step() {
-          if (i >= steps.length) return;
-          oml2d.setModelRotation(steps[i]);
-          i++;
-          setTimeout(step, 60);
-        }
-        step();
-      });
-    }
-    setTimeout(bindDblClick, 1500);
 
     // 天气联动
     fetchWeather(function () {
