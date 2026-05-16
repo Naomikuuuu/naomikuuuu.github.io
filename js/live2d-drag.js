@@ -20,7 +20,6 @@
     container.style.left = sl + 'px';
     container.style.top = st + 'px';
     container.style.cursor = 'grabbing';
-    e.preventDefault();
   }
 
   function onMouseMove(e) {

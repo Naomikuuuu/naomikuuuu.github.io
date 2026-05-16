@@ -45,7 +45,7 @@
       },
       copyTips: {
         duration: 3000,
-        priority: 3,
+        priority: 1,
         message: [
           '你复制了什么呢？记得注明出处哦~',
           '转载要记得署名哟！',
@@ -170,36 +170,45 @@
   function create() {
     var oml2d = window.__oml2d = OML2D.loadOml2d(CONFIG);
 
-    // 点击 & 双击检测
+    // 点击 & 双击检测（DOM 级，比模型 hit 区域更可靠）
     var clickMsgs = [
       '哎呀，别戳我~', '好痒！', '嗯？怎么啦？',
       '嘻嘻~', '有什么想说的吗？'
     ];
-    var lastHitTime = 0, hitTimer = null;
-    oml2d.add('hit', function () {
-      var now = Date.now();
-      if (now - lastHitTime < 400) {
-        // 双击 → 旋转
-        clearTimeout(hitTimer);
-        lastHitTime = 0;
-        var steps = [0.1, 0.2, 0.3, 0.2, 0.1, 0, -0.1, -0.15, -0.1, -0.05, 0];
-        var i = 0;
-        say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
-        function step() {
-          if (i >= steps.length) return;
-          oml2d.setModelRotation(steps[i]);
-          i++;
-          setTimeout(step, 60);
+    var clickTimer = null, lastClickTime = 0;
+
+    function bindCanvasClicks() {
+      var canvas = document.querySelector('canvas');
+      if (!canvas) { setTimeout(bindCanvasClicks, 800); return; }
+      canvas.addEventListener('click', function (e) {
+        var now = Date.now();
+        if (now - lastClickTime < 400) {
+          // 双击 → 旋转
+          clearTimeout(clickTimer);
+          clickTimer = null;
+          lastClickTime = 0;
+          var steps = [0.1, 0.2, 0.3, 0.2, 0.1, 0, -0.1, -0.15, -0.1, -0.05, 0];
+          var i = 0;
+          say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
+          (function step() {
+            if (i >= steps.length) return;
+            oml2d.setModelRotation(steps[i]);
+            i++;
+            setTimeout(step, 60);
+          })();
+          e.preventDefault();
+          return;
         }
-        step();
-        return;
-      }
-      lastHitTime = now;
-      clearTimeout(hitTimer);
-      hitTimer = setTimeout(function () {
-        say(oml2d, clickMsgs, 3000, 5);
-      }, 420);
-    });
+        lastClickTime = now;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(function () {
+          clickTimer = null;
+          say(oml2d, clickMsgs, 3000, 5);
+        }, 420);
+        e.preventDefault();
+      });
+    }
+    setTimeout(bindCanvasClicks, 1500);
 
     // 首页专属问候
     if (isHome()) {
