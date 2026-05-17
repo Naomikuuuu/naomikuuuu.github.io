@@ -185,6 +185,14 @@
   function create() {
     var oml2d = window.__oml2d = OML2D.loadOml2d(CONFIG);
 
+    // 缓存 Cubism CoreModel，用于 Live2D 参数级旋转（驱动网格变形）
+    var coreModel = null;
+    oml2d.onLoad(function () {
+      try {
+        coreModel = oml2d.models.model.internalModel.coreModel;
+      } catch (e) {}
+    });
+
     // 点击 & 双击检测（DOM 级，比模型 hit 区域更可靠）
     var clickMsgs = [
       '哎呀，别戳我~', '好痒！', '嗯？怎么啦？',
@@ -198,25 +206,23 @@
       canvas.addEventListener('click', function (e) {
         var now = Date.now();
         if (now - lastClickTime < 400) {
-          // 双击 → 弹跳动画
+          // 双击 → Live2D 参数旋转（驱动网格变形，非 CSS 纸片）
           clearTimeout(clickTimer);
           clickTimer = null;
           lastClickTime = 0;
           say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
-          canvas.style.transition = 'none';
-          canvas.style.transform = 'translateY(0px)';
-          var jumps = [0, -8, -16, -20, -16, -8, 0, 4, 0];
-          var i = 0;
-          (function bounce() {
-            if (i >= jumps.length) {
-              canvas.style.transition = 'transform 0.2s ease-out';
-              canvas.style.transform = 'translateY(0px)';
-              return;
-            }
-            canvas.style.transform = 'translateY(' + jumps[i] + 'px)';
-            i++;
-            setTimeout(bounce, 50);
-          })();
+          if (coreModel) {
+            var angles = [0, 3, 6, 9, 12, 9, 6, 3, 0, -3, -6, -9, -6, -3, 0];
+            var idx = 0;
+            (function step() {
+              if (idx >= angles.length) return;
+              try {
+                coreModel.setParameterValueById('ParamAngleZ', angles[idx], 1);
+              } catch (e) {}
+              idx++;
+              setTimeout(step, 60);
+            })();
+          }
           e.preventDefault();
           return;
         }
