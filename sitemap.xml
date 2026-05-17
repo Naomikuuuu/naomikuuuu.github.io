@@ -65,6 +65,13 @@
 
   
   <url>
+    <loc>https://naomikuuuu.github.io/tags/HPCG/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://naomikuuuu.github.io/tags/C/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -106,14 +113,14 @@
     <priority>0.2</priority>
   </url>
   
+
+  
   <url>
-    <loc>https://naomikuuuu.github.io/tags/HPCG/</loc>
+    <loc>https://naomikuuuu.github.io/categories/HPC/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
-  
-
   
   <url>
     <loc>https://naomikuuuu.github.io/categories/%E7%BC%96%E7%A8%8B/</loc>
@@ -124,13 +131,6 @@
   
   <url>
     <loc>https://naomikuuuu.github.io/categories/%E6%95%B0%E5%AD%A6/</loc>
-    <lastmod>2026-05-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://naomikuuuu.github.io/categories/HPC/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

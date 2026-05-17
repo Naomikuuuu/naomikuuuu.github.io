@@ -185,14 +185,6 @@
   function create() {
     var oml2d = window.__oml2d = OML2D.loadOml2d(CONFIG);
 
-    // 缓存 Cubism CoreModel，用于 Live2D 参数级旋转（驱动网格变形）
-    var coreModel = null;
-    oml2d.onLoad(function () {
-      try {
-        coreModel = oml2d.models.model.internalModel.coreModel;
-      } catch (e) {}
-    });
-
     // 点击 & 双击检测（DOM 级，比模型 hit 区域更可靠）
     var clickMsgs = [
       '哎呀，别戳我~', '好痒！', '嗯？怎么啦？',
@@ -211,13 +203,21 @@
           clickTimer = null;
           lastClickTime = 0;
           say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
-          if (coreModel) {
+
+          // 懒加载访问 Cubism CoreModel，不依赖 onLoad 时序
+          var cm = null;
+          try {
+            cm = oml2d.models.model.internalModel.coreModel;
+          } catch (e) {}
+          console.log('[l2d]双击旋转: models=' + !!oml2d.models + ' model=' + !!(oml2d.models && oml2d.models.model) + ' im=' + !!(cm) + ' setParam=' + (cm ? typeof cm.setParameterValueById : 'N/A'));
+
+          if (cm && cm.setParameterValueById) {
             var angles = [0, 3, 6, 9, 12, 9, 6, 3, 0, -3, -6, -9, -6, -3, 0];
             var idx = 0;
             (function step() {
               if (idx >= angles.length) return;
               try {
-                coreModel.setParameterValueById('ParamAngleZ', angles[idx], 1);
+                cm.setParameterValueById('ParamAngleZ', angles[idx], 1);
               } catch (e) {}
               idx++;
               setTimeout(step, 60);
