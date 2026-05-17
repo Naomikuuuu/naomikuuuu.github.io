@@ -97,10 +97,22 @@
     return null;
   }
 
-  // ---- 天气联动 ----
+  // ---- 天气联动 (localStorage 缓存1小时) ----
   var weatherMsg = '';
   function fetchWeather(cb) {
     try {
+      var cacheKey = '__l2d_weather';
+      var cache = localStorage.getItem(cacheKey);
+      if (cache) {
+        try {
+          var parsed = JSON.parse(cache);
+          if (parsed.ts && (Date.now() - parsed.ts) < 3600000) {
+            weatherMsg = parsed.data;
+            cb();
+            return;
+          }
+        } catch (e) {}
+      }
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'https://wttr.in/?format=j1', true);
       xhr.timeout = 5000;
@@ -133,6 +145,9 @@
           else if (code >= 176 && code < 400) weatherMsg = base + '记得带伞，别淋湿了哦~';
           else if (code >= 395 || code === 230 || code === 227) weatherMsg = base + '外面好冷，注意保暖！';
           else weatherMsg = base;
+          try {
+            localStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), data: weatherMsg }));
+          } catch (e) {}
         } catch (e) {}
         cb();
       };
@@ -183,16 +198,27 @@
       canvas.addEventListener('click', function (e) {
         var now = Date.now();
         if (now - lastClickTime < 400) {
-          // 双击 → 旋转
+          // 双击 → 旋转 (CSS transform 实现)
           clearTimeout(clickTimer);
           clickTimer = null;
           lastClickTime = 0;
-          var steps = [0.1, 0.2, 0.3, 0.2, 0.1, 0, -0.1, -0.15, -0.1, -0.05, 0];
-          var i = 0;
           say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
+          var angle = 0;
+          var totalAngle = Math.PI * 2;
+          var steps = 25;
+          var stepAngle = totalAngle / steps;
+          var i = 0;
+          canvas.style.transformOrigin = 'center bottom';
+          canvas.style.transition = 'none';
+          canvas.style.transform = 'rotate(0rad)';
           (function step() {
-            if (i >= steps.length) return;
-            oml2d.setModelRotation(steps[i]);
+            if (i > steps) {
+              canvas.style.transition = 'transform 0.3s ease-out';
+              canvas.style.transform = 'rotate(0rad)';
+              return;
+            }
+            angle += stepAngle;
+            canvas.style.transform = 'rotate(' + angle + 'rad)';
             i++;
             setTimeout(step, 60);
           })();
