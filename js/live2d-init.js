@@ -133,20 +133,14 @@
     sayHello: false,
     menus: {
       items: function (defaultItems) {
-        return defaultItems.concat([
-          {
-            id: 'lang-cn',
-            title: '中文模式',
-            icon: 'icon-[中]',
-            onClick: function () { switchLang('cn'); }
-          },
-          {
-            id: 'lang-jp',
-            title: '日本語',
-            icon: 'icon-[日]',
-            onClick: function () { switchLang('jp'); }
-          }
-        ]);
+        // 删除默认的 About，换成语言切换
+        var filtered = defaultItems.filter(function (item) { return item.id !== 'About'; });
+        return filtered.concat([{
+          id: 'lang-toggle',
+          icon: 'icon-switch',
+          title: '中 ⇄ 日',
+          onClick: function () { switchLang(lang === 'cn' ? 'jp' : 'cn'); }
+        }]);
       }
     },
     tips: {
