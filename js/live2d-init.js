@@ -198,27 +198,24 @@
       canvas.addEventListener('click', function (e) {
         var now = Date.now();
         if (now - lastClickTime < 400) {
-          // 双击 → 旋转 (CSS transform 实现)
+          // 双击 → 弹跳动画
           clearTimeout(clickTimer);
           clickTimer = null;
           lastClickTime = 0;
           say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
           canvas.style.transition = 'none';
-          canvas.style.transform = 'rotateY(0deg)';
-          canvas.parentElement.style.perspective = '600px';
-          var angle = 0;
-          var steps = 20;
+          canvas.style.transform = 'translateY(0px)';
+          var jumps = [0, -8, -16, -20, -16, -8, 0, 4, 0];
           var i = 0;
-          (function step() {
-            if (i > steps) {
-              canvas.style.transition = 'transform 0.4s ease-out';
-              canvas.style.transform = 'rotateY(0deg)';
+          (function bounce() {
+            if (i >= jumps.length) {
+              canvas.style.transition = 'transform 0.2s ease-out';
+              canvas.style.transform = 'translateY(0px)';
               return;
             }
-            angle += 18;
-            canvas.style.transform = 'rotateY(' + angle + 'deg)';
+            canvas.style.transform = 'translateY(' + jumps[i] + 'px)';
             i++;
-            setTimeout(step, 60);
+            setTimeout(bounce, 50);
           })();
           e.preventDefault();
           return;
