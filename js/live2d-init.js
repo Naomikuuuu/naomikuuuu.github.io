@@ -210,22 +210,21 @@
             cm = oml2d.models.model.internalModel.coreModel;
           } catch (e) {}
 
-          // 诊断：Cubism 原生方法在原型上，用 in 检测
-          console.log('[l2d] getParamIndex:', 'getParamIndex' in (cm || {}));
-          console.log('[l2d] getParamFloat:', 'getParamFloat' in (cm || {}));
-          console.log('[l2d] setParamFloat:', 'setParamFloat' in (cm || {}));
-          console.log('[l2d] addToParamFloat:', 'addToParamFloat' in (cm || {}));
-
-          // 尝试用 getParamIndex 查角度参数是否存在
-          if (cm && cm.getParamIndex) {
-            ['ParamAngleX','ParamAngleY','ParamAngleZ','ParamBodyAngleX','ParamBodyAngleY','ParamBodyAngleZ'].forEach(function(id) {
+          if (cm && cm.addToParamFloat) {
+            // 用 addToParamFloat 驱动 ParamBodyAngleY + ParamAngleZ
+            // 累加制：正→停→负→停→正，总和为零回到原位
+            var deltas  = [ 3, 3, 3, 0, 0, -3,-3,-3,-3,-3,-3, 0, 3, 3, 3];
+            var zDeltas = [ 1, 1, 1, 0, 0, -1,-1,-1,-1,-1,-1, 0, 1, 1, 1];
+            var idx = 0;
+            (function step() {
+              if (idx >= deltas.length) return;
               try {
-                var idx = cm.getParamIndex(id);
-                console.log('[l2d] 参数 ' + id + ' -> index=' + idx);
-              } catch(e) {
-                console.log('[l2d] 参数 ' + id + ' -> 不存在');
-              }
-            });
+                cm.addToParamFloat('ParamBodyAngleY', deltas[idx], 1);
+                cm.addToParamFloat('ParamAngleZ', zDeltas[idx], 1);
+              } catch (e) {}
+              idx++;
+              setTimeout(step, 60);
+            })();
           }
           e.preventDefault();
           return;
