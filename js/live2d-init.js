@@ -119,9 +119,6 @@
     cold: '寒いね…暖かい歌、届けるよ。'
   };
 
-  // ---- 状态栏标签 ----
-  function statusLabel(l) { return l === 'cn' ? '初音ミク、参上！[中]' : 'ミク、ただいま！[日]'; }
-
   // ---- CONFIG ----
   var CONFIG = {
     dockedPosition: 'right',
@@ -134,6 +131,24 @@
     }],
     parentElement: document.body,
     sayHello: false,
+    menus: {
+      items: function (defaultItems) {
+        return defaultItems.concat([
+          {
+            id: 'lang-cn',
+            title: '中文模式',
+            icon: 'icon-[中]',
+            onClick: function () { switchLang('cn'); }
+          },
+          {
+            id: 'lang-jp',
+            title: '日本語',
+            icon: 'icon-[日]',
+            onClick: function () { switchLang('jp'); }
+          }
+        ]);
+      }
+    },
     tips: {
       messageLine: 2,
       style: { width: '220px', height: '100px' },
@@ -165,7 +180,7 @@
       }
     },
     statusBar: {
-      loadSuccessMessage: '初音ミク、参上！[中]',
+      loadSuccessMessage: '初音ミク、参上！',
       restMessage: 'ミク充电中...zzZ',
       restMessageDuration: 10000
     }
@@ -286,6 +301,19 @@
     oml2d.tipsMessage(msg, dur || 4000, pri || 4);
   }
 
+  // ---- 语言切换 (供菜单项调用) ----
+  function switchLang(newLang) {
+    if (lang === newLang) return;
+    lang = newLang;
+    var oml2d = window.__oml2d;
+    if (!oml2d) return;
+    try { oml2d.options.tips.copyTips.message = (lang === 'cn') ? copyCN : copyJP; } catch(e) {}
+    var swMsgs = (lang === 'cn')
+      ? ['已切换为中文〜', '说中文啦！有什么想聊的？']
+      : ['日本語に切り替えたよ！', '日本語モード、スタート！'];
+    say(oml2d, swMsgs, 3000, 5);
+  }
+
   function boot() {
     if (typeof OML2D === 'undefined') {
       var s = document.createElement('script');
@@ -306,19 +334,6 @@
       var pool = (lang === 'cn') ? idleCN : idleJP;
       say(oml2d, pool, 5000, 2);
     }, 15000);
-
-    // ---- 状态栏点击 → 切换语言 ----
-    oml2d.setStatusBarClickEvent(function () {
-      lang = (lang === 'cn') ? 'jp' : 'cn';
-      oml2d.statusBarPopup(statusLabel(lang), 2000);
-      // 同步更新 copyTips
-      try { oml2d.options.tips.copyTips.message = (lang === 'cn') ? copyCN : copyJP; } catch(e) {}
-      // 立即说一句当前语言的提示
-      var swMsgs = (lang === 'cn')
-        ? ['已切换为中文〜', '说中文啦！有什么想聊的？']
-        : ['日本語に切り替えたよ！', '日本語モード、スタート！'];
-      say(oml2d, swMsgs, 3000, 5);
-    });
 
     // ---- 点击 / 双击对话 ----
     var clickTimer = null, lastClickTime = 0;
