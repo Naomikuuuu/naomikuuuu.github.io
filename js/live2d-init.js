@@ -203,22 +203,20 @@
           clickTimer = null;
           lastClickTime = 0;
           say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
-          var angle = 0;
-          var totalAngle = Math.PI * 2;
-          var steps = 25;
-          var stepAngle = totalAngle / steps;
-          var i = 0;
-          canvas.style.transformOrigin = 'center bottom';
           canvas.style.transition = 'none';
-          canvas.style.transform = 'rotate(0rad)';
+          canvas.style.transform = 'rotateY(0deg)';
+          canvas.parentElement.style.perspective = '600px';
+          var angle = 0;
+          var steps = 20;
+          var i = 0;
           (function step() {
             if (i > steps) {
-              canvas.style.transition = 'transform 0.3s ease-out';
-              canvas.style.transform = 'rotate(0rad)';
+              canvas.style.transition = 'transform 0.4s ease-out';
+              canvas.style.transform = 'rotateY(0deg)';
               return;
             }
-            angle += stepAngle;
-            canvas.style.transform = 'rotate(' + angle + 'rad)';
+            angle += 18;
+            canvas.style.transform = 'rotateY(' + angle + 'deg)';
             i++;
             setTimeout(step, 60);
           })();
