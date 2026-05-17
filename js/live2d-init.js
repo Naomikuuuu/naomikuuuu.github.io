@@ -210,29 +210,22 @@
             cm = oml2d.models.model.internalModel.coreModel;
           } catch (e) {}
 
-          if (cm) {
-            // 诊断：枚举 cm 上所有与参数相关的方法/属性
-            var paramKeys = Object.keys(cm).filter(function (k) {
-              return /param|add|set|get/i.test(k);
+          // 诊断：Cubism 原生方法在原型上，用 in 检测
+          console.log('[l2d] getParamIndex:', 'getParamIndex' in (cm || {}));
+          console.log('[l2d] getParamFloat:', 'getParamFloat' in (cm || {}));
+          console.log('[l2d] setParamFloat:', 'setParamFloat' in (cm || {}));
+          console.log('[l2d] addToParamFloat:', 'addToParamFloat' in (cm || {}));
+
+          // 尝试用 getParamIndex 查角度参数是否存在
+          if (cm && cm.getParamIndex) {
+            ['ParamAngleX','ParamAngleY','ParamAngleZ','ParamBodyAngleX','ParamBodyAngleY','ParamBodyAngleZ'].forEach(function(id) {
+              try {
+                var idx = cm.getParamIndex(id);
+                console.log('[l2d] 参数 ' + id + ' -> index=' + idx);
+              } catch(e) {
+                console.log('[l2d] 参数 ' + id + ' -> 不存在');
+              }
             });
-            var allKeys = Object.keys(cm);
-            console.log('[l2d] coreModel 参数相关 keys:', paramKeys);
-            console.log('[l2d] coreModel 前30个 keys:', allKeys.slice(0, 30));
-
-            // 尝试获取参数列表的各种可能方法名
-            var paramIds = null;
-            try { paramIds = cm.getParameterIds(); } catch (e) {}
-            if (!paramIds) try { paramIds = cm._parameterIds; } catch (e) {}
-            if (!paramIds) try { paramIds = cm.getParamIds(); } catch (e) {}
-            console.log('[l2d] 模型参数列表:', paramIds);
-
-            // 如果拿到了参数列表，过滤出角度相关参数
-            if (paramIds && paramIds.length) {
-              var angleParams = paramIds.filter(function (id) {
-                return /angle/i.test(id);
-              });
-              console.log('[l2d] 角度相关参数:', angleParams);
-            }
           }
           e.preventDefault();
           return;
