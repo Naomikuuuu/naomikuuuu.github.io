@@ -209,15 +209,16 @@
           try {
             cm = oml2d.models.model.internalModel.coreModel;
           } catch (e) {}
-          console.log('[l2d]双击旋转: models=' + !!oml2d.models + ' model=' + !!(oml2d.models && oml2d.models.model) + ' im=' + !!(cm) + ' setParam=' + (cm ? typeof cm.setParameterValueById : 'N/A'));
 
-          if (cm && cm.setParameterValueById) {
-            var angles = [0, 3, 6, 9, 12, 9, 6, 3, 0, -3, -6, -9, -6, -3, 0];
+          if (cm && cm.addParameterValueById) {
+            // 用 addParameterValueById 驱动 Live2D 参数（Cubism 是累加制）
+            // 正 → 停 → 负 → 停 → 正，总和为0，回到原位
+            var deltas = [0.5,0.5,0.5, 0,0, -0.5,-0.5,-0.5,-0.5,-0.5,-0.5, 0, 0.5,0.5,0.5];
             var idx = 0;
             (function step() {
-              if (idx >= angles.length) return;
+              if (idx >= deltas.length) return;
               try {
-                cm.setParameterValueById('ParamAngleZ', angles[idx], 1);
+                cm.addParameterValueById('ParamAngleZ', deltas[idx]);
               } catch (e) {}
               idx++;
               setTimeout(step, 60);
