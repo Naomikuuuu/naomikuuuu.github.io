@@ -204,25 +204,35 @@
           lastClickTime = 0;
           say(oml2d, ['转圈圈~', '晕了吗？', '啦啦啦~', '旋转跳跃我闭着眼！'], 3000, 5);
 
-          // 懒加载访问 Cubism CoreModel，不依赖 onLoad 时序
+          // 懒加载访问 Cubism CoreModel
           var cm = null;
           try {
             cm = oml2d.models.model.internalModel.coreModel;
           } catch (e) {}
 
-          if (cm && cm.addParameterValueById) {
-            // 用 addParameterValueById 驱动 Live2D 参数（Cubism 是累加制）
-            // 正 → 停 → 负 → 停 → 正，总和为0，回到原位
-            var deltas = [0.5,0.5,0.5, 0,0, -0.5,-0.5,-0.5,-0.5,-0.5,-0.5, 0, 0.5,0.5,0.5];
-            var idx = 0;
-            (function step() {
-              if (idx >= deltas.length) return;
-              try {
-                cm.addParameterValueById('ParamAngleZ', deltas[idx]);
-              } catch (e) {}
-              idx++;
-              setTimeout(step, 60);
-            })();
+          if (cm) {
+            // 诊断：枚举 cm 上所有与参数相关的方法/属性
+            var paramKeys = Object.keys(cm).filter(function (k) {
+              return /param|add|set|get/i.test(k);
+            });
+            var allKeys = Object.keys(cm);
+            console.log('[l2d] coreModel 参数相关 keys:', paramKeys);
+            console.log('[l2d] coreModel 前30个 keys:', allKeys.slice(0, 30));
+
+            // 尝试获取参数列表的各种可能方法名
+            var paramIds = null;
+            try { paramIds = cm.getParameterIds(); } catch (e) {}
+            if (!paramIds) try { paramIds = cm._parameterIds; } catch (e) {}
+            if (!paramIds) try { paramIds = cm.getParamIds(); } catch (e) {}
+            console.log('[l2d] 模型参数列表:', paramIds);
+
+            // 如果拿到了参数列表，过滤出角度相关参数
+            if (paramIds && paramIds.length) {
+              var angleParams = paramIds.filter(function (id) {
+                return /angle/i.test(id);
+              });
+              console.log('[l2d] 角度相关参数:', angleParams);
+            }
           }
           e.preventDefault();
           return;
