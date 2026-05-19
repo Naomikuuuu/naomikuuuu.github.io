@@ -2,6 +2,13 @@
   if (window.__live2dInited) return;
   window.__live2dInited = true;
 
+  function isMobileLike() {
+    return window.matchMedia &&
+      window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+  }
+
+  if (isMobileLike()) return;
+
   // ---- 语言状态 (默认中文，点状态栏切换) ----
   var lang = 'cn';
 

@@ -2,6 +2,13 @@
   if (window.__live2dDragInited) return;
   window.__live2dDragInited = true;
 
+  function isMobileLike() {
+    return window.matchMedia &&
+      window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+  }
+
+  if (isMobileLike()) return;
+
   var container = null;
   var dragging = false, moved = false;
   var sx, sy, sl, st;
