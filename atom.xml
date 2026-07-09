@@ -10,7 +10,23 @@
   <rights>All rights reserved 2026, Naomiku</rights>
   <subtitle>Naomiku 的个人技术博客，记录数学学习、C++ 编程、高性能计算与课程实验。</subtitle>
   <title>Naomiku的自留地</title>
-  <updated>2026-07-08T16:00:00.000Z</updated>
+  <updated>2026-07-09T12:00:00.000Z</updated>
+  <entry>
+    <author>
+      <name>Naomiku</name>
+    </author>
+    <category term="数学" scheme="https://naomikuuuu.com/categories/%E6%95%B0%E5%AD%A6/"/>
+    <category term="统计学习" scheme="https://naomikuuuu.com/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0/"/>
+    <category term="机器学习" scheme="https://naomikuuuu.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <category term="因果推断" scheme="https://naomikuuuu.com/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/"/>
+    <category term="复习笔记" scheme="https://naomikuuuu.com/tags/%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://naomikuuuu.com/2026/07/09/Statistical-Learning-Notes/</id>
+    <link href="https://naomikuuuu.com/2026/07/09/Statistical-Learning-Notes/"/>
+    <published>2026-07-09T12:00:00.000Z</published>
+    <summary>系统整理统计学习课程内容，涵盖线性模型、正则化、分类、SVM、核方法、树模型、因果推断、工具变量及典型考试题。</summary>
+    <title>统计学习系统笔记：从监督学习到因果推断</title>
+    <updated>2026-07-09T12:00:00.000Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Naomiku</name>

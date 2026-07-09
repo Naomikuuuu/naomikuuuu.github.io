@@ -84,8 +84,23 @@
   text-decoration: underline;
 }
 
-/* ===== OOP 错题折叠卡片 ===== */
-.oop-question {
+/* ===== OOP 错题与答案 ===== */
+.oop-question-title {
+  margin: 1.5rem 0 0.75rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 0 8px 8px 0;
+  background: rgba(74, 158, 255, 0.08);
+  font-size: 1.05rem;
+}
+
+.oop-question-context {
+  margin: 1.5rem 0 0.75rem;
+  color: var(--font-color);
+  font-size: 1.1rem;
+}
+
+.oop-answer {
   margin: 1rem 0;
   overflow: hidden;
   border: 1px solid rgba(74, 158, 255, 0.3);
@@ -93,23 +108,23 @@
   background: rgba(74, 158, 255, 0.04);
 }
 
-.oop-question summary {
+.oop-answer summary {
   padding: 0.9rem 1rem;
   cursor: pointer;
   user-select: none;
   background: rgba(74, 158, 255, 0.08);
 }
 
-.oop-question summary:hover {
+.oop-answer summary:hover {
   background: rgba(74, 158, 255, 0.14);
 }
 
-.oop-question > :not(summary) {
+.oop-answer > :not(summary) {
   margin-right: 1rem;
   margin-left: 1rem;
 }
 
-.oop-question > pre {
+.oop-answer > pre {
   margin-right: 1rem;
   margin-left: 1rem;
 }
