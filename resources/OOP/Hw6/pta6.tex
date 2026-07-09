@@ -1,0 +1,1111 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- 常用宏包 ---
+\usepackage[UTF8]{ctex}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+% --- 代码高亮设置 ---
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black},
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5}
+}
+
+\title{OOP HW4 错题整理：Template, STL, String \& Exception}
+\author{Notes}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{总览}
+
+本份笔记按照前面整理出的 \textbf{1--100 题编号}记录，不重新编号。整理范围包括：
+\[
+1,\ 5,\ 17,\ 18,\ 25,\ 27,\ 30,\ 31,\ 32,\ 34,\ 41,\ 43,\ 44,\ 49,\ 53,\ 55,\ 66,\ 67,\ 71\text{--}72,\ 87
+\]
+以及前面单独问过的异常题：
+\[
+69,\ 73,\ 78,\ 86,\ 93,\ 94.
+\]
+
+\bigskip
+
+\noindent \textbf{核心主线：}
+\begin{itemize}
+    \item \textbf{template}：模板不是具体代码，实例化后才形成具体函数或具体类。
+    \item \textbf{class template}：使用类模板创建对象时，一般需要写模板实参，如 \texttt{MyClass<int> a(10);}。
+    \item \textbf{STL}：容器、迭代器、算法相互配合，不是完全孤立的三部分。
+    \item \textbf{string}：注意 \texttt{cin >> s}、\texttt{getline}、下标越界和字符运算。
+    \item \textbf{exception}：多个 \texttt{catch} 从上到下匹配；派生类异常应写在基类异常之前；\texttt{throw;} 表示重抛当前异常。
+\end{itemize}
+
+% ---------------------------------------------------
+
+\section*{一、模板与类模板}
+
+\subsection*{Question 1}
+\textbf{原题：}现有声明：
+\begin{lstlisting}
+template <class T>
+class Test { ... };
+\end{lstlisting}
+则以下哪一个声明不可能正确？
+\begin{itemize}
+    \item \textbf{A.} \texttt{Test a;}
+    \item B. \texttt{Test<int> a;}
+    \item C. \texttt{Test<float> a;}
+    \item D. \texttt{Test<Test<int>> a;}
+\end{itemize}
+
+\[
+\boxed{\text{答案：A}}
+\]
+
+\textbf{解析：}类模板不是具体类，使用时通常要给出模板实参：
+\begin{lstlisting}
+Test<int> a;
+Test<float> b;
+Test<Test<int>> c;
+\end{lstlisting}
+而
+\begin{lstlisting}
+Test a;
+\end{lstlisting}
+没有说明 \texttt{T} 是什么类型，因此不正确。
+
+\textbf{易错点：}函数模板可以通过函数实参自动推导类型，但类模板创建对象时，传统 C++ 语境下一般不能直接省略模板实参。本题按基础 C++ 题库语境处理。
+
+% ---------------------------------------------------
+
+\subsection*{Question 5}
+\textbf{原题：}关于函数模板，描述错误的是。
+\begin{itemize}
+    \item A. 函数模板必须由程序员实例化为可执行的函数模板
+    \item B. 函数模板的实例化由编译器实现
+    \item C. 一个类定义中，只要有一个函数模板，则这个类是类模板
+    \item D. 类模板的成员函数都是函数模板，类模板实例化后，成员函数也随之实例化
+\end{itemize}
+
+\[
+\boxed{\text{严格看：A、C 都有问题；若单选，题库多半想考 A}}
+\]
+
+\textbf{解析：}
+\begin{itemize}
+    \item A. “函数模板必须由程序员实例化”错误。函数模板通常由编译器根据调用自动实例化。
+    \item B. “函数模板的实例化由编译器实现”正确。
+    \item C. “一个类定义中只要有一个函数模板，则这个类是类模板”错误。普通类中也可以有成员函数模板。
+    \item D. “类模板的成员函数都是模板函数”是教材中的粗略说法，严格术语下不完全准确。
+\end{itemize}
+
+例如：
+\begin{lstlisting}
+template<class T>
+T myMax(T x, T y) {
+    return x > y ? x : y;
+}
+
+int main() {
+    myMax(1, 2);       // 编译器自动实例化 myMax<int>
+    myMax(1.0, 2.0);   // 编译器自动实例化 myMax<double>
+}
+\end{lstlisting}
+
+\textbf{补充：普通类也可以有成员函数模板。}
+\begin{lstlisting}
+class A {
+public:
+    template<class T>
+    void print(T x) {
+        cout << x << endl;
+    }
+};
+\end{lstlisting}
+这个 \texttt{A} 不是类模板。
+
+% ---------------------------------------------------
+
+\subsection*{Question 17}
+\textbf{原题：}类模板的使用实际上是将类模板实例化成一个\underline{\hspace{2cm}}。
+\begin{itemize}
+    \item A. 函数
+    \item B. 对象
+    \item \textbf{C. 类}
+    \item D. 抽象类
+\end{itemize}
+
+\[
+\boxed{\text{答案：C}}
+\]
+
+\textbf{解析：}类模板本身不是一个具体类。使用时，编译器把类模板实例化成具体类：
+\begin{lstlisting}
+template<class T>
+class Box {
+    T value;
+};
+
+Box<int> a;      // Box<int> 是具体类
+Box<double> b;   // Box<double> 是另一个具体类
+\end{lstlisting}
+
+\textbf{一句话：}类模板 $\to$ 模板类/具体类 $\to$ 对象。
+
+% ---------------------------------------------------
+
+\subsection*{Question 18}
+\textbf{原题：}下列关于模板的说法中，错误的是\underline{\hspace{2cm}}。
+\begin{itemize}
+    \item A. 用模板定义一个对象时，不能省略参数
+    \item \textbf{B. 类模板只能有虚拟参数类型}
+    \item C. 类模板的成员函数都是模板函数
+    \item D. 类模板在编译中不会生成任何代码
+\end{itemize}
+
+\[
+\boxed{\text{答案：B}}
+\]
+
+\textbf{解析：}这里的“虚拟参数类型”是老教材说法，大致指 \textbf{类型模板参数}，例如：
+\begin{lstlisting}
+template<class T>
+class A {};
+\end{lstlisting}
+其中 \texttt{T} 是类型模板参数。
+
+但类模板不只能有类型参数，还可以有 \textbf{非类型模板参数}：
+\begin{lstlisting}
+template<class T, int N>
+class Array {
+    T data[N];
+};
+
+Array<int, 10> a;  // T = int, N = 10
+\end{lstlisting}
+
+\textbf{关于“类模板的成员函数都是模板函数”：}
+\begin{lstlisting}
+template<class T>
+class A {
+public:
+    void test() {
+        cout << "hello";
+    }
+};
+\end{lstlisting}
+这里 \texttt{test()} 没有自己的 \texttt{template<class U>}，所以严格说它不是“函数模板”，而是\textbf{类模板的普通成员函数}。但它会随着 \texttt{A<int>}、\texttt{A<double>} 等类模板实例化而生成对应版本。所以教材有时粗略地说“类模板的成员函数都是模板函数”。
+
+\textbf{更准确的说法：}类模板的成员函数会随类模板实例化而实例化；只有自己带 \texttt{template<class U>} 的成员函数才严格叫成员函数模板。
+
+% ---------------------------------------------------
+
+\subsection*{Question 25}
+\textbf{原题：}下列关于类模板的定义，正确的是\underline{\hspace{2cm}}。
+\begin{itemize}
+    \item \textbf{A.} \texttt{template<class T, int i = 0>}
+    \item B. \texttt{template<class T, class int i>}
+    \item C. \texttt{template<class T, typename T>}
+    \item D. \texttt{template<class T1, T2>}
+\end{itemize}
+
+\[
+\boxed{\text{答案：A}}
+\]
+
+\textbf{解析：}
+\begin{lstlisting}
+template<class T, int i = 0>
+class A {};
+\end{lstlisting}
+是合法的。这里 \texttt{T} 是类型模板参数，\texttt{i} 是非类型模板参数，并且 \texttt{i} 有默认值。
+
+\textbf{为什么 \texttt{template<class T, typename T>} 错？}
+\begin{lstlisting}
+template<class T, typename T>
+class A {};
+\end{lstlisting}
+两个模板参数都叫 \texttt{T}，在同一作用域内重名，非法。类似于不能写：
+\begin{lstlisting}
+void f(int x, double x) {}
+\end{lstlisting}
+
+正确写法应为：
+\begin{lstlisting}
+template<class T, typename U>
+class PairLike {};
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 32}
+\textbf{原题：}模板的使用是为了（）。
+\begin{itemize}
+    \item \textbf{A.} 提高代码的可重用性
+    \item B. 提高代码的运行效率
+    \item C. 加强类的封装性
+    \item D. 实现多态性
+\end{itemize}
+
+\[
+\boxed{\text{答案：A}}
+\]
+
+\textbf{解析：}模板让同一套代码适用于不同类型：
+\begin{lstlisting}
+template<class T>
+T add(T a, T b) {
+    return a + b;
+}
+\end{lstlisting}
+这样既可以处理 \texttt{int}，也可以处理 \texttt{double}，主要目的就是\textbf{代码复用}。
+
+% ---------------------------------------------------
+
+\subsection*{Question 34}
+\textbf{原题：}关于函数模板，描述错误的是（~~~~）。
+\begin{itemize}
+    \item A. 函数模板的实例化由编译器实现
+    \item B. 函数模板必须由程序员实例化为可执行的函数模板
+    \item C. 类模板的成员函数都是函数模板，类模板实例化后，成员函数也随之实例化
+    \item D. 一个类定义中，只要有一个函数模板，这个类就是类模板
+\end{itemize}
+
+\[
+\boxed{\text{严格看：B、D 都有问题；若单选，题库通常想考 B}}
+\]
+
+\textbf{解析：}
+\begin{itemize}
+    \item A. 函数模板的实例化由编译器实现。正确。
+    \item B. 函数模板必须由程序员实例化。错误。通常编译器会根据调用自动实例化。
+    \item C. 类模板的成员函数随类模板实例化而实例化。教材语境中通常认为正确。
+    \item D. 一个类定义中只要有一个函数模板，这个类就是类模板。严格错误。
+\end{itemize}
+
+\textbf{不用程序员自己实例化的例子：}
+\begin{lstlisting}
+template<class T>
+T maxValue(T x, T y) {
+    return x > y ? x : y;
+}
+
+int main() {
+    int a = maxValue(3, 5);          // 自动生成 maxValue<int>
+    double b = maxValue(3.1, 5.2);   // 自动生成 maxValue<double>
+}
+\end{lstlisting}
+
+程序员没有写：
+\begin{lstlisting}
+maxValue<int>(3, 5);
+maxValue<double>(3.1, 5.2);
+\end{lstlisting}
+但编译器会自动推导并实例化。
+
+% ---------------------------------------------------
+
+\subsection*{Question 49}
+\textbf{原题：}A template class can have \underline{\hspace{2cm}}.
+\begin{itemize}
+    \item \textbf{A.} More than one generic data type
+    \item B. Only one generic data type
+    \item C. At most two data types
+    \item D. Only generic type of integers and not characters
+\end{itemize}
+
+\[
+\boxed{\text{答案：A}}
+\]
+
+\textbf{解析：}类模板可以有多个类型参数：
+\begin{lstlisting}
+template<class T1, class T2>
+class MyPair {
+    T1 first;
+    T2 second;
+};
+\end{lstlisting}
+使用时：
+\begin{lstlisting}
+MyPair<int, double> p;
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 53}
+\textbf{原题：}Which is the most significant feature that arises by using template classes?
+\begin{itemize}
+    \item A. Code readability
+    \item B. Ease in coding
+    \item \textbf{C.} Code reusability
+    \item D. Modularity in code
+\end{itemize}
+
+\[
+\boxed{\text{答案：C}}
+\]
+
+\textbf{解析：}类模板的核心价值是用一份类定义适配多种类型：
+\begin{lstlisting}
+vector<int> vi;
+vector<double> vd;
+vector<string> vs;
+\end{lstlisting}
+\texttt{vector} 只写一套模板，但可以实例化出多种具体容器类型。
+
+% ---------------------------------------------------
+
+\subsection*{Question 55}
+\textbf{原题：}How is function overloading different from template class?
+\begin{itemize}
+    \item A. Overloading is multiple function doing same operation, Template is multiple function doing different operations
+    \item B. Overloading is single function doing different operations, Template is multiple function doing different operations
+    \item \textbf{C.} Overloading is multiple function doing similar operation, Template is multiple function doing identical operations
+    \item D. Overloading is multiple function doing same operation, Template is same function doing different operations
+\end{itemize}
+
+\[
+\boxed{\text{答案：C}}
+\]
+
+\textbf{解析：}函数重载是多个函数使用同一个函数名，但参数表不同；模板则是用同一个模式处理不同类型。题库选项中 C 最接近：
+\[
+\text{Overloading：多个函数做相似操作；Template：同一模式处理不同类型。}
+\]
+
+例如重载：
+\begin{lstlisting}
+int maxValue(int a, int b);
+double maxValue(double a, double b);
+\end{lstlisting}
+
+模板：
+\begin{lstlisting}
+template<class T>
+T maxValue(T a, T b);
+\end{lstlisting}
+
+\textbf{易错点：}重载强调“多个函数”；模板强调“一套代码模式，多种实例化”。
+
+% ---------------------------------------------------
+
+\section*{二、STL、迭代器与 pair}
+
+\subsection*{迭代器知识总括}
+
+\textbf{STL 的核心结构：}
+\begin{itemize}
+    \item \textbf{容器 container}：存数据，例如 \texttt{vector}, \texttt{list}, \texttt{map}, \texttt{set}。
+    \item \textbf{迭代器 iterator}：像指针一样访问容器中的元素。
+    \item \textbf{算法 algorithm}：通过迭代器操作容器，例如 \texttt{sort}, \texttt{find}, \texttt{copy}。
+\end{itemize}
+
+常见迭代器类型：
+\begin{itemize}
+    \item \textbf{Input Iterator}：只能读，只能向前走。
+    \item \textbf{Output Iterator}：只能写，只能向前走。
+    \item \textbf{Forward Iterator}：可多次遍历，只能向前。
+    \item \textbf{Bidirectional Iterator}：可前进也可后退，如 \texttt{list} 迭代器。
+    \item \textbf{Random Access Iterator}：可随机访问，如 \texttt{vector} 迭代器。
+\end{itemize}
+
+\textbf{不存在“删除迭代器”这种基本迭代器类别。}
+
+% ---------------------------------------------------
+
+\subsection*{Question 27}
+\textbf{原题：}设有如下代码段：
+\begin{lstlisting}
+std::map<char *, int> m;
+const int MAX_SIZE = 100;
+int main() {
+    char str[MAX_SIZE];
+    for (int i = 0; i < 10; i++) {
+        std::cin >> str;
+        m[str] = i;
+    }
+    std::cout << m.size() << std::endl;
+}
+\end{lstlisting}
+读入 10 个字符串，则输出的 \texttt{m.size()} 为：
+\begin{itemize}
+    \item A. 0
+    \item \textbf{B. 1}
+    \item C. 10
+\end{itemize}
+
+\[
+\boxed{\text{答案：B}}
+\]
+
+\textbf{解析：}\texttt{map<char*, int>} 的 key 是 \texttt{char*} 指针。这里每次输入都写入同一个数组 \texttt{str}，所以 \texttt{str} 转成指针后地址始终相同。于是 map 认为 key 一直是同一个，最终只有一个元素。
+
+\textbf{如果想按字符串内容作为 key，应使用：}
+\begin{lstlisting}
+std::map<std::string, int> m;
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 30：pair 模板}
+\textbf{原题：}下列关于 \texttt{pair<>} 类模板的描述中，错误的是。
+\begin{itemize}
+    \item A. \texttt{pair<>} 类模板定义在头文件 \texttt{utility} 中
+    \item B. \texttt{pair<>} 类模板作用是将两个数据组成一个数据，两个数据可以是同一个类型也可以是不同的类型
+    \item C. 创建 \texttt{pair<>} 对象只能调用其构造函数
+    \item D. \texttt{pair<>} 类模板提供了两个成员函数 \texttt{first} 与 \texttt{second} 来访问这两个数据
+\end{itemize}
+
+\[
+\boxed{\text{题库多半选：C；但 D 的表述也不严谨}}
+\]
+
+\textbf{解析：}
+\begin{itemize}
+    \item A. \texttt{pair} 定义在头文件 \texttt{<utility>} 中。正确。
+    \item B. \texttt{pair} 可以把两个数据组合成一个数据，二者类型可以相同也可以不同。正确。
+    \item C. 创建 \texttt{pair} 对象只能调用构造函数。错误，因为还可以用 \texttt{make\_pair}。
+    \item D. \texttt{first} 和 \texttt{second} 不是成员函数，而是数据成员；所以这句话表述也不严谨。
+\end{itemize}
+
+示例：
+\begin{lstlisting}
+#include <utility>
+using namespace std;
+
+pair<int, string> p1(1, "Tom");
+auto p2 = make_pair(2, string("Jerry"));
+
+cout << p1.first << " " << p1.second << endl;
+\end{lstlisting}
+
+\textbf{严格记法：}
+\begin{lstlisting}
+p.first;   // 数据成员
+p.second;  // 数据成员
+\end{lstlisting}
+不是：
+\begin{lstlisting}
+p.first();   // 错
+p.second();  // 错
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 31}
+\textbf{原题：}下列选项中，哪一项不是迭代器。
+\begin{itemize}
+    \item A. 输入迭代器
+    \item B. 前向迭代器
+    \item C. 双向迭代器
+    \item \textbf{D. 删除迭代器}
+\end{itemize}
+
+\[
+\boxed{\text{答案：D}}
+\]
+
+\textbf{解析：}输入迭代器、前向迭代器、双向迭代器都是常见迭代器类别；没有“删除迭代器”这一基本类别。
+
+\textbf{注意：}\texttt{erase} 是容器的删除操作，不是迭代器类别：
+\begin{lstlisting}
+vector<int> v = {1, 2, 3};
+auto it = v.begin();
+v.erase(it);
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\section*{三、string 与输入输出}
+
+\subsection*{Question 41}
+\textbf{原题：}有代码如下：
+\begin{lstlisting}
+string s;
+s[0] = '1';
+\end{lstlisting}
+则关于以上语句说法正确的是（~~~~）。
+\begin{itemize}
+    \item \textbf{A.} 语句 \texttt{"s[0]='1';"} 有问题
+    \item B. \texttt{s} 的值为字符串 \texttt{"1"}
+    \item C. \texttt{s} 是空格串
+    \item D. \texttt{s} 是空串
+\end{itemize}
+
+\[
+\boxed{\text{答案：A}}
+\]
+
+\textbf{解析：}默认构造出的 \texttt{s} 是空字符串，没有第 0 个字符。直接访问 \texttt{s[0]} 越界，属于未定义行为。
+
+正确做法：
+\begin{lstlisting}
+string s;
+s.push_back('1');     // 方法一
+
+string t;
+t.resize(1);
+t[0] = '1';           // 方法二
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 43}
+\textbf{原题：}有代码如下：
+\begin{lstlisting}
+int n;
+string s;
+cin >> n;
+getline(cin, s);
+cout << s.size() << endl;
+\end{lstlisting}
+则在输入以下数据后得到结果是（~~~~）。
+\begin{lstlisting}
+1
+Hello World
+\end{lstlisting}
+\begin{itemize}
+    \item A. 11
+    \item \textbf{B. 0}
+    \item C. 5
+    \item D. 12
+\end{itemize}
+
+\[
+\boxed{\text{答案：B}}
+\]
+
+\textbf{解析：}\texttt{cin >> n} 只读走数字 \texttt{1}，但留下后面的换行符 \texttt{'\textbackslash n'}。紧接着 \texttt{getline(cin, s)} 会读到这个换行符之前的空内容，所以 \texttt{s} 是空串，长度为 0。
+
+正确写法：
+\begin{lstlisting}
+int n;
+string s;
+cin >> n;
+cin.ignore();          // 丢掉换行符
+getline(cin, s);
+\end{lstlisting}
+
+如果担心缓冲区中还有更多字符，可以写：
+\begin{lstlisting}
+cin.ignore(numeric_limits<streamsize>::max(), '\n');
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 44}
+\textbf{原题：}以下代码的输出结果是（~~~~）。
+\begin{lstlisting}
+string res="";
+string s,t="123456";
+s=string(3,'0'); //相当于s="000";
+s=s+"123";
+for(int i=5;i>=0;i--) {
+      char c=s[i]+t[i]-'0';
+      res=c+res;
+}
+cout<<res<<endl;
+\end{lstlisting}
+\begin{itemize}
+    \item A. 975321
+    \item B. 236456
+    \item C. 654632
+    \item \textbf{D. 123579}
+\end{itemize}
+
+\[
+\boxed{\text{答案：D}}
+\]
+
+\textbf{解析：}这里不是整数加法，而是字符运算。逐位计算：
+\[
+\begin{aligned}
+0+1 &\to 1,\\
+0+2 &\to 2,\\
+0+3 &\to 3,\\
+1+4 &\to 5,\\
+2+5 &\to 7,\\
+3+6 &\to 9.
+\end{aligned}
+\]
+因此结果是：
+\begin{lstlisting}
+123579
+\end{lstlisting}
+
+\textbf{易错点：}代码没有处理进位，所以不是普通的大整数加法模板，只是每一位单独相加。
+
+% ---------------------------------------------------
+
+\section*{四、异常处理}
+
+\subsection*{Question 66}
+\textbf{原题：}What is wrong in the following code?
+\begin{lstlisting}
+vector<int> v;
+v[0] = 2.5;
+\end{lstlisting}
+\begin{itemize}
+    \item A. The program has a compile error because there are no elements in the vector.
+    \item B. The program has a compile error because you cannot assign a double value to \texttt{v[0]}.
+    \item \textbf{C.} The program has a runtime error because there are no elements in the vector.
+    \item D. The program has a runtime error because you cannot assign a double value to \texttt{v[0]}.
+\end{itemize}
+
+\[
+\boxed{\text{答案：C}}
+\]
+
+\textbf{解析：}\texttt{vector<int> v;} 创建的是空容器，此时没有第 0 个元素。访问 \texttt{v[0]} 越界。
+
+\textbf{严格 C++ 说法：}\texttt{v[0]} 越界是未定义行为，不一定稳定表现为“运行时错误”。但考试题一般按运行时错误处理。
+
+\textbf{注意：}\texttt{2.5} 赋给 \texttt{int} 可以发生类型转换，不是主要错误。
+
+正确做法：
+\begin{lstlisting}
+vector<int> v;
+v.push_back(2);  // 先插入元素
+v[0] = 2;
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 67}
+\textbf{原题：}If you enter \texttt{1 0}, what is the output of the following code?
+\begin{lstlisting}
+#include "iostream"
+using namespace std;
+
+int main()
+{
+    cout << "Enter two integers: ";
+    int number1, number2;
+    cin >> number1 >> number2;
+
+    try
+    {
+        if (number2 == 0)
+            throw number1;
+
+        cout << number1 << " / " << number2 << " is "
+             << (number1 / number2) << endl;
+
+        cout << "C" << endl;
+    }
+    catch (int e)
+    {
+        cout << "A";
+    }
+
+    cout << "B" << endl;
+    return 0;
+}
+\end{lstlisting}
+\begin{itemize}
+    \item A. A
+    \item B. B
+    \item C. C
+    \item \textbf{D. AB}
+\end{itemize}
+
+\[
+\boxed{\text{答案：D}}
+\]
+
+\textbf{解析：}输入 \texttt{number1 = 1, number2 = 0}，所以抛出 \texttt{int} 类型异常。程序跳到：
+\begin{lstlisting}
+catch (int e) {
+    cout << "A";
+}
+\end{lstlisting}
+输出 \texttt{A}。然后 \texttt{catch} 结束后，继续执行：
+\begin{lstlisting}
+cout << "B" << endl;
+\end{lstlisting}
+所以最终输出：
+\begin{lstlisting}
+AB
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 69}
+\textbf{原题：}Which of the following statements are true?
+\begin{itemize}
+    \item \textbf{A.} A custom exception class is just like a regular class.
+    \item B. A custom exception class must always be derived from class exception.
+    \item C. A custom exception class must always be derived from a derived class of class exception.
+    \item D. A custom exception class must always be derived from class runtime\_error.
+\end{itemize}
+
+\[
+\boxed{\text{答案：A}}
+\]
+
+\textbf{解析：}C++ 中自定义异常类本质上就是普通类，不要求必须继承 \texttt{std::exception}：
+\begin{lstlisting}
+class MyException {};
+
+throw MyException();
+\end{lstlisting}
+
+\textbf{工程上推荐：}
+\begin{lstlisting}
+class MyException : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "MyException";
+    }
+};
+\end{lstlisting}
+这样可以用：
+\begin{lstlisting}
+catch (const std::exception& e) {
+    cout << e.what();
+}
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 71 与 Question 72 对比}
+\textbf{共同代码：}
+\begin{lstlisting}
+try {
+    statement1;
+    statement2;
+    statement3;
+}
+catch (Exception1 ex1)
+{
+}
+catch (Exception2 ex2)
+{
+}
+catch (Exception3 ex3)
+{
+    statement4;
+    throw;
+}
+statement5;
+\end{lstlisting}
+
+\subsubsection*{Question 71}
+\textbf{原题：}Suppose that \texttt{statement2} throws an exception of type \texttt{Exception2} in the above statement. Which statement is executed after \texttt{statement2} is executed?
+\begin{itemize}
+    \item A. statement2
+    \item B. statement3
+    \item C. statement4
+    \item \textbf{D. statement5}
+\end{itemize}
+
+\[
+\boxed{\text{Question 71 答案：D}}
+\]
+
+\textbf{执行流程：}
+\begin{itemize}
+    \item 执行 \texttt{statement1}。
+    \item 执行 \texttt{statement2}，抛出 \texttt{Exception2}。
+    \item \texttt{statement3} 不执行。
+    \item 进入 \texttt{catch(Exception2 ex2)}。
+    \item 该 \texttt{catch} 中没有 \texttt{throw;}，所以异常处理结束。
+    \item 继续执行 \texttt{statement5}。
+\end{itemize}
+
+\subsubsection*{Question 72}
+\textbf{原题：}Suppose that \texttt{statement3} throws an exception of type \texttt{Exception3} in the above statement. Which statements are executed after \texttt{statement3} is executed?
+\begin{itemize}
+    \item A. statement2
+    \item B. statement3
+    \item \textbf{C. statement4}
+    \item D. statement5
+\end{itemize}
+
+\[
+\boxed{\text{Question 72 答案：C}}
+\]
+
+\textbf{执行流程：}
+\begin{itemize}
+    \item 执行 \texttt{statement1}。
+    \item 执行 \texttt{statement2}。
+    \item 执行 \texttt{statement3}，抛出 \texttt{Exception3}。
+    \item 进入 \texttt{catch(Exception3 ex3)}。
+    \item 执行 \texttt{statement4}。
+    \item 执行 \texttt{throw;}，重抛当前异常。
+    \item 当前 \texttt{try-catch} 后面的 \texttt{statement5} 不执行。
+\end{itemize}
+
+\textbf{核心区别：}
+\[
+\texttt{catch(Exception2)}\text{ 没有重抛，所以继续执行 statement5；}
+\]
+\[
+\texttt{catch(Exception3)}\text{ 有 \texttt{throw;}，所以异常继续向外传播。}
+\]
+
+% ---------------------------------------------------
+
+\subsection*{Question 73}
+\textbf{原题：}下列关于异常处理的说法不正确的是（~~~~）。
+\begin{itemize}
+    \item A. 异常处理的 \texttt{throw} 与 \texttt{catch} 通常不在同一个函数中，实现异常检测与异常处理的分离。
+    \item B. \texttt{catch} 语句块必须跟在 \texttt{try} 语句块的后面，一个 \texttt{try} 语句块后可以有多个 \texttt{catch} 语句块。
+    \item \textbf{C.} 在对函数进行异常规范声明时，若形参表后没有任何表示抛出异常类型的说明，它表示该函数不能抛出任何异常。
+    \item D. \texttt{catch} 语句块中，\texttt{catch(...)} 表示该 \texttt{catch} 可以捕捉任意类型的异常，必须将 \texttt{catch(...)} 放在 \texttt{catch} 结构的最后。
+\end{itemize}
+
+\[
+\boxed{\text{答案：C}}
+\]
+
+\textbf{解析：}普通函数声明：
+\begin{lstlisting}
+void f();
+\end{lstlisting}
+并不表示 \texttt{f} 不能抛出异常。它只是没有写异常说明。
+
+如果要表示函数不抛异常，C++11 以后应写：
+\begin{lstlisting}
+void f() noexcept;
+\end{lstlisting}
+旧式写法是：
+\begin{lstlisting}
+void f() throw();
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 78}
+\textbf{原题：}下列关于断言的描述中，错误的是。
+\begin{itemize}
+    \item A. 断言是调试程序的一种手段
+    \item B. 若断言情况发生，一般会终止程序
+    \item C. 在 C++ 中，宏 \texttt{assert()} 用来在调试阶段实现断言
+    \item \textbf{D.} 断言在程序调试与发布版本中都可以使用断言
+\end{itemize}
+
+\[
+\boxed{\text{答案：D}}
+\]
+
+\textbf{解析：}\texttt{assert()} 主要用于调试阶段。若断言失败，一般会终止程序：
+\begin{lstlisting}
+#include <cassert>
+
+int x = -1;
+assert(x > 0);  // 断言失败，通常终止程序
+\end{lstlisting}
+
+如果发布版本中定义了 \texttt{NDEBUG}，断言通常会被关闭：
+\begin{lstlisting}
+#define NDEBUG
+#include <cassert>
+\end{lstlisting}
+
+\textbf{一句话：}断言是给程序员调试用的，不是给用户处理运行时错误用的。
+
+% ---------------------------------------------------
+
+\subsection*{Question 86}
+\textbf{原题：}How many catch blocks can a single try block can have?
+\begin{itemize}
+    \item A. Only 1
+    \item B. Only 2
+    \item C. Maximum 127
+    \item \textbf{D. As many as required}
+\end{itemize}
+
+\[
+\boxed{\text{答案：D}}
+\]
+
+\textbf{解析：}一个 \texttt{try} 后面可以跟多个 \texttt{catch}：
+\begin{lstlisting}
+try {
+    // code
+}
+catch (const runtime_error& e) {
+}
+catch (const logic_error& e) {
+}
+catch (const exception& e) {
+}
+catch (...) {
+}
+\end{lstlisting}
+
+多个 \texttt{catch} 从上往下匹配，只执行第一个匹配成功的。一般顺序：
+\[
+\text{派生类异常} \to \text{基类异常} \to \texttt{catch(...)}
+\]
+
+% ---------------------------------------------------
+
+\subsection*{Question 87}
+\textbf{原题：}To catch the exceptions \underline{\hspace{2cm}}.
+\begin{itemize}
+    \item A. An object must be created to catch the exception
+    \item \textbf{B.} A variable should be created to catch the exception
+    \item C. An array should be created to catch all the exceptions
+    \item D. A string have to be created to store the exception
+\end{itemize}
+
+\[
+\boxed{\text{考试答案：B}}
+\]
+
+\textbf{解析：}题库想表达的是常见写法：
+\begin{lstlisting}
+try {
+    throw 10;
+}
+catch (int e) {
+    cout << e;
+}
+\end{lstlisting}
+这里 \texttt{e} 是 \texttt{catch} 参数变量。
+
+\textbf{但严格 C++ 说法：}这个题目本身不严谨。因为 C++ 中可以不写变量名：
+\begin{lstlisting}
+catch (const runtime_error&) {
+    cout << "caught";
+}
+\end{lstlisting}
+也可以用：
+\begin{lstlisting}
+catch (...) {
+    cout << "caught anything";
+}
+\end{lstlisting}
+
+所以：
+\begin{itemize}
+    \item A. “必须创建对象来捕获异常”不准确，异常对象是在 \texttt{throw} 时产生的。
+    \item B. “应该创建一个变量”更符合题库语法意图，但不是严格必要条件。
+\end{itemize}
+
+% ---------------------------------------------------
+
+\subsection*{Question 93}
+\textbf{原题：}If catching of base class exception is done before derived class in C++ \underline{\hspace{2cm}}.
+\begin{itemize}
+    \item A. It gives compile time error
+    \item B. It doesn’t run the program
+    \item \textbf{C. It may give warning but not error}
+    \item D. It always gives compile time error
+\end{itemize}
+
+\[
+\boxed{\text{答案：C}}
+\]
+
+\textbf{解析：}如果基类异常写在派生类异常前面：
+\begin{lstlisting}
+try {
+    throw runtime_error("error");
+}
+catch (const exception& e) {
+    cout << "base";
+}
+catch (const runtime_error& e) {
+    cout << "derived";
+}
+\end{lstlisting}
+由于 \texttt{runtime\_error} 是 \texttt{exception} 的派生类，第一个 \texttt{catch} 已经能捕获它，后面的派生类 \texttt{catch} 就不可达。
+
+\textbf{通常不是编译错误，但编译器可能 warning。}
+
+正确顺序：
+\begin{lstlisting}
+catch (const runtime_error& e) {
+}
+catch (const exception& e) {
+}
+\end{lstlisting}
+
+% ---------------------------------------------------
+
+\subsection*{Question 94}
+\textbf{原题：}If a catch block accepts more than one exceptions then \underline{\hspace{2cm}}.
+\begin{itemize}
+    \item A. The catch parameters are not final
+    \item \textbf{B. The catch parameters are final}
+    \item C. The catch parameters are not defined
+    \item D. The catch parameters are not used
+\end{itemize}
+
+\[
+\boxed{\text{答案：B}}
+\]
+
+\textbf{解析：}这题是 \textbf{Java multi-catch} 语法，不是 C++ 语法。例如 Java 中：
+\begin{lstlisting}[language=Java]
+try {
+    // code
+}
+catch (IOException | SQLException e) {
+    // e is implicitly final
+}
+\end{lstlisting}
+这里 \texttt{e} 是隐式 \texttt{final}，不能重新赋值。
+
+\textbf{C++ 注意：}C++ 不支持这种写法：
+\begin{lstlisting}
+catch (Exception1 | Exception2 e) { }  // C++ 错误
+\end{lstlisting}
+C++ 通常写多个 \texttt{catch}，或者捕获共同基类。
+
+% ---------------------------------------------------
+
+\section*{五、最开始单独问过的题号映射}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+你最开始问的问题 & 对应题号 & 核心结论 \\
+\midrule
+自定义异常类是否必须继承 \texttt{exception} & Question 69 & 不必须，答案 A \\
+\texttt{try} 后可以有几个 \texttt{catch} & Question 86 & 按需多个，答案 D \\
+\texttt{catch} 中为什么还能 \texttt{throw;} & Question 72 & \texttt{throw;} 是重抛当前异常 \\
+异常处理说法不正确 & Question 73 & \texttt{void f();} 不代表不能抛异常，答案 C \\
+断言是什么 & Question 78 & \texttt{assert} 调试用，发布版可能关闭，答案 D \\
+基类异常先于派生类异常捕获 & Question 93 & 可能 warning，但通常非 error，答案 C \\
+一个 catch 捕获多个异常 & Question 94 & Java multi-catch，参数隐式 final，答案 B \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{六、最后速记}
+
+\begin{itemize}
+    \item 类模板创建对象一般要写模板实参：\texttt{Test<int> a;}。
+    \item 函数模板通常由编译器根据调用自动实例化，不需要程序员手动实例化。
+    \item 类模板可以有类型参数，也可以有非类型参数，如 \texttt{template<class T, int N>}。
+    \item \texttt{pair} 的 \texttt{first} 和 \texttt{second} 是数据成员，不是成员函数。
+    \item STL 不是容器、迭代器、算法三者互不相干；算法靠迭代器操作容器。
+    \item \texttt{map<char*, int>} 比较的是指针地址，不是字符串内容。
+    \item 空 \texttt{string} 不能直接写 \texttt{s[0]='1'}。
+    \item \texttt{cin >> n} 后接 \texttt{getline}，要先处理换行符。
+    \item 空 \texttt{vector} 不能直接访问 \texttt{v[0]}。
+    \item 多个 \texttt{catch} 从上往下匹配；派生类异常放前，基类异常放后。
+    \item \texttt{throw;} 只能在处理异常时用于重抛当前异常。
+    \item \texttt{assert} 是调试手段，不应作为发布版错误处理机制。
+    \item Java 的 multi-catch 和 C++ 的异常语法不要混在一起。
+\end{itemize}
+
+\end{document}

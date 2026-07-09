@@ -2,34 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://naomikuuuu.github.io/about/index.html</loc>
+    <loc>https://naomikuuuu.com/2025/09/01/HPCG-experiment-guide/</loc>
     
-    <lastmod>2026-05-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://naomikuuuu.github.io/PY/index.html</loc>
-    
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2025-09-01</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/2026/05/16/Cpp-OOP-Notes/</loc>
+    <loc>https://naomikuuuu.com/2026/05/16/Cpp-OOP-Notes/</loc>
     
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-07-08</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/2026/05/15/Morse-Theory/</loc>
+    <loc>https://naomikuuuu.com/2026/05/15/Morse-Theory/</loc>
     
     <lastmod>2026-05-15</lastmod>
     
@@ -38,7 +29,25 @@
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/2025/09/01/HPCG-experiment-guide/</loc>
+    <loc>https://naomikuuuu.com/404</loc>
+    
+    <lastmod>2026-07-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://naomikuuuu.com/categories/</loc>
+    
+    <lastmod>2026-07-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://naomikuuuu.com/about/</loc>
     
     <lastmod>2026-05-15</lastmod>
     
@@ -47,9 +56,27 @@
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/archive/index.html</loc>
+    <loc>https://naomikuuuu.com/tags/</loc>
     
-    <lastmod>2025-09-03</lastmod>
+    <lastmod>2026-07-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://naomikuuuu.com/PY/</loc>
+    
+    <lastmod>2025-09-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://naomikuuuu.com/privacy/</loc>
+    
+    <lastmod>2026-07-08</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -57,58 +84,65 @@
   
 
   <url>
-    <loc>https://naomikuuuu.github.io/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://naomikuuuu.github.io/tags/C/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/tags/HPCG/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/tags/OOP/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/tags/C/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/tags/%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/tags/OOP/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/tags/HPCG/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/tags/STL/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/tags/%E6%95%B0%E5%AD%A6%E7%A0%94%E8%AE%A8%E8%AF%BEB/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/tags/%E9%94%99%E9%A2%98%E6%95%B4%E7%90%86/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/tags/Morse-Theory/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/tags/%E6%95%B0%E5%AD%A6%E7%A0%94%E8%AE%A8%E8%AF%BEB/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/tags/%E6%8B%93%E6%89%91/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/tags/Morse-Theory/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://naomikuuuu.com/tags/%E6%8B%93%E6%89%91/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -116,22 +150,22 @@
 
   
   <url>
-    <loc>https://naomikuuuu.github.io/categories/%E7%BC%96%E7%A8%8B/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/categories/HPC/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/categories/HPC/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/categories/%E7%BC%96%E7%A8%8B/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.github.io/categories/%E6%95%B0%E5%AD%A6/</loc>
-    <lastmod>2026-05-19</lastmod>
+    <loc>https://naomikuuuu.com/categories/%E6%95%B0%E5%AD%A6/</loc>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

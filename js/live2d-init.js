@@ -318,7 +318,7 @@
   function boot() {
     if (typeof OML2D === 'undefined') {
       var s = document.createElement('script');
-      s.src = 'https://unpkg.com/oh-my-live2d';
+      s.src = 'https://unpkg.com/oh-my-live2d@0.19.3';
       s.onload = create;
       document.head.appendChild(s);
     } else {
@@ -419,9 +419,17 @@
     });
   }
 
+  function scheduleBoot() {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(boot, { timeout: 3000 });
+    } else {
+      setTimeout(boot, 1000);
+    }
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
+    document.addEventListener('DOMContentLoaded', scheduleBoot);
   } else {
-    boot();
+    scheduleBoot();
   }
 })();

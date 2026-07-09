@@ -84,6 +84,36 @@
   text-decoration: underline;
 }
 
+/* ===== OOP 错题折叠卡片 ===== */
+.oop-question {
+  margin: 1rem 0;
+  overflow: hidden;
+  border: 1px solid rgba(74, 158, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(74, 158, 255, 0.04);
+}
+
+.oop-question summary {
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(74, 158, 255, 0.08);
+}
+
+.oop-question summary:hover {
+  background: rgba(74, 158, 255, 0.14);
+}
+
+.oop-question > :not(summary) {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.oop-question > pre {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
 /* ===== 数学环境样式 (Morse Theory 文章) ===== */
 
 /* 定义 */
