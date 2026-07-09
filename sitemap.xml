@@ -47,18 +47,18 @@
   </url>
   
   <url>
-    <loc>https://naomikuuuu.com/tags/</loc>
+    <loc>https://naomikuuuu.com/about/</loc>
     
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-05-15</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.com/PY/</loc>
+    <loc>https://naomikuuuu.com/tags/</loc>
     
-    <lastmod>2025-09-14</lastmod>
+    <lastmod>2026-07-09</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -83,9 +83,9 @@
   </url>
   
   <url>
-    <loc>https://naomikuuuu.com/about/</loc>
+    <loc>https://naomikuuuu.com/PY/</loc>
     
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2025-09-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
