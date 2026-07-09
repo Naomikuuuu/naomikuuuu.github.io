@@ -2206,7 +2206,7 @@ class overall: public average &#123; public: int students; &#125;;</code></pre>
 <summary><strong>查看答案与解析</strong></summary><template class="oop-answer-template">
 
 <p><strong>答案：A</strong></p>
-<p>**解析：**正确选项是 <strong>A</strong>。多级继承（Multilevel Inheritance）是指一条垂直向下的纵向继承链：基类 $\rightarrow$ 派生类 $\rightarrow$ 再派生类。即一个派生类，它是从另一个本来也是派生类的类继承而来的。</p>
+<p>**解析：**正确选项是 <strong>A</strong>。多级继承（Multilevel Inheritance）是指一条垂直向下的纵向继承链：基类 <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> 派生类 <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> 再派生类。即一个派生类，它是从另一个本来也是派生类的类继承而来的。</p>
 </template><div class="oop-answer-content"></div></details>
 </section>
 
@@ -2228,7 +2228,7 @@ class overall: public average &#123; public: int students; &#125;;</code></pre>
 <summary><strong>查看答案与解析</strong></summary><template class="oop-answer-template">
 
 <p><strong>答案：A</strong></p>
-<p>**解析：**正确选项是 <strong>A</strong>。即使是多级继承（A $\rightarrow$ B $\rightarrow$ C），你在审查任何一个单独的层级时，它依然只继承了直接上级的一个类（例如 C 的直接基类只有 B）。这和拥有多个直接父类的多重继承（Multiple Inheritance）有本质区别。</p>
+<p>**解析：**正确选项是 <strong>A</strong>。即使是多级继承（A <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> B <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> C），你在审查任何一个单独的层级时，它依然只继承了直接上级的一个类（例如 C 的直接基类只有 B）。这和拥有多个直接父类的多重继承（Multiple Inheritance）有本质区别。</p>
 </template><div class="oop-answer-content"></div></details>
 </section>
 
@@ -2332,17 +2332,17 @@ class overall: public average &#123; public: int students; &#125;;</code></pre>
 <tbody><tr>
 <td><strong>Single level</strong> (单继承)</td>
 <td><strong>1 对 1</strong></td>
-<td>一个派生类只拥有<strong>唯一</strong>一个直接基类。（A $\rightarrow$ B）<br>**易错点：**单继承约束的只是“认爹的规则”。哪怕程序里写了 1000 个独立的类，只要它们全都是两两一对一继承，整体就依然是单继承。</td>
+<td>一个派生类只拥有<strong>唯一</strong>一个直接基类。（A <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> B）<br>**易错点：**单继承约束的只是“认爹的规则”。哪怕程序里写了 1000 个独立的类，只要它们全都是两两一对一继承，整体就依然是单继承。</td>
 </tr>
 <tr>
 <td><strong>Multilevel</strong> (多级继承)</td>
 <td><strong>单向垂直链</strong></td>
-<td>派生类作为新的基类，继续派生下一个类，形成家族代代相传的垂直链条。（A $\rightarrow$ B $\rightarrow$ C）<br>**易错点：**构造顺序永远从“最顶层的老祖宗”开始往下，析构顺序严格反转（拆楼逻辑）。每层只能看见紧挨着自己的上一层非私有成员。</td>
+<td>派生类作为新的基类，继续派生下一个类，形成家族代代相传的垂直链条。（A <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> B <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> C）<br>**易错点：**构造顺序永远从“最顶层的老祖宗”开始往下，析构顺序严格反转（拆楼逻辑）。每层只能看见紧挨着自己的上一层非私有成员。</td>
 </tr>
 <tr>
 <td><strong>Hierarchical</strong> (层次继承)</td>
 <td><strong>1 对 多</strong></td>
-<td>一个基类同时派生出多个不同的子类，像大树发叉一样散开。（A $\rightarrow$ B 且 A $\rightarrow$ C）<br>**易错点：**兄弟子类之间是平行的，互不干扰。多用于同一基类在不同业务方向上的分支实现。</td>
+<td>一个基类同时派生出多个不同的子类，像大树发叉一样散开。（A <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> B 且 A <span class="mathjax-inline">&#92;(\rightarrow&#92;)</span> C）<br>**易错点：**兄弟子类之间是平行的，互不干扰。多用于同一基类在不同业务方向上的分支实现。</td>
 </tr>
 <tr>
 <td><strong>Hybrid</strong> (混合继承)</td>
@@ -2484,30 +2484,30 @@ class overall: public average &#123; public: int students; &#125;;</code></pre>
 <tbody><tr>
 <td><strong>类的核心行为</strong></td>
 <td><code>=</code>, <code>[]</code>, <code>()</code>, <code>-&gt;</code></td>
-<td>$✓$ <strong>是</strong></td>
-<td>$\times$ 否</td>
-<td>$\times$ 否</td>
+<td><span class="mathjax-inline">&#92;(✓&#92;)</span> <strong>是</strong></td>
+<td><span class="mathjax-inline">&#92;(\times&#92;)</span> 否</td>
+<td><span class="mathjax-inline">&#92;(\times&#92;)</span> 否</td>
 </tr>
 <tr>
 <td><strong>标准 IO 流操作</strong></td>
 <td><code>&lt;&lt;</code>, <code>&gt;&gt;</code> (配合 cin&#x2F;cout)</td>
-<td>$\times$ 否</td>
-<td>$✓$ <strong>是</strong></td>
-<td>$\times$ 否</td>
+<td><span class="mathjax-inline">&#92;(\times&#92;)</span> 否</td>
+<td><span class="mathjax-inline">&#92;(✓&#92;)</span> <strong>是</strong></td>
+<td><span class="mathjax-inline">&#92;(\times&#92;)</span> 否</td>
 </tr>
 <tr>
 <td><strong>修改对象自身状态</strong></td>
 <td><code>+=</code>, <code>-=</code>, <code>++</code>, <code>--</code></td>
-<td>$\times$ 否</td>
-<td>$\times$ 否</td>
-<td>$✓$ 可以 (推荐 Member)</td>
+<td><span class="mathjax-inline">&#92;(\times&#92;)</span> 否</td>
+<td><span class="mathjax-inline">&#92;(\times&#92;)</span> 否</td>
+<td><span class="mathjax-inline">&#92;(✓&#92;)</span> 可以 (推荐 Member)</td>
 </tr>
 <tr>
 <td><strong>对称计算与比较</strong></td>
 <td><code>+</code>, <code>-</code>, <code>==</code>, <code>&lt;</code></td>
-<td>$\times$ 否</td>
-<td>$\times$ 否</td>
-<td>$✓$ 可以 (推荐 Friend)</td>
+<td><span class="mathjax-inline">&#92;(\times&#92;)</span> 否</td>
+<td><span class="mathjax-inline">&#92;(\times&#92;)</span> 否</td>
+<td><span class="mathjax-inline">&#92;(✓&#92;)</span> 可以 (推荐 Friend)</td>
 </tr>
 <tr>
 <td><strong>底层语法解析</strong></td>
@@ -3593,7 +3593,7 @@ class Box &#123;
 Box&lt;int&gt; a;      // Box&lt;int&gt; 是具体类
 Box&lt;double&gt; b;   // Box&lt;double&gt; 是另一个具体类</code></pre>
 
-<p>**一句话：**类模板 $\to$ 模板类&#x2F;具体类 $\to$ 对象。</p>
+<p>**一句话：**类模板 <span class="mathjax-inline">&#92;(\to&#92;)</span> 模板类&#x2F;具体类 <span class="mathjax-inline">&#92;(\to&#92;)</span> 对象。</p>
 </template><div class="oop-answer-content"></div></details>
 </section>
 
