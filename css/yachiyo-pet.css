@@ -1,4 +1,4 @@
-/* Scoped styles for the desktop reaction-pack pet. */
+/* Scoped styles for the reaction-pack pet on desktop and touch screens. */
 .yp-root {
   --yp-panel: rgba(247, 251, 255, .94);
   --yp-text: #26364b;
@@ -142,5 +142,55 @@
   .yp-root *, .yp-root *::before, .yp-root *::after { animation: none !important; transition: none !important; }
 }
 @media (max-height: 700px) { .yp-root { bottom: 20px; } .yp-stage { height: 216px; } .yp-dialogue-shell { height: 55px; } }
-@media (max-width: 768px), (pointer: coarse) { .yp-root { display: none !important; } }
+@media (max-width: 768px), (pointer: coarse) {
+  .yp-root {
+    width: min(176px, calc(100vw - 16px));
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(68px, calc(env(safe-area-inset-bottom) + 12px));
+  }
+  .yp-dialogue-shell {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 8px);
+    z-index: 2;
+    width: min(240px, calc(100vw - 16px));
+    height: auto;
+    padding: 0;
+  }
+  .yp-root[data-dialogue-below="true"] .yp-dialogue-shell { bottom: auto; top: 48px; }
+  .yp-root[data-dialogue-left="true"] .yp-dialogue-shell { left: 0; right: auto; }
+  .yp-header { gap: 0; }
+  .yp-root .yp-handle { min-height: 44px; min-width: 0; padding: 8px; }
+  .yp-status { display: none; }
+  .yp-root .yp-minimize { flex: 0 0 44px; width: 44px; height: 44px; margin: 0; }
+  .yp-stage { height: 180px; }
+  .yp-canvas { cursor: pointer; touch-action: pan-y pinch-zoom; }
+  .yp-root .yp-menu-toggle {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    border-color: var(--yp-line);
+    background: var(--yp-panel);
+    color: var(--yp-accent);
+    backdrop-filter: blur(12px);
+  }
+  .yp-controls { grid-template-columns: repeat(2, 1fr); margin-top: 4px; }
+  .yp-controls button { flex-direction: row; min-height: 44px; padding: 8px 4px; gap: 6px; }
+  .yp-root .yp-options button { min-height: 44px; padding: 5px 3px; }
+  .yp-root .yp-restore { min-height: 44px; }
+  .yp-hint { max-width: 100%; font-size: 10px; }
+  .yp-root[data-state="celebrating"] .yp-star { left: calc(4px + var(--i) * 45px); top: calc(14px + var(--i) * 36px); }
+  .yp-root[data-state="singing"] .yp-note { top: calc(12px + var(--i) * 30px); right: calc(5px + var(--i) * 18px); font-size: 23px; }
+  .yp-root[data-state="sleeping"] .yp-zzz { top: 10px; right: 6px; font-size: 16px; }
+}
+@media (max-height: 500px) and (max-width: 768px), (max-height: 500px) and (pointer: coarse) {
+  .yp-stage { height: 112px; }
+  .yp-hint { display: none; }
+  .yp-root[data-menu-open="true"] .yp-panel {
+    max-height: calc(100vh - 88px);
+    max-height: calc(100dvh - 88px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
 @media print { .yp-root { display: none !important; } }

@@ -11,18 +11,18 @@
   </url>
   
   <url>
-    <loc>https://naomikuuuu.com/2026/05/15/Morse-Theory/</loc>
+    <loc>https://naomikuuuu.com/2026/07/09/Statistical-Learning-Notes/</loc>
     
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-07-09</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://naomikuuuu.com/2026/07/09/Statistical-Learning-Notes/</loc>
+    <loc>https://naomikuuuu.com/2026/05/15/Morse-Theory/</loc>
     
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-05-15</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -74,15 +74,6 @@
   </url>
   
   <url>
-    <loc>https://naomikuuuu.com/privacy/</loc>
-    
-    <lastmod>2026-07-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://naomikuuuu.com/tags/</loc>
     
     <lastmod>2026-10-02</lastmod>
@@ -91,10 +82,19 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://naomikuuuu.com/privacy/</loc>
+    
+    <lastmod>2026-07-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   <url>
     <loc>https://naomikuuuu.com/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -102,84 +102,84 @@
   
   <url>
     <loc>https://naomikuuuu.com/tags/HPCG/</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://naomikuuuu.com/tags/%E6%95%B0%E5%AD%A6%E7%A0%94%E8%AE%A8%E8%AF%BEB/</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://naomikuuuu.com/tags/Morse-Theory/</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://naomikuuuu.com/tags/%E6%8B%93%E6%89%91/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/tags/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/tags/%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://naomikuuuu.com/tags/%E6%95%B0%E5%AD%A6%E7%A0%94%E8%AE%A8%E8%AF%BEB/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://naomikuuuu.com/tags/Morse-Theory/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://naomikuuuu.com/tags/%E6%8B%93%E6%89%91/</loc>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/tags/C/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/tags/OOP/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/tags/STL/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/tags/%E9%94%99%E9%A2%98%E6%95%B4%E7%90%86/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -188,21 +188,21 @@
   
   <url>
     <loc>https://naomikuuuu.com/categories/HPC/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/categories/%E6%95%B0%E5%AD%A6/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://naomikuuuu.com/categories/%E7%BC%96%E7%A8%8B/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
